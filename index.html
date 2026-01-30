@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AtoZ Urban Clean | Luxury Services</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AtoZ Urban Clean | Luxury Home Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,10 +11,11 @@
             --primary: #0056b3;
             --text: #3f414d;
             --bg: #ffffff;
+            --light-bg: #f8f9fa;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { color: var(--text); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { color: var(--text); background-color: var(--bg); line-height: 1.6; }
 
         /* --- NYKAA STYLE HEADER --- */
         .top-header {
@@ -27,8 +28,9 @@
         }
         .logo { font-size: 26px; font-weight: 800; color: var(--primary); font-style: italic; text-decoration: none; }
         .search-bar { width: 400px; padding: 10px; border: 1px solid #f3f3f3; background: #f3f3f3; border-radius: 4px; }
+        .cart-icon { cursor: pointer; position: relative; font-weight: 600; color: var(--nykaa-pink); }
 
-        /* Mega Menu Navigation */
+        /* Navigation & Mega Menu */
         .nav-container {
             border-bottom: 1px solid #e8e8e8;
             background: #fff;
@@ -36,24 +38,20 @@
             top: 0;
             z-index: 1000;
         }
-        .main-nav {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
+        .main-nav { display: flex; justify-content: center; list-style: none; }
         .nav-item { padding: 15px 20px; font-weight: 600; font-size: 14px; cursor: pointer; color: #555; position: relative; }
         .nav-item:hover { color: var(--nykaa-pink); border-bottom: 3px solid var(--nykaa-pink); }
 
-        /* Mega Menu Content */
         .mega-menu {
             display: none;
             position: absolute;
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-            width: 80%;
+            width: 90vw;
+            max-width: 1000px;
             background: #fff;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             padding: 30px;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
@@ -63,48 +61,84 @@
         .menu-col h4 { color: var(--nykaa-pink); font-size: 13px; margin-bottom: 15px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
         .menu-col ul { list-style: none; }
         .menu-col li { font-size: 13px; color: #777; margin-bottom: 8px; cursor: pointer; }
-        .menu-col li:hover { color: #000; }
+        .menu-col li a { text-decoration: none; color: inherit; }
+        .menu-col li:hover { color: #000; font-weight: 600; }
 
-        /* --- HERO & CONTENT --- */
-        .hero { padding: 60px 5%; text-align: center; background: #f9f9f9; }
-        .hero h2 { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
-        .hero p { color: #888; font-style: italic; }
+        /* --- HERO SECTION --- */
+        .hero { 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('http://googleusercontent.com/image_collection/image_retrieval/12526993748280424998_0');
+            background-size: cover;
+            background-position: center;
+            height: 45vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; font-style: italic; opacity: 0.9; }
+
+        /* --- SERVICE GRID --- */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .section-title { text-align: center; margin-bottom: 30px; font-weight: 700; color: var(--primary); }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: var(--bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #efefef;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card-img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #444; }
+        .price { font-size: 1.3rem; font-weight: 700; color: #222; margin-bottom: 15px; }
+        .add-btn {
+            background: var(--bg);
+            color: var(--nykaa-pink);
+            border: 1.5px solid var(--nykaa-pink);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .add-btn:hover { background: var(--nykaa-pink); color: white; }
 
         /* --- FOOTER --- */
-        footer {
-            background: #3f414d;
-            color: #fff;
-            padding: 50px 5%;
-            margin-top: 50px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            border-bottom: 1px solid #555;
-            padding-bottom: 30px;
-        }
+        footer { background: #3f414d; color: #fff; padding: 50px 5% 20px 5%; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; border-bottom: 1px solid #555; padding-bottom: 30px; }
         .footer-col h4 { margin-bottom: 20px; font-size: 18px; color: var(--nykaa-pink); }
         .footer-col p { font-size: 14px; color: #bbb; line-height: 1.8; }
-        .developer-tag {
-            text-align: center;
-            padding-top: 20px;
-            font-size: 12px;
-            color: #888;
-        }
+        .developer-tag { text-align: center; padding-top: 20px; font-size: 12px; color: #888; }
 
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .search-bar, .main-nav { display: none; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+            .hero h2 { font-size: 1.8rem; }
             .footer-grid { grid-template-columns: 1fr; }
+            .card-img { height: 140px; }
         }
     </style>
 </head>
 <body>
 
     <div class="top-header">
-        <a href="#" class="logo">AtoZ Urban Clean</a>
+        <a href="index.html" class="logo">AtoZ Urban Clean</a>
         <input type="text" class="search-bar" placeholder="Search for cleaning services...">
-        <div style="font-weight: bold; color: var(--nykaa-pink);">Sign In</div>
+        <div class="cart-icon">BAG (0)</div>
     </div>
 
     <nav class="nav-container">
@@ -114,16 +148,23 @@
                     <div class="menu-col">
                         <h4>Essential Items</h4>
                         <ul>
-                            <li>Window & Door cleaning (1 no) - ₹99</li>
-                            <li>Fan Cleaning - ₹99</li>
-                            <li>Exhaust Fan - ₹199</li>
+                            <li><a href="window-cleaning.html">Window & Door cleaning</a></li>
+                            <li>Fan Cleaning</li>
+                            <li>Exhaust Fan</li>
                         </ul>
                     </div>
                     <div class="menu-col">
                         <h4>Wet Cleaning</h4>
                         <ul>
-                            <li>Sink and Faucet (1 no) - ₹299</li>
-                            <li>Bathroom Cleaning - ₹799</li>
+                            <li>Sink and Faucet</li>
+                            <li>Bathroom Cleaning</li>
+                        </ul>
+                    </div>
+                    <div class="menu-col">
+                        <h4>Floor Care</h4>
+                        <ul>
+                            <li>Standard Floor Cleaning</li>
+                            <li>Complete Home Indoor</li>
                         </ul>
                     </div>
                 </div>
@@ -139,6 +180,38 @@
         <p>Luxury Cleaning for Everyday Living</p>
     </section>
 
+    <div class="container">
+        <h2 class="section-title">Our Premium Services</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/9726134544504192591_0" class="card-img" alt="Window Cleaning">
+                <div class="card-content">
+                    <h3>Window & Door cleaning (1 no)</h3>
+                    <p class="price">₹ 99.00</p>
+                    <button class="add-btn">ADD TO BAG</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/16024035910114101639_0" class="card-img" alt="Exhaust Fan">
+                <div class="card-content">
+                    <h3>Exhaust Fan Cleaning (1 no)</h3>
+                    <p class="price">₹ 199.00</p>
+                    <button class="add-btn">ADD TO BAG</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/3166957108413185152_0" class="card-img" alt="Toilet Cleaning">
+                <div class="card-content">
+                    <h3>Premium Toilet Cleaning (Tiles & Seat)</h3>
+                    <p class="price">₹ 799.00</p>
+                    <button class="add-btn">ADD TO BAG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
@@ -147,7 +220,7 @@
             </div>
             <div class="footer-col">
                 <h4>CONTACT US</h4>
-                <p>Email: support@atozclean.com<br>Phone: +91 90000 00000<br>WhatsApp: Available 24/7</p>
+                <p>Email: support@atozclean.com<br>Phone: +91 9489587626<br>WhatsApp: Available 24/7</p>
             </div>
             <div class="footer-col">
                 <h4>ABOUT US</h4>
@@ -155,7 +228,7 @@
             </div>
         </div>
         <div class="developer-tag">
-            Designed & Developed by: <strong>[Your Developer Name]</strong>
+            Designed & Developed by: <strong>Yuva Sivasakthi</strong>
         </div>
     </footer>
 
