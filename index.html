@@ -67,28 +67,6 @@
     .nav-item{
         border-bottom:1px solid #eee;
     }
-
-    /* disable hover logic on mobile */
-    .nav-item:hover .mega-menu{
-        display:none;
-    }
-
-    /* mega menu becomes dropdown */
-    .mega-menu{
-        position:static;
-        transform:none;
-        box-shadow:none;
-        width:100%;
-        padding:15px;
-        grid-template-columns:1fr;
-        background:#fafafa;
-    }
-
-    .nav-item.active .mega-menu{
-        display:grid;
-    }
-}
-
         
         :root {
             --nykaa-pink: #fc2779;
@@ -126,27 +104,64 @@
         .nav-item { padding: 15px 20px; font-weight: 600; font-size: 14px; cursor: pointer; color: #555; position: relative; }
         .nav-item:hover { color: var(--nykaa-pink); border-bottom: 3px solid var(--nykaa-pink); }
 
-        .mega-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90vw;
-            max-width: 1000px;
-            background: #fff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            padding: 30px;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            z-index: 999;
-        }
+        
         .nav-item:hover .mega-menu { display: grid; }
         .menu-col h4 { color: var(--nykaa-pink); font-size: 13px; margin-bottom: 15px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
         .menu-col ul { list-style: none; }
         .menu-col li { font-size: 13px; color: #777; margin-bottom: 8px; cursor: pointer; }
         .menu-col li a { text-decoration: none; color: inherit; }
         .menu-col li:hover { color: #000; font-weight: 600; }
+
+        /* ===== COMPACT MEGA MENU (SELVA STYLE) ===== */
+
+.mega-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 720px;              /* smaller width */
+    max-width: 95vw;
+
+    background: #fff;
+    padding: 20px 24px;        /* reduced padding */
+    border-radius: 8px;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns like selva */
+    gap: 16px;
+
+    z-index: 999;
+}
+
+/* Show on hover (desktop only) */
+.nav-item:hover .mega-menu {
+    display: grid;
+}
+
+/* Column titles */
+.mega-menu h4 {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #ff0055;
+    font-weight: 600;
+}
+
+/* Menu links */
+.mega-menu a {
+    display: block;
+    font-size: 13px;
+    padding: 4px 0;
+    color: #555;
+    text-decoration: none;
+}
+
+.mega-menu a:hover {
+    color: #ff0055;
+}
 
         
 
@@ -203,56 +218,18 @@
 /* ===== MOBILE MENU FIX (USE EXISTING menu-toggle) ===== */
 @media (max-width: 768px) {
 
-    .menu-toggle {
-        display: block;
-        font-size: 26px;
-        cursor: pointer;
-        font-weight: 700;
-        color: var(--primary);
-    }
-
-    .main-nav {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #eee;
-    }
-
-    .main-nav.active {
-        display: flex;
-    }
-
-    .nav-item {
-        width: 100%;
-        padding: 14px 20px;
-        border-bottom: 1px solid #eee;
-    }
-
-    /* Disable hover logic on mobile */
-    .nav-item:hover .mega-menu {
-        display: none;
-    }
-
-    /* Accordion mega menu */
     .mega-menu {
         position: static;
         transform: none;
-        display: none;
         width: 100%;
-        max-width: 100%;
         box-shadow: none;
-        background: #f8f9fa;
-        padding: 10px 20px;
+        border-radius: 0;
+        padding: 10px 15px;
         grid-template-columns: 1fr;
-    }
-
-    .nav-item.active .mega-menu {
-        display: block;
+        background: #f9f9f9;
     }
 }
-
-        
+       
     </style>
 </head>
 <body>
