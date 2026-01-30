@@ -1,201 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AtoZ Urban Clean | Luxury Home Services</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --nykaa-pink:#fc2779;
-  --primary:#0056b3;
-  --text:#3f414d;
-  --bg:#fff;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AtoZ Urban Clean | Luxury Home Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .hero {
+    /* Use your specific image file name here */
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('index.jpg'); 
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60vh; /* Adjust height as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#fff;color:var(--text)}
-
-/* HEADER */
-.top-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:15px 5%;
-  border-bottom:1px solid #eee;
-}
-.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none;font-style:italic}
-.search-bar{width:400px;padding:10px;border:1px solid #eee;background:#f3f3f3}
-.cart-icon{font-weight:600;color:var(--nykaa-pink)}
-.menu-toggle{display:none;font-size:22px;cursor:pointer}
-
-/* NAV */
-.nav-container{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:1000}
-.main-nav{list-style:none;display:flex;justify-content:center}
-.nav-item{
-  padding:15px 20px;
-  font-weight:600;
-  font-size:14px;
-  cursor:pointer;
-  position:relative;
-}
-.nav-item:hover{color:var(--nykaa-pink);border-bottom:3px solid var(--nykaa-pink)}
-
-/* ===== MEGA MENU (FIXED) ===== */
-.mega-menu{
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(-50%) translateY(10px);
-  width:min(1000px,94vw);
-  background:#fff;
-  padding:28px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:24px;
-  border-radius:12px;
-  box-shadow:0 15px 40px rgba(0,0,0,.12);
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:.25s ease;
-  z-index:999;
-}
-.nav-item:hover>.mega-menu{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-  transform:translateX(-50%) translateY(0);
+.hero h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-.menu-col h4{
-  font-size:13px;
-  color:var(--nykaa-pink);
-  margin-bottom:12px;
-  border-bottom:1px solid #eee;
+.hero p {
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 300;
 }
-.menu-col ul{list-style:none}
-.menu-col li{font-size:13px;margin-bottom:8px}
-.menu-col a{text-decoration:none;color:#555}
-.menu-col a:hover{color:var(--primary)}
 
-/* HERO */
-.hero{
-  height:60vh;
-  background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('index.jpg');
-  background-size:cover;
-  background-position:center;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:#fff;
-  text-align:center;
+        
+        :root {
+            --nykaa-pink: #fc2779;
+            --primary: #0056b3;
+            --text: #3f414d;
+            --bg: #ffffff;
+            --light-bg: #f8f9fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { color: var(--text); background-color: var(--bg); line-height: 1.6; }
+
+        /* --- NYKAA STYLE HEADER --- */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-bottom: 1px solid #e8e8e8;
+            background: #fff;
+        }
+        .logo { font-size: 26px; font-weight: 800; color: var(--primary); font-style: italic; text-decoration: none; }
+        .search-bar { width: 400px; padding: 10px; border: 1px solid #f3f3f3; background: #f3f3f3; border-radius: 4px; }
+        .cart-icon { cursor: pointer; position: relative; font-weight: 600; color: var(--nykaa-pink); }
+
+        /* Navigation & Mega Menu */
+        .nav-container {
+            border-bottom: 1px solid #e8e8e8;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .main-nav { display: flex; justify-content: center; list-style: none; }
+        .nav-item { padding: 15px 20px; font-weight: 600; font-size: 14px; cursor: pointer; color: #555; position: relative; }
+        .nav-item:hover { color: var(--nykaa-pink); border-bottom: 3px solid var(--nykaa-pink); }
+        /* ===== MOBILE NAV BUTTON ===== */
+.menu-toggle {
+    display: none;
+    font-size: 22px;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--primary);
 }
-.hero h2{font-size:3rem}
-.hero p{font-size:1.5rem;font-style:italic}
 
-/* GRID */
-.container{max-width:1200px;margin:40px auto;padding:0 20px}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:25px;
-}
-.card{border:1px solid #eee;border-radius:12px;overflow:hidden}
-.card-img{width:100%;height:200px;object-fit:cover}
-.card-content{padding:20px}
-.price{font-weight:700}
+/* ===== MOBILE NAV ===== */
+@media (max-width: 768px) {
 
-/* FOOTER */
-footer{background:#3f414d;color:#fff;padding:40px 5%}
-.footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
-.footer-col h4{color:var(--nykaa-pink)}
-
-/* ===== MOBILE VIEW ===== */
-@media(max-width:768px){
-  .search-bar{display:none}
-  .menu-toggle{display:block}
-  .main-nav{display:none;flex-direction:column}
-  .main-nav.active{display:flex}
-  .nav-item{border-bottom:1px solid #eee}
-  .nav-item:hover{border:none}
-
-  .mega-menu{
-    position:static;
-    transform:none;
-    box-shadow:none;
-    opacity:1;
-    visibility:visible;
-    pointer-events:auto;
-    display:none;
-    grid-template-columns:1fr;
-    background:#fafafa;
-    padding:10px 0;
-  }
-  .nav-item.active>.mega-menu{display:grid}
-}
-</style>
-</head>
-
-<body>
-
-<div class="top-header">
-  <a class="logo" href="#">AtoZ Urban Clean</a>
-  <input class="search-bar" placeholder="Search services">
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <div class="cart-icon">BAG (0)</div>
-</div>
-
-<nav class="nav-container">
-<ul class="main-nav">
-<li class="nav-item">BASIC CLEANING
-  <div class="mega-menu">
-    <div class="menu-col">
-      <h4>Essential</h4>
-      <ul>
-        <li><a href="#">Window Cleaning</a></li>
-        <li><a href="#">Fan Cleaning</a></li>
-      </ul>
-    </div>
-  </div>
-</li>
-
-<li class="nav-item">PREMIUM CLEANING
-  <div class="mega-menu">
-    <div class="menu-col">
-      <ul>
-        <li><a href="#">Toilet</a></li>
-        <li><a href="#">Kitchen</a></li>
-      </ul>
-    </div>
-  </div>
-</li>
-</ul>
-</nav>
-
-<section class="hero">
-<h2>We Clean. You Relax.</h2>
-<p>Luxury Cleaning for Everyday Living</p>
-</section>
-
-<footer>
-<p style="text-align:center">Designed & Developed by <b>Yuva Sivasakthi</b></p>
-</footer>
-
-<script>
-function toggleMenu(){
-  document.querySelector('.main-nav').classList.toggle('active');
-}
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click',function(){
-    if(window.innerWidth<=768){
-      this.classList.toggle('active');
+    .menu-toggle {
+        display: block;
     }
-  });
+
+    .search-bar {
+        display: none;
+    }
+
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        background: #fff;
+        width: 100%;
+        border-top: 1px solid #eee;
+    }
+
+    .main-nav.active {
+        display: flex;
+    }
+
+    .nav-item {
+        padding: 14px 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .nav-item:hover {
+        border-bottom: none;
+    }
+
+    /* Mega menu becomes accordion */
+    .mega-menu {
+        position: static;
+        transform: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 12px 0 0;
+        display: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        grid-template-columns: 1fr;
+        background: #fafafa;
+    }
+
+    .nav-item.active > .mega-menu {
+        display: grid;
+    }
+
+    .menu-col {
+        padding: 10px 20px;
+    }
+}
+        
+        .nav-item:hover .mega-menu { display: grid; }
+        .menu-col h4 { color: var(--nykaa-pink); font-size: 13px; margin-bottom: 15px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+        .menu-col ul { list-style: none; }
+        .menu-col li { font-size: 13px; color: #777; margin-bottom: 8px; cursor: pointer; }
+        .menu-col li a { text-decoration: none; color: inherit; }
+        .menu-col li:hover { color: #000; font-weight: 600; }
+
+        
+
+        /* --- SERVICE GRID --- */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .section-title { text-align: center; margin-bottom: 30px; font-weight: 700; color: var(--primary); }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: var(--bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #efefef;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card-img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #444; }
+        .price { font-size: 1.3rem; font-weight: 700; color: #222; margin-bottom: 15px; }
+        .add-btn {
+            background: var(--bg);
+            color: var(--nykaa-pink);
+            border: 1.5px solid var(--nykaa-pink);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .add-btn:hover { background: var(--nykaa-pink); color: white; }
+
+        /* --- FOOTER --- */
+        footer { background: #3f414d; color: #fff; padding: 50px 5% 20px 5%; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; border-bottom: 1px solid #555; padding-bottom: 30px; }
+        .footer-col h4 { margin-bottom: 20px; font-size: 18px; color: var(--nykaa-pink); }
+        .footer-col p { font-size: 14px; color: #bbb; line-height: 1.8; }
+        .developer-tag { text-align: center; padding-top: 20px; font-size: 12px; color: #888; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .search-bar, .main-nav { display: none; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+            .hero h2 { font-size: 1.8rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .card-img { height: 140px; }
+        }
+    </style>
+</head>
+<body>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  <script>
+function toggleMenu() {
+    document.querySelector('.main-nav').classList.toggle('active');
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function (e) {
+        if (window.innerWidth <= 768) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+        }
+    });
 });
 </script>
+
+    <div class="top-header">
+        <a href="index.html" class="logo">AtoZ Urban Clean</a>
+        <input type="text" class="search-bar" placeholder="Search for cleaning services...">
+        <div class="cart-icon">BAG (0)</div>
+    </div>
+
+    <nav class="nav-container">
+        <ul class="main-nav">
+            <li class="nav-item">BASIC CLEANING
+                <div class="mega-menu">
+                    <div class="menu-col">
+                        <h4>Essential Items</h4>
+                        <ul>
+                            <li><a href="window-cleaning.html">Window & Door cleaning</a></li>
+                            <li>Fan Cleaning</li>
+                            <li>Exhaust Fan</li>
+                        </ul>
+                    </div>
+                    <div class="menu-col">
+                        <h4>Wet Cleaning</h4>
+                        <ul>
+                            <li>Sink and Faucet</li>
+                            <li>Bathroom Cleaning</li>
+                        </ul>
+                    </div>
+                    <div class="menu-col">
+                        <h4>Floor Care</h4>
+                        <ul>
+                            <li>Standard Floor Cleaning</li>
+                            <li>Complete Home Indoor</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">PREMIUM CLEANING<div class="mega-menu">
+                    <div class="menu-col">
+                        <ul>
+                            <li><a href="window-cleaning.html">Toilet Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Bedroom Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Kitchen Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Office Cleaning</a></li>
+                        </ul>
+                    </div></div>
+            </li>
+            <li class="nav-item">DEEP CLEANING<div class="mega-menu">
+                    <div class="menu-col">
+                        <ul>
+                            <li><a href="window-cleaning.html">Steam Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Bedroom Deep Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Furnished Area Based Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Unfurnished Area Based Cleaning</a></li>
+                        </ul>
+                    </div></div>
+            </li>
+            <li class="nav-item">COMMERCIAL<div class="mega-menu">
+                    <div class="menu-col">
+                        <ul>
+                            <li><a href="window-cleaning.html">Basic Office Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Standard Office Cleaning</a></li>
+                            <li><a href="window-cleaning.html">Premium Office Cleaning</a></li>
+                        </ul>
+                    </div></div>
+            </li>
+            <li class="nav-item">HOUSE SHIFTING<div class="mega-menu">
+                    <div class="menu-col">
+                        <ul>
+                            <li><a href="window-cleaning.html">Packing</a></li>
+                            <li><a href="window-cleaning.html">Load & Unload</a></li>
+                        </ul>
+                    </div></div>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+    <h2>We Clean. You Relax.</h2>
+    <p>Luxury Cleaning for Everyday Living</p>
+</section>
+
+    <div class="container">
+        <h2 class="section-title">Our Premium Services</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/9726134544504192591_0" class="card-img" alt="Window Cleaning">
+                <div class="card-content">
+                    <h3>Window & Door cleaning (1 no)</h3>
+                    <p class="price">₹ 99.00</p>
+                    <button class="add-btn">ADD TO BAG</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/16024035910114101639_0" class="card-img" alt="Exhaust Fan">
+                <div class="card-content">
+                    <h3>Exhaust Fan Cleaning (1 no)</h3>
+                    <p class="price">₹ 199.00</p>
+                    <button class="add-btn">ADD TO BAG</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/3166957108413185152_0" class="card-img" alt="Toilet Cleaning">
+                <div class="card-content">
+                    <h3>Premium Toilet Cleaning (Tiles & Seat)</h3>
+                    <p class="price">₹ 799.00</p>
+                    <button class="add-btn">ADD TO BAG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>LOCATION</h4>
+                <p>123 Clean Street, Urban Plaza<br>Your City, State - 123456</p>
+            </div>
+            <div class="footer-col">
+                <h4>CONTACT US</h4>
+                <p>Email: support@atozclean.com<br>Phone: +91 9489587626<br>WhatsApp: Available 24/7</p>
+            </div>
+            <div class="footer-col">
+                <h4>ABOUT US</h4>
+                <p>Providing premium and deep cleaning services including scrubbing tiles, degreasing, and steam cleaning.</p>
+            </div>
+        </div>
+        <div class="developer-tag">
+            Designed & Developed by: <strong>Yuva Sivasakthi</strong>
+        </div>
+    </footer>
 
 </body>
 </html>
