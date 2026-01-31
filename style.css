@@ -1,0 +1,136 @@
+body{
+margin:0;
+font-family:Segoe UI;
+}
+
+/* TOP */
+.topbar{
+display:flex;
+justify-content:space-between;
+padding:15px;
+align-items:center;
+}
+
+.logo{
+color:#1565c0;
+}
+
+.search{
+width:40%;
+padding:8px;
+}
+
+/* MENU */
+.menu{
+display:flex;
+gap:30px;
+background:#1565c0;
+padding:15px;
+list-style:none;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+}
+
+.nav-item{
+position:relative;
+color:white;
+cursor:pointer;
+}
+
+.mega-menu{
+display:none;
+position:absolute;
+background:white;
+padding:20px;
+top:40px;
+}
+
+.nav-item:hover .mega-menu{
+display:block;
+}
+
+/* HERO */
+.hero{
+height:420px;
+background:url('../images/index.jpg') center/cover;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-size:32px;
+}
+
+/* SERVICES */
+.title{
+text-align:center;
+margin-top:40px;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+padding:40px;
+}
+
+.card{
+box-shadow:0 10px 20px rgba(0,0,0,.1);
+padding:15px;
+text-align:center;
+transition:.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+button{
+background:#1565c0;
+color:white;
+border:none;
+padding:10px 20px;
+cursor:pointer;
+}
+
+/* SLIDER */
+.slider{
+height:300px;
+position:relative;
+}
+
+.slides{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+display:none;
+}
+
+.slides.active{
+display:block;
+}
+
+.slide-text{
+color:white;
+font-size:30px;
+text-align:center;
+padding-top:120px;
+}
+
+/* FOOTER */
+footer{
+background:#222;
+color:white;
+text-align:center;
+padding:20px;
+}
