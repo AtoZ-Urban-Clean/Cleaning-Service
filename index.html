@@ -1,611 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AtoZ Urban Clean</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtoZ Urban Clean</title>
+    <style>
+        :root { --blue: #007bff; --dark: #333; --light: #f4f4f4; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        /* Header & Top Bar */
+        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: white; border-bottom: 1px solid #ddd; }
+        .logo { color: var(--blue); font-size: 24px; font-weight: bold; font-style: italic; }
+        .search-bar { flex: 1; margin: 0 20px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .header-icons { display: flex; align-items: center; gap: 15px; }
+        .bag-count { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; position: relative; top: -10px; left: -10px; }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+        /* Navigation & Mega Menu */
+        nav { background: #fff; display: flex; justify-content: center; border-bottom: 2px solid var(--blue); }
+        .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
+        .nav-item { padding: 15px 20px; cursor: pointer; font-weight: bold; position: relative; }
+        .mega-menu { 
+            display: none; position: absolute; top: 100%; left: 0; background: white; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 20px; z-index: 100; min-width: 500px;
+            grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .nav-item:hover .mega-menu { display: grid; }
+        .mega-menu h4 { margin-top: 0; color: var(--blue); border-bottom: 1px solid #eee; }
+        .mega-menu ul { list-style: none; padding: 0; }
+        .mega-menu li { padding: 5px 0; font-weight: normal; font-size: 14px; }
 
-<style>
-:root{
-  --pink:#fc2779;
-  --primary:#0056b3;
-  --text:#3f414d;
-}
+        /* Hero Section */
+        .hero { 
+            height: 400px; background: url('index.jpg') center/cover no-repeat; 
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+        }
+        .hero-overlay { background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Inter',sans-serif;
-}
+        /* Service Grid */
+        .grid-container { padding: 40px 5%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .service-card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; text-align: center; padding-bottom: 15px; transition: 0.3s; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .service-card img { width: 100%; height: 200px; object-fit: cover; }
+        
+        /* Footer */
+        footer { background: #333; color: white; padding: 20px 5%; margin-top: 40px; text-align: center; }
+        
+        /* Modal / Tracking */
+        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 1001; }
 
-body{
-  background:#fff;
-  color:var(--text);
-}
-
-/* ===== HEADER ===== */
-.top-header{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:15px 5%;
-  border-bottom:1px solid #eee;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:800;
-  color:var(--primary);
-  text-decoration:none;
-}
-
-.search-bar{
-  flex:1;
-  max-width:400px;
-  padding:10px;
-  border:1px solid #eee;
-  background:#f3f3f3;
-  border-radius:4px;
-}
-
-.cart-icon{
-  color:var(--pink);
-  font-weight:700;
-}
-
-/* ===== MENU TOGGLE ===== */
-.menu-toggle{
-  display:none;
-  font-size:26px;
-  cursor:pointer;
-  color:var(--primary);
-}
-
-/* ===== NAV ===== */
-.nav-container{
-  position:sticky;
-  top:0;
-  background:#fff;
-  border-bottom:1px solid #eee;
-  z-index:1000;
-}
-
-.main-nav{
-  list-style:none;
-  display:flex;
-  justify-content:center;
-}
-
-.nav-item{
-  position:relative;
-  padding:15px 20px;
-  font-size:14px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.nav-item:hover{
-  color:var(--pink);
-}
-
-/* ===== MEGA MENU ===== */
-.mega-menu{
-  display:none;
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(-50%);
-  width:720px;
-  max-width:95vw;
-  background:#fff;
-  padding:20px;
-  border-radius:8px;
-  box-shadow:0 12px 30px rgba(0,0,0,0.12);
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-  z-index:999;
-}
-
-@media(min-width:769px){
-  .nav-item:hover .mega-menu{
-    display:grid;
-  }
-}
-
-.menu-col h4{
-  font-size:14px;
-  color:var(--pink);
-  margin-bottom:10px;
-}
-
-.menu-col ul{
-  list-style:none;
-}
-
-.menu-col li{
-  font-size:13px;
-  margin-bottom:6px;
-}
-
-.menu-col a{
-  text-decoration:none;
-  color:#555;
-}
-
-.menu-col a:hover{
-  color:var(--pink);
-}
-
-/* ===== HERO ===== */
-.hero{
-  height:60vh;
-  background:
-    linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),
-    url('index.jpg') center/cover no-repeat;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  color:#fff;
-}
-
-.hero h2{font-size:3rem;}
-.hero p{font-size:1.3rem;font-style:italic;}
-
-/* ===== SERVICES ===== */
-.container{
-  max-width:1200px;
-  margin:40px auto;
-  padding:0 20px;
-}
-
-.section-title{
-  text-align:center;
-  color:var(--primary);
-  margin-bottom:30px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:25px;
-}
-
-.card{
-  border:1px solid #eee;
-  border-radius:12px;
-  overflow:hidden;
-}
-
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-}
-
-.card-content{padding:15px;}
-
-.price{
-  font-weight:700;
-  margin:10px 0;
-}
-
-.add-btn{
-  width:100%;
-  padding:10px;
-  border:2px solid var(--pink);
-  background:#fff;
-  color:var(--pink);
-  font-weight:700;
-  cursor:pointer;
-}
-
-.add-btn:hover{
-  background:var(--pink);
-  color:#fff;
-}
-
-/* ===== SLIDER ===== */
-.slider{
-  position:relative;
-  height:60vh;
-  overflow:hidden;
-}
-
-.slides{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0;
-  transition:opacity .8s ease;
-}
-
-.slides.active{opacity:1;}
-
-.slide-text{
-  position:absolute;
-  bottom:20%;
-  left:10%;
-  color:#fff;
-}
-
-.slide-text h2{font-size:2.5rem;}
-.slide-text p{font-size:1.2rem;}
-
-/* ===== CATEGORIES ===== */
-.categories{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-  max-width:1200px;
-  margin:40px auto;
-  padding:0 20px;
-}
-
-.cat-card{
-  text-decoration:none;
-  color:var(--text);
-  text-align:center;
-  border:1px solid #eee;
-  border-radius:12px;
-  padding:15px;
-  background:#fff;
-}
-
-.cat-card img{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-  border-radius:8px;
-  margin-bottom:12px;
-}
-
-.cat-card span{
-  font-weight:600;
-  font-size:16px;
-}
-
-/* ===== FOOTER ===== */
-footer{
-  background:#3f414d;
-  color:#fff;
-  padding:40px 5% 20px;
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:30px;
-}
-
-.footer-col h4{
-  color:var(--pink);
-  margin-bottom:15px;
-}
-
-.footer-col p{
-  font-size:14px;
-  color:#ccc;
-}
-
-.developer-tag{
-  text-align:center;
-  margin-top:20px;
-  font-size:12px;
-  color:#aaa;
-}
-
-/* ===== MOBILE ===== */
-@media(max-width:768px){
-  .menu-toggle{display:block;}
-  .search-bar{display:none;}
-  .main-nav{display:none;flex-direction:column;}
-  .main-nav.active{display:flex;}
-  .nav-item{border-bottom:1px solid #eee;}
-  .mega-menu{
-    position:static;
-    transform:none;
-    box-shadow:none;
-    width:100%;
-    grid-template-columns:1fr;
-    background:#f9f9f9;
-  }
-  .nav-item.active .mega-menu{display:block;}
-  .hero h2{font-size:1.8rem;}
-  .footer-grid{grid-template-columns:1fr;}
-}
-
-.banner-slider{
-  position:relative;
-  max-width:1200px;
-  margin:40px auto;
-  border-radius:16px;
-  overflow:hidden;
-}
-
-.banner-link{
-  display:block;
-  position:relative;
-}
-
-.banner-link img{
-  width:100%;
-  height:420px;
-  object-fit:cover;
-}
-
-.banner-content{
-  position:absolute;
-  bottom:30px;
-  left:30px;
-  color:#fff;
-}
-
-.banner-content h3{
-  font-size:32px;
-  margin-bottom:10px;
-}
-
-.banner-btn{
-  padding:10px 20px;
-  border:none;
-  border-radius:20px;
-  background:#fc2779;
-  color:#fff;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.nav-btn{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:#fff;
-  border:none;
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:20px;
-}
-
-.prev{ left:15px; }
-.next{ right:15px; }
-
-  
-</style>
+        @media (max-width: 768px) {
+            .grid-container { grid-template-columns: 1fr; }
+            .mega-menu { min-width: 100%; position: static; display: none; }
+            .nav-item.active .mega-menu { display: block; }
+        }
+    </style>
 </head>
-
 <body>
 
-<header class="top-header">
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  
-  <input class="search-bar" placeholder="Search services">
-  <div class="cart-icon">BAG (0)</div>
-</header>
+<div class="header-top">
+    <div class="logo">AtoZ Urban Clean</div>
+    <input type="text" class="search-bar" placeholder="Search for a service...">
+    <div class="header-icons">
+        <span onclick="showCart()" style="cursor:pointer">🛍️ <span class="bag-count" id="count">0</span></span>
+        <button>Sign In</button>
+    </div>
+</div>
 
-<nav class="nav-container">
-<ul class="main-nav">
-<a href="index.html" class="logo">AtoZ Urban Clean</a>
-<li class="nav-item">BASIC CLEANING
-  <div class="mega-menu">
-    <div class="menu-col">
-      <h4>Essential</h4>
-      <ul>
-        <li><a href="#">Window & Door Cleaning</a></li>
-        <li><a href="#">Fan Cleaning</a></li>
-        <li><a href="#">Exhaust Fan Cleaning</a></li>
-      </ul>
-    </div>
-        <div class="menu-col">
-      <h4>Wet Cleaning</h4>
-      <ul>
-        <li><a href="window-cleaning.html">Sink and Faucet</a></li>
-        <li><a href="window-cleaning.html">Bathroom Cleaning</a></li>
-      </ul>
-    </div>
-    <div class="menu-col">
-      <h4>Floor</h4>
-      <ul>
-        <li><a href="window-cleaning.html">Standard Floor Cleaning</a></li>
-        <li><a href="window-cleaning.html">Complete Home Indoor</a></li>
-      </ul>
-    </div>
-  </div>
-</li>
-
-<li class="nav-item">PREMIUM CLEANING
-  <div class="mega-menu">
-    <div class="menu-col">
-      <ul>
-                            <li><a href="window-cleaning.html">Toilet Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Bedroom Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Kitchen Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Office Cleaning</a></li>
-      </ul>
-    </div>
-  </div>
-</li>
-
-<li class="nav-item">DEEP CLEANING
-  <div class="mega-menu">
-    <div class="menu-col">
-      <ul>
-                            <li><a href="window-cleaning.html">Steam Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Bedroom Deep Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Furnished Area Based Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Unfurnished Area Based Cleaning</a></li>
-      </ul>
-    </div>
-  </div>
-</li>
-
-<li class="nav-item">COMMERCIAL
-  <div class="mega-menu">
-    <div class="menu-col">
-      <ul>
-                            <li><a href="window-cleaning.html">Basic Office Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Standard Office Cleaning</a></li>
-                            <li><a href="window-cleaning.html">Premium Office Cleaning</a></li>
-      </ul>
-    </div>
-  </div>
-</li>
-<li class="nav-item">COMMERCIAL
-  <div class="mega-menu">
-    <div class="menu-col">
-      <ul>
-                            <li><a href="window-cleaning.html">Packing</a></li>
-                            <li><a href="window-cleaning.html">Load & Unload</a></li>
-      </ul>
-    </div>
-  </div>
-</li>
-
-</ul>
+<nav>
+    <ul class="nav-links">
+        <li class="nav-item">BASIC CLEANING
+            <div class="mega-menu">
+                <div><h4>Essential</h4><ul><li>Window Cleaning</li><li>Fan Cleaning</li></ul></div>
+                <div><h4>Wet</h4><ul><li>Sink & Faucet</li><li>Bathroom</li></ul></div>
+                <div><h4>Floor</h4><ul><li>Floor Mopping</li></ul></div>
+            </div>
+        </li>
+        <li class="nav-item">PREMIUM CLEANING</li>
+        <li class="nav-item">DEEP CLEANING</li>
+        <li class="nav-item">COMMERCIAL</li>
+        <li class="nav-item">HOUSE SHIFTING</li>
+    </ul>
 </nav>
-  
+
 <section class="hero">
-<h2>We Clean. You Relax.</h2>
-<p>Luxury Cleaning for Everyday Living</p>
+    <div class="hero-overlay">
+        <h1>We Clean. You Relax.</h1>
+        <p>Luxury Cleaning for Everyday Living</p>
+    </div>
 </section>
-<h2 class="section-title">Our Services</h2>
 
-<div class="banner-slider">
-  <button class="nav-btn prev" onclick="prevSlide()">❮</button>
-
-  <a id="bannerLink" href="#" class="banner-link">
-    <img id="bannerImg" src="Complete Home Cleaning indoor.jpg" alt="Service Banner">
-    <div class="banner-content">
-      <h3 id="bannerTitle">Premium Cleaning</h3>
-      <button class="banner-btn">Book Now →</button>
+<div class="grid-container" id="service-grid">
     </div>
-  </a>
-  <button class="nav-btn next" onclick="nextSlide()">❯</button>
-</div>
-
-<!-- SERVICES -->
-<div class="container">
-<h2 class="section-title">Our Premium Services</h2>
-<div class="grid">
-
-<div class="card">
-<img src="https://picsum.photos/400/300?1">
-<div class="card-content">
-<h3>Window Cleaning</h3>
-<p class="price">₹99</p>
-<button class="add-btn">ADD TO BAG</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/300?2">
-<div class="card-content">
-<h3>Exhaust Fan</h3>
-<p class="price">₹199</p>
-<button class="add-btn">ADD TO BAG</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/300?3">
-<div class="card-content">
-<h3>Toilet Cleaning</h3>
-<p class="price">₹799</p>
-<button class="add-btn">ADD TO BAG</button>
-</div>
-</div>
-
-<section class="slider">
-  <div class="slides active" style="background-image:url('office cleaning.jpg')">
-    <div class="slide-text">
-      <h2>Premium Home Cleaning</h2>
-      <p>Professional & Trusted</p>
-    </div>
-  </div>
-  <div class="slides" style="background-image:url('Deep Cleaning (strong descaling, mould removal, steam cleaning).jpg')">
-    <div class="slide-text">
-      <h2>Deep Cleaning Experts</h2>
-      <p>Hygiene You Can Feel</p>
-    </div>
-  </div>
-</section>
 
 <footer>
-<div class="developer-tag">
-Designed & Developed by <b>Yuva Sivasakthi</b>
-</div>
+    <p>Contact Us | About Us</p>
+    <p>Designed & Developed by <b>Yuva Sivasakthi</b></p>
+    <p><small>Revision: Jan 2026</small></p>
 </footer>
 
 <script>
-function toggleMenu(){
-  document.querySelector('.main-nav').classList.toggle('active');
-}
+    const services = [
+        { id: 1, name: "Basic Cleaning", price: 5999, img: "basic.jpg", cat: "Basic" },
+        { id: 2, name: "Bathroom Cleaning", price: 799, img: "bathroom.jpg", cat: "Basic" },
+        { id: 3, name: "Kitchen Cleaning", price: 1299, img: "kitchen.jpg", cat: "Premium" },
+        { id: 4, name: "Office Cleaning", price: 45, img: "office cleaning.jpg", cat: "Commercial" },
+        { id: 5, name: "House Shifting", price: 2999, img: "shifting.jpg", cat: "Shifting" },
+        { id: 6, name: "Deep Cleaning", price: 6499, img: "deep.jpg", cat: "Deep" }
+    ];
 
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click',()=>{
-    if(window.innerWidth<=768){
-      item.classList.toggle('active');
+    let cart = [];
+
+    function renderServices(items) {
+        const grid = document.getElementById('service-grid');
+        grid.innerHTML = items.map(s => `
+            <div class="service-card">
+                <img src="${s.img}" alt="${s.name}">
+                <h3>${s.name}</h3>
+                <p>Rs. ${s.price}</p>
+                <button onclick="addToCart(${s.id})">Book Now</button>
+            </div>
+        `).join('');
     }
-  });
-});
 
-let slideIndex=0;
-const slides=document.querySelectorAll('.slides');
+    function addToCart(id) {
+        const item = services.find(s => s.id === id);
+        cart.push(item);
+        document.getElementById('count').innerText = cart.length;
+        alert(item.name + " added to bag!");
+        
+        // Final Step: WhatsApp integration
+        if(confirm("Proceed to finalize booking via WhatsApp?")) {
+            sendWhatsApp();
+        }
+    }
 
-setInterval(()=>{
-  slides[slideIndex].classList.remove('active');
-  slideIndex=(slideIndex+1)%slides.length;
-  slides[slideIndex].classList.add('active');
-},4000);
+    function sendWhatsApp() {
+        const msg = encodeURIComponent(`New Booking Request:\nItems: ${cart.map(c => c.name).join(", ")}\nTotal: Rs.${cart.reduce((a,b) => a+b.price, 0)}`);
+        window.open(`https://wa.me/919489587626?text=${msg}`);
+    }
+
+    renderServices(services);
 </script>
 
-<script>
-const banners = [
-  {
-    img: "Premium Kitchen cleaning.jpg",
-    title: "Premium Home Cleaning",
-    link: "premium-cleaning.html"
-  },
-  {
-    img: "Deep Cleaning (strong descaling, mould removal, steam cleaning).jpg",
-    title: "Deep Cleaning Services",
-    link: "deep-cleaning.html"
-  },
-  {
-    img: "Floor Cleaning (dusting, sweeping, mopping all areas).jpg",
-    title: "Commercial Cleaning",
-    link: "commercial.html"
-  }
-];
-
-let index = 0;
-
-function showSlide(){
-  document.getElementById("bannerImg").src = banners[index].img;
-  document.getElementById("bannerTitle").innerText = banners[index].title;
-  document.getElementById("bannerLink").href = banners[index].link;
-}
-
-function nextSlide(){
-  index = (index + 1) % banners.length;
-  showSlide();
-}
-
-function prevSlide(){
-  index = (index - 1 + banners.length) % banners.length;
-  showSlide();
-}
-
-setInterval(nextSlide, 4000);
-</script>
-
-  
 </body>
 </html>
