@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<h2>Booking</h2>
+
+<form id="form">
+
+<input id="name" placeholder="Name" required>
+<input id="phone" placeholder="Phone" required>
+<input id="location" placeholder="Location" required>
+
+<button>Confirm Booking</button>
+
+</form>
+
+<script>
+
+document.getElementById("form").onsubmit=function(e){
+
+e.preventDefault();
+
+let id="AZ"+Math.floor(Math.random()*100000);
+
+let booking={
+id:id,
+name:name.value,
+phone:phone.value,
+location:location.value,
+status:"Waiting"
+};
+
+localStorage.setItem(id,JSON.stringify(booking));
+
+alert("Booking Confirmed! ID: "+id);
+
+/* WhatsApp */
+window.open(
+"https://wa.me/919489587626?text=New Booking ID:"+id
+);
+
+};
+
+</script>
+
+</body>
+</html>
