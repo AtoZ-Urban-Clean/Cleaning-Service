@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<h2>Track Booking</h2>
+
+<input id="bid" placeholder="Enter Booking ID">
+<button onclick="track()">Track</button>
+
+<h3 id="result"></h3>
+
+<script>
+
+function track(){
+
+let data=localStorage.getItem(bid.value);
+
+if(data){
+let obj=JSON.parse(data);
+result.innerText="Status: "+obj.status;
+}
+else{
+result.innerText="Booking Not Found";
+}
+
+}
+
+</script>
+
+</body>
+</html>
