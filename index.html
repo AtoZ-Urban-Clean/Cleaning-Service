@@ -8,56 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* Slider Text Animation */
-.slide-text {
-  position: absolute;
-  bottom: 20%;
-  left: 10%;
-  color: #fff;
-  z-index: 2;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-}
-
-/* CATEGORIES SECTION - NEW STYLES */
-.categories {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-.cat-card {
-  text-decoration: none;
-  color: var(--text);
-  text-align: center;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: #fff;
-}
-
-.cat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
-.cat-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-
-.cat-card span {
-  font-weight: 600;
-  font-size: 16px;
-  display: block;
-}
-  
 :root{
   --pink:#fc2779;
   --primary:#0056b3;
@@ -141,7 +91,7 @@ body{
   color:var(--pink);
 }
 
-/* ===== MEGA MENU (DESKTOP) ===== */
+/* ===== MEGA MENU ===== */
 .mega-menu{
   display:none;
   position:absolute;
@@ -159,8 +109,10 @@ body{
   z-index:999;
 }
 
-.nav-item:hover .mega-menu{
-  display:grid;
+@media(min-width:769px){
+  .nav-item:hover .mega-menu{
+    display:grid;
+  }
 }
 
 .menu-col h4{
@@ -201,14 +153,8 @@ body{
   color:#fff;
 }
 
-.hero h2{
-  font-size:3rem;
-}
-
-.hero p{
-  font-size:1.3rem;
-  font-style:italic;
-}
+.hero h2{font-size:3rem;}
+.hero p{font-size:1.3rem;font-style:italic;}
 
 /* ===== SERVICES ===== */
 .container{
@@ -241,9 +187,7 @@ body{
   object-fit:cover;
 }
 
-.card-content{
-  padding:15px;
-}
+.card-content{padding:15px;}
 
 .price{
   font-weight:700;
@@ -263,6 +207,67 @@ body{
 .add-btn:hover{
   background:var(--pink);
   color:#fff;
+}
+
+/* ===== SLIDER ===== */
+.slider{
+  position:relative;
+  height:60vh;
+  overflow:hidden;
+}
+
+.slides{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transition:opacity .8s ease;
+}
+
+.slides.active{opacity:1;}
+
+.slide-text{
+  position:absolute;
+  bottom:20%;
+  left:10%;
+  color:#fff;
+}
+
+.slide-text h2{font-size:2.5rem;}
+.slide-text p{font-size:1.2rem;}
+
+/* ===== CATEGORIES ===== */
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.cat-card{
+  text-decoration:none;
+  color:var(--text);
+  text-align:center;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:15px;
+  background:#fff;
+}
+
+.cat-card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:12px;
+}
+
+.cat-card span{
+  font-weight:600;
+  font-size:16px;
 }
 
 /* ===== FOOTER ===== */
@@ -297,113 +302,48 @@ footer{
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
-
-  .menu-toggle{
-    display:block;
-  }
-
-  .search-bar{
-    display:none;
-  }
-
-  .main-nav{
-    display:none;
-    flex-direction:column;
-  }
-
-  .main-nav.active{
-    display:flex;
-  }
-
-  .nav-item{
-    border-bottom:1px solid #eee;
-  }
-
+  .menu-toggle{display:block;}
+  .search-bar{display:none;}
+  .main-nav{display:none;flex-direction:column;}
+  .main-nav.active{display:flex;}
+  .nav-item{border-bottom:1px solid #eee;}
   .mega-menu{
     position:static;
     transform:none;
     box-shadow:none;
-    border-radius:0;
     width:100%;
     grid-template-columns:1fr;
-    padding:10px 15px;
     background:#f9f9f9;
   }
-
-  .nav-item.active .mega-menu{
-    display:block;
-  }
-
-  .hero h2{
-    font-size:1.8rem;
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr;
-  }
+  .nav-item.active .mega-menu{display:block;}
+  .hero h2{font-size:1.8rem;}
+  .footer-grid{grid-template-columns:1fr;}
 }
-
-  .slider{
-  position:relative;
-  height:60vh;
-  overflow:hidden;
-}
-
-.slides{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0;
-  transition:opacity .8s ease;
-}
-
-.slides.active{
-  opacity:1;
-}
-
-.slide-text{
-  position:absolute;
-  bottom:20%;
-  left:10%;
-  color:#fff;
-}
-
-.slide-text h2{
-  font-size:2.5rem;
-}
-
-.slide-text p{
-  font-size:1.2rem;
-}
-  
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header class="header-wrapper">
-  <div class="header-left">
+<header class="top-header">
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <a href="index.html" class="logo">AtoZ Urban Clean</a>
-</div>
+  <input class="search-bar" placeholder="Search services">
+  <div class="cart-icon">BAG (0)</div>
+</header>
 
-<!-- NAV -->
 <nav class="nav-container">
 <ul class="main-nav">
-
 <li class="nav-item">BASIC CLEANING
   <div class="mega-menu">
     <div class="menu-col">
       <h4>Essential</h4>
       <ul>
-        <li><a href="window-cleaning.html">Window & Door Cleaning</a></li>
-        <li><a href="window-cleaning.html">Fan Cleaning</a></li>
-        <li><a href="window-cleaning.html">Exhaust Fan Cleaning</a></li>
+        <li><a href="#">Window & Door Cleaning</a></li>
+        <li><a href="#">Fan Cleaning</a></li>
+        <li><a href="#">Exhaust Fan Cleaning</a></li>
       </ul>
     </div>
-    <div class="menu-col">
+        <div class="menu-col">
       <h4>Wet Cleaning</h4>
       <ul>
         <li><a href="window-cleaning.html">Sink and Faucet</a></li>
@@ -467,54 +407,15 @@ footer{
     </div>
   </div>
 </li>
+
 </ul>
 </nav>
-<div class="header-right">
-    <input class="search-bar" placeholder="Search services">
-    <div class="cart-icon">BAG (0)</div>
-  </div>
-</header>
-<!-- HERO -->
+
 <section class="hero">
 <h2>We Clean. You Relax.</h2>
 <p>Luxury Cleaning for Everyday Living</p>
 </section>
 
-<!-- SERVICES -->
-<div class="container">
-<h2 class="section-title">Our Premium Services</h2>
-<div class="grid">
-
-<div class="card">
-<img src="https://picsum.photos/400/300?1">
-<div class="card-content">
-<h3>Window Cleaning</h3>
-<p class="price">₹99</p>
-<button class="add-btn">ADD TO BAG</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/300?2">
-<div class="card-content">
-<h3>Exhaust Fan</h3>
-<p class="price">₹199</p>
-<button class="add-btn">ADD TO BAG</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/300?3">
-<div class="card-content">
-<h3>Toilet Cleaning</h3>
-<p class="price">₹799</p>
-<button class="add-btn">ADD TO BAG</button>
-</div>
-</div>
-
-</div>
-</div>
-<!-- ===== SLIDER ===== -->
 <section class="slider">
   <div class="slides active" style="background-image:url('slider1.jpg')">
     <div class="slide-text">
@@ -522,60 +423,15 @@ footer{
       <p>Professional & Trusted</p>
     </div>
   </div>
-
   <div class="slides" style="background-image:url('slider2.jpg')">
     <div class="slide-text">
       <h2>Deep Cleaning Experts</h2>
       <p>Hygiene You Can Feel</p>
     </div>
   </div>
-
-  <div class="slides" style="background-image:url('slider3.jpg')">
-    <div class="slide-text">
-      <h2>Commercial Cleaning</h2>
-      <p>Offices • Shops • Buildings</p>
-    </div>
-  </div>
-</section>
-<!-- ===== CATEGORIES ===== -->
-<section class="categories">
-  <a href="basic-cleaning.html" class="cat-card">
-    <img src="basic.webp">
-    <span>Basic Cleaning</span>
-  </a>
-
-  <a href="Premium Bedroom Deep Cleaning.html" class="cat-card">
-    <img src="cat-premium.jpg">
-    <span>Premium Cleaning</span>
-  </a>
-
-  <a href="deep-cleaning.html" class="cat-card">
-    <img src="Deep Cleaning (strong descaling, mould removal, steam cleaning).jpg">
-    <span>Deep Cleaning</span>
-  </a>
-
-  <a href="commercial.html" class="cat-card">
-    <img src="office cleaning.jpg">
-    <span>Commercial</span>
-  </a>
 </section>
 
-<!-- FOOTER -->
 <footer>
-<div class="footer-grid">
-<div class="footer-col">
-<h4>LOCATION</h4>
-<p>Your City, India</p>
-</div>
-<div class="footer-col">
-<h4>CONTACT</h4>
-<p>+91 9489587626</p>
-</div>
-<div class="footer-col">
-<h4>ABOUT</h4>
-<p>Premium cleaning services</p>
-</div>
-</div>
 <div class="developer-tag">
 Designed & Developed by <b>Yuva Sivasakthi</b>
 </div>
@@ -593,8 +449,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     }
   });
 });
-</script>
-<script>
+
 let slideIndex=0;
 const slides=document.querySelectorAll('.slides');
 
@@ -604,21 +459,6 @@ setInterval(()=>{
   slides[slideIndex].classList.add('active');
 },4000);
 </script>
-let slideIndex = 0;
-const slides = document.querySelectorAll('.slides');
 
-function showNextSlide() {
-  // Remove active class from current slide
-  slides[slideIndex].classList.remove('active');
-  
-  // Move to next index, loop back to 0 if at the end
-  slideIndex = (slideIndex + 1) % slides.length;
-  
-  // Add active class to new slide
-  slides[slideIndex].classList.add('active');
-}
-
-// Start automatic transition every 4000ms (4 seconds)
-setInterval(showNextSlide, 4000);
 </body>
 </html>
