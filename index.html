@@ -1,146 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AtoZ Urban Clean</title>
-    <style>
-        :root { --blue: #007bff; --dark: #333; --light: #f4f4f4; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
-        
-        /* Header & Top Bar */
-        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: white; border-bottom: 1px solid #ddd; }
-        .logo { color: var(--blue); font-size: 24px; font-weight: bold; font-style: italic; }
-        .search-bar { flex: 1; margin: 0 20px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-        .header-icons { display: flex; align-items: center; gap: 15px; }
-        .bag-count { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; position: relative; top: -10px; left: -10px; }
-
-        /* Navigation & Mega Menu */
-        nav { background: #fff; display: flex; justify-content: center; border-bottom: 2px solid var(--blue); }
-        .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
-        .nav-item { padding: 15px 20px; cursor: pointer; font-weight: bold; position: relative; }
-        .mega-menu { 
-            display: none; position: absolute; top: 100%; left: 0; background: white; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 20px; z-index: 100; min-width: 500px;
-            grid-template-columns: repeat(3, 1fr); gap: 20px;
-        }
-        .nav-item:hover .mega-menu { display: grid; }
-        .mega-menu h4 { margin-top: 0; color: var(--blue); border-bottom: 1px solid #eee; }
-        .mega-menu ul { list-style: none; padding: 0; }
-        .mega-menu li { padding: 5px 0; font-weight: normal; font-size: 14px; }
-
-        /* Hero Section */
-        .hero { 
-            height: 400px; background: url('index.jpg') center/cover no-repeat; 
-            display: flex; align-items: center; justify-content: center; text-align: center; color: white;
-        }
-        .hero-overlay { background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; }
-
-        /* Service Grid */
-        .grid-container { padding: 40px 5%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .service-card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; text-align: center; padding-bottom: 15px; transition: 0.3s; }
-        .service-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .service-card img { width: 100%; height: 200px; object-fit: cover; }
-        
-        /* Footer */
-        footer { background: #333; color: white; padding: 20px 5%; margin-top: 40px; text-align: center; }
-        
-        /* Modal / Tracking */
-        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 1001; }
-
-        @media (max-width: 768px) {
-            .grid-container { grid-template-columns: 1fr; }
-            .mega-menu { min-width: 100%; position: static; display: none; }
-            .nav-item.active .mega-menu { display: block; }
-        }
-    </style>
+<title>A to Z Urban Clean</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-<div class="header-top">
-    <div class="logo">AtoZ Urban Clean</div>
-    <input type="text" class="search-bar" placeholder="Search for a service...">
-    <div class="header-icons">
-        <span onclick="showCart()" style="cursor:pointer">🛍️ <span class="bag-count" id="count">0</span></span>
-        <button>Sign In</button>
-    </div>
+<!-- HEADER -->
+<header>
+
+<div class="topbar">
+<h1 class="logo">A to Z Urban Clean</h1>
+
+<input class="search" placeholder="Search services...">
+
+<div class="icons">
+<span id="cart">🛒 <b id="count">0</b></span>
+<span>Sign In</span>
+</div>
 </div>
 
+
 <nav>
-    <ul class="nav-links">
-        <li class="nav-item">BASIC CLEANING
-            <div class="mega-menu">
-                <div><h4>Essential</h4><ul><li>Window Cleaning</li><li>Fan Cleaning</li></ul></div>
-                <div><h4>Wet</h4><ul><li>Sink & Faucet</li><li>Bathroom</li></ul></div>
-                <div><h4>Floor</h4><ul><li>Floor Mopping</li></ul></div>
-            </div>
-        </li>
-        <li class="nav-item">PREMIUM CLEANING</li>
-        <li class="nav-item">DEEP CLEANING</li>
-        <li class="nav-item">COMMERCIAL</li>
-        <li class="nav-item">HOUSE SHIFTING</li>
-    </ul>
+<ul class="menu">
+
+<li class="nav-item">BASIC CLEANING
+<div class="mega-menu">
+<a href="services.html?cat=Basic">Window</a>
+<a href="services.html?cat=Basic">Fan</a>
+<a href="services.html?cat=Basic">Floor</a>
+</div>
+</li>
+
+<li class="nav-item">DEEP CLEANING
+<div class="mega-menu">
+<a href="services.html?cat=Deep">Steam Cleaning</a>
+</div>
+</li>
+
+<li>
+<a href="services.html">ALL SERVICES</a>
+</li>
+
+<li>
+<a href="tracking.html">TRACK BOOKING</a>
+</li>
+
+</ul>
 </nav>
 
+</header>
+
+
+<!-- HERO -->
 <section class="hero">
-    <div class="hero-overlay">
-        <h1>We Clean. You Relax.</h1>
-        <p>Luxury Cleaning for Everyday Living</p>
-    </div>
+<h2>We Clean. You Relax.</h2>
+<p>Luxury Cleaning for Everyday Living.</p>
 </section>
 
-<div class="grid-container" id="service-grid">
-    </div>
+
+
+<!-- SERVICES -->
+<h2 class="title">Our Services</h2>
+
+<div class="services">
+
+<div class="card">
+<img src="images/basic.jpg">
+<h3>Basic Cleaning</h3>
+<a href="booking.html?service=Basic Cleaning">
+<button>Book Now</button>
+</a>
+</div>
+
+<div class="card">
+<img src="images/bathroom.jpg">
+<h3>Bathroom Cleaning</h3>
+<a href="booking.html?service=Bathroom Cleaning">
+<button>Book Now</button>
+</a>
+</div>
+
+<div class="card">
+<img src="images/kitchen.jpg">
+<h3>Kitchen Cleaning</h3>
+<a href="booking.html?service=Kitchen Cleaning">
+<button>Book Now</button>
+</a>
+</div>
+
+<div class="card">
+<img src="images/office.jpg">
+<h3>Office Cleaning</h3>
+<a href="booking.html?service=Office Cleaning">
+<button>Book Now</button>
+</a>
+</div>
+
+<div class="card">
+<img src="images/deep.jpg">
+<h3>Deep Cleaning</h3>
+<a href="booking.html?service=Deep Cleaning">
+<button>Book Now</button>
+</a>
+</div>
+
+<div class="card">
+<img src="images/shifting.jpg">
+<h3>House Shifting</h3>
+<a href="booking.html?service=House Shifting">
+<button>Book Now</button>
+</a>
+</div>
+
+</div>
+
+
+
+<!-- SLIDER -->
+<section class="slider">
+
+<div class="slides active" style="background-image:url('images/office.jpg')">
+<div class="slide-text">
+<h2>Premium Home Cleaning</h2>
+</div>
+</div>
+
+<div class="slides" style="background-image:url('images/deep.jpg')">
+<div class="slide-text">
+<h2>Deep Cleaning Experts</h2>
+</div>
+</div>
+
+</section>
+
+
 
 <footer>
-    <p>Contact Us | About Us</p>
-    <p>Designed & Developed by <b>Yuva Sivasakthi</b></p>
-    <p><small>Revision: Jan 2026</small></p>
+
+<h3>Contact | About Us</h3>
+
+<p>Designed & Developed by <b>Yuva Sivasakthi</b></p>
+
 </footer>
 
-<script>
-    const services = [
-        { id: 1, name: "Basic Cleaning", price: 5999, img: "basic.jpg", cat: "Basic" },
-        { id: 2, name: "Bathroom Cleaning", price: 799, img: "bathroom.jpg", cat: "Basic" },
-        { id: 3, name: "Kitchen Cleaning", price: 1299, img: "kitchen.jpg", cat: "Premium" },
-        { id: 4, name: "Office Cleaning", price: 45, img: "office cleaning.jpg", cat: "Commercial" },
-        { id: 5, name: "House Shifting", price: 2999, img: "shifting.jpg", cat: "Shifting" },
-        { id: 6, name: "Deep Cleaning", price: 6499, img: "deep.jpg", cat: "Deep" }
-    ];
-
-    let cart = [];
-
-    function renderServices(items) {
-        const grid = document.getElementById('service-grid');
-        grid.innerHTML = items.map(s => `
-            <div class="service-card">
-                <img src="${s.img}" alt="${s.name}">
-                <h3>${s.name}</h3>
-                <p>Rs. ${s.price}</p>
-                <button onclick="addToCart(${s.id})">Book Now</button>
-            </div>
-        `).join('');
-    }
-
-    function addToCart(id) {
-        const item = services.find(s => s.id === id);
-        cart.push(item);
-        document.getElementById('count').innerText = cart.length;
-        alert(item.name + " added to bag!");
-        
-        // Final Step: WhatsApp integration
-        if(confirm("Proceed to finalize booking via WhatsApp?")) {
-            sendWhatsApp();
-        }
-    }
-
-    function sendWhatsApp() {
-        const msg = encodeURIComponent(`New Booking Request:\nItems: ${cart.map(c => c.name).join(", ")}\nTotal: Rs.${cart.reduce((a,b) => a+b.price, 0)}`);
-        window.open(`https://wa.me/919489587626?text=${msg}`);
-    }
-
-    renderServices(services);
-</script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
