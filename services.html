@@ -2,127 +2,72 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AtoZ Urban Clean – Services</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI, Arial, sans-serif;
-  background:#f6f6f6;
-}
-
-/* HEADER */
-header{
-  background:#fff;
-  padding:20px;
-  text-align:center;
-  font-size:26px;
-  font-weight:600;
+/* HEADER BAR */
+.site-header{
+  background:#ffffff;
   border-bottom:1px solid #ddd;
-}
-
-/* MAIN LAYOUT */
-.container{
+  padding:12px 20px;
   display:flex;
-  gap:20px;
-  padding:20px;
-}
-
-/* FILTER SIDEBAR */
-.filters{
-  width:260px;
-  background:#fff;
-  padding:15px;
-  border-radius:8px;
-}
-
-.filter-title{
-  font-weight:600;
-  margin:15px 0 5px;
-}
-
-.filter{
-  padding:10px 0;
-  border-bottom:1px solid #eee;
-  display:flex;
+  align-items:center;
   justify-content:space-between;
-  cursor:pointer;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  font-family:Segoe UI, Arial, sans-serif;
 }
 
-/* PRODUCT GRID */
-.products{
-  flex:1;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:20px;
+/* LOGO */
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#000;
+}
+.logo img{
+  height:40px;
+}
+.logo span{
+  font-size:20px;
+  font-weight:700;
 }
 
-/* PRODUCT CARD */
-.card{
-  background:#fff;
-  border-radius:10px;
-  padding:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+/* MENU */
+.nav{
+  display:flex;
+  gap:25px;
 }
-
-.badges{
-  font-size:12px;
-  margin-bottom:8px;
-}
-.badges span{
-  margin-right:10px;
-  font-weight:600;
-}
-.featured{color:#ff007f;}
-.best{color:#2ecc71;}
-
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
-.card h3{
-  font-size:16px;
-  margin:10px 0;
-}
-
-.price{
+.nav a{
+  text-decoration:none;
+  color:#333;
   font-size:15px;
+  font-weight:500;
 }
-.price del{
-  color:#888;
-}
-.off{
-  color:#2ecc71;
-  font-weight:600;
+.nav a:hover{
+  color:#ff007f;
 }
 
-.rating{
-  font-size:14px;
-  margin:6px 0;
-}
-
-.book{
-  display:block;
-  text-align:center;
-  margin-top:10px;
-  padding:10px;
+/* BUTTON */
+.header-btn{
   background:#ff007f;
   color:#fff;
-  text-decoration:none;
+  padding:10px 18px;
   border-radius:6px;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+}
+.header-btn:hover{
+  opacity:0.9;
 }
 
 /* MOBILE */
-@media(max-width:900px){
-  .container{
-    flex-direction:column;
-  }
-  .filters{
-    width:100%;
+@media(max-width:768px){
+  .nav{
+    display:none;
   }
 }
 </style>
@@ -130,257 +75,26 @@ header{
 
 <body>
 
-<!-- HEADER LOAD -->
-<div id="header"></div>
+<header class="site-header">
 
-<header>All Services</header>
+  <!-- LOGO (CLICKABLE IMAGE) -->
+  <a href="index.html" class="logo">
+    <img src="logo.png" alt="AtoZ Urban Clean">
+    <span>AtoZ Urban Clean</span>
+  </a>
 
-<div class="container">
+  <!-- MENU -->
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 
-  <!-- FILTERS -->
-  <div class="filters">
-    <div class="filter">Sort By : Popularity <span>⌄</span></div>
+  <!-- BUTTON -->
+  <a href="services.html" class="header-btn">Book Now</a>
 
-    <div class="filter-title">Category</div>
-    <div class="filter">Basic Cleaning <span>⌄</span></div>
-    <div class="filter">Deep Cleaning <span>⌄</span></div>
-    <div class="filter">Office Cleaning <span>⌄</span></div>
-    <div class="filter">House Shifting <span>⌄</span></div>
+</header>
 
-    <div class="filter-title">Price</div>
-    <div class="filter">Low to High <span>⌄</span></div>
-
-    <div class="filter-title">Rating</div>
-    <div class="filter">4★ & above <span>⌄</span></div>
-  </div>
-
-  <!-- PRODUCTS -->
-  <div class="products">
-
-        <!-- CARD 1 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
-      <h3>Window cleaning </h3>
-	<h5> Quantity 1</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Window & Door cleaning.jpg">
-      <h3>Door cleaning </h3>
-	<h5> Quantity 1</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Fan Cleaning.jpg">
-      <h3>Fan cleaning </h3>
-	<h5> Quantity 1</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-    <!-- CARD 4 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Exhaust Fan.jpg">
-      <h3>Exhaust Fan cleaning </h3>
-	<h5> Quantity 1</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 5 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Sink and Faucet Cleaning.jpg">
-      <h3>Sink and Faucet Cleaning </h3>
-	<h5> Quantity 1</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 6 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Bathroom Cleaning (Floor & wall tiles).jpg">
-      <h3>Bathroom Cleaning </h3>
-	<h5> Floor & wall tiles</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 7 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Premium Toilet Cleaning (Seat, Floor & Wall tiles).jpg">
-      <h3>Premium Toilet Cleaning </h3>
-	<h5>Seat, Floor & Wall tiles</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 8 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Standard Kitchen Cleaning.jpg">
-      <h3>Standard Kitchen Cleaning </h3>
-	<h5>Floor & Wall tiles</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 9 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Floor Cleaning (dusting, sweeping, mopping all areas).jpg">
-      <h3>Floor Cleaning</h3>
-	<h5>Dusting, Sweeping, Mopping all areas</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 10 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Complete Home Cleaning indoor.jpg">
-      <h3>Complete Home Cleaning indoor</h3>
-	<h5>Indoor Cleaning</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-	     <!-- CARD 11 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Deep Cleaning (strong descaling, mould removal, steam cleaning).jpg">
-      <h3>Deep Cleaning</h3>
-	<h5>Strong descaling, Mould removal, Steam cleaning</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 12 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Premium Bedroom Deep Cleaning.jpg">
-      <h3>Bedroom Cleaning</h3>
-	<h5>Premium Bedroom Deep Cleaning</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 13 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Premium Kitchen cleaning.jpg">
-      <h3>Kitchen Cleaning</h3>
-	<h5>Premium Kitchen Deep Cleaning</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-
-   <!-- CARD 14 -->
-    <div class="card">
-      <div class="badges">
-        <span class="featured">FEATURED</span>
-        <span class="best">BESTSELLER</span>
-      </div>
-      <img src="Premium Kitchen cleaning.jpg">
-      <h3>Kitchen Cleaning</h3>
-	<h5>Premium Kitchen Deep Cleaning</h5>
-      <div class="price">
-        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
-      </div>
-      <a class="book" href="#">Book Now</a>
-    </div>
-	  
-  <!-- FOOTER LOAD -->
-<div id="footer"></div>
-</div>
-
-
-<script>
-fetch("header.html")
-  .then(res => res.text())
-  .then(data => document.getElementById("header").innerHTML = data);
-
-fetch("footer.html")
-  .then(res => res.text())
-  .then(data => document.getElementById("footer").innerHTML = data);
-</script>
-	
 </body>
 </html>
