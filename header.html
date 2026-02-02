@@ -1,12 +1,96 @@
 <header class="site-header">
   <div class="logo">AtoZ Urban Clean</div>
 
-  <nav class="menu">
-    <a href="index.html">HOME</a>
-    <a href="services.html">BASIC CLEANING</a>
-    <a href="services.html#premium">PREMIUM CLEANING</a>
-    <a href="services.html#deep">DEEP CLEANING</a>
-    <a href="services.html#commercial">COMMERCIAL</a>
+  <nav class="nav">
+    <ul class="nav-list">
+
+      <!-- BASIC CLEANING -->
+      <li class="nav-item">
+        <span class="nav-link">BASIC CLEANING</span>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <h4>Essential</h4>
+            <ul>
+              <li><a href="services.html">Window & Door Cleaning</a></li>
+              <li><a href="services.html">Fan Cleaning</a></li>
+              <li><a href="services.html">Exhaust Fan Cleaning</a></li>
+            </ul>
+          </div>
+          <div class="menu-col">
+            <h4>Wet Cleaning</h4>
+            <ul>
+              <li><a href="services.html">Sink & Faucet</a></li>
+              <li><a href="services.html">Bathroom Cleaning</a></li>
+            </ul>
+          </div>
+          <div class="menu-col">
+            <h4>Floor</h4>
+            <ul>
+              <li><a href="services.html">Standard Floor Cleaning</a></li>
+              <li><a href="services.html">Complete Home Indoor</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- PREMIUM -->
+      <li class="nav-item">
+        <span class="nav-link">PREMIUM CLEANING</span>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <ul>
+              <li><a href="services.html">Toilet Cleaning</a></li>
+              <li><a href="services.html">Bedroom Cleaning</a></li>
+              <li><a href="services.html">Kitchen Cleaning</a></li>
+              <li><a href="services.html">Office Cleaning</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- DEEP -->
+      <li class="nav-item">
+        <span class="nav-link">DEEP CLEANING</span>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <ul>
+              <li><a href="services.html">Steam Cleaning</a></li>
+              <li><a href="services.html">Bedroom Deep Cleaning</a></li>
+              <li><a href="services.html">Furnished Cleaning</a></li>
+              <li><a href="services.html">Unfurnished Cleaning</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- COMMERCIAL -->
+      <li class="nav-item">
+        <span class="nav-link">COMMERCIAL</span>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <ul>
+              <li><a href="services.html">Basic Office Cleaning</a></li>
+              <li><a href="services.html">Standard Office Cleaning</a></li>
+              <li><a href="services.html">Premium Office Cleaning</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- SHIFTING -->
+      <li class="nav-item">
+        <span class="nav-link">SHIFTING</span>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <ul>
+              <li><a href="services.html">Packing</a></li>
+              <li><a href="services.html">Load & Unload</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+    </ul>
   </nav>
 
   <div class="right">
@@ -15,6 +99,7 @@
   </div>
 </header>
 
+<!-- ================= CSS ================= -->
 <style>
 .site-header{
   display:flex;
@@ -25,20 +110,77 @@
   border-bottom:1px solid #ddd;
   font-family:Segoe UI, Arial;
 }
+
 .logo{
   color:#0066ff;
   font-size:20px;
   font-weight:600;
 }
-.menu a{
-  margin:0 10px;
-  text-decoration:none;
-  color:#333;
+
+.nav-list{
+  list-style:none;
+  display:flex;
+  margin:0;
+  padding:0;
+}
+
+.nav-item{
+  position:relative;
+  padding:0 12px;
+}
+
+.nav-link{
+  cursor:pointer;
   font-weight:500;
 }
-.menu a:hover{
+
+.mega-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  z-index:999;
+  min-width:500px;
+}
+
+.menu-col h4{
+  margin:0 0 8px;
+}
+
+.menu-col ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.menu-col li{
+  margin-bottom:6px;
+}
+
+.menu-col a{
+  text-decoration:none;
+  color:#333;
+}
+
+.menu-col a:hover{
   color:#0066ff;
 }
+
+/* DESKTOP HOVER */
+@media(min-width:901px){
+  .nav-item:hover .mega-menu{
+    display:grid;
+  }
+}
+
+/* RIGHT */
 .right{
   display:flex;
   align-items:center;
@@ -53,4 +195,32 @@
   text-decoration:none;
   font-weight:600;
 }
+
+/* MOBILE */
+@media(max-width:900px){
+  .nav-list{
+    flex-direction:column;
+  }
+  .mega-menu{
+    position:static;
+    transform:none;
+    min-width:100%;
+  }
+}
 </style>
+
+<!-- ================= JS (MOBILE CLICK) ================= -->
+<script>
+document.querySelectorAll(".nav-link").forEach(link=>{
+  link.addEventListener("click", function(e){
+    if(window.innerWidth <= 900){
+      const menu = this.nextElementSibling;
+      document.querySelectorAll(".mega-menu").forEach(m=>{
+        if(m!==menu) m.style.display="none";
+      });
+      menu.style.display =
+        menu.style.display==="grid" ? "none" : "grid";
+    }
+  });
+});
+</script>
