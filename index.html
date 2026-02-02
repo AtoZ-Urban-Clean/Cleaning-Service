@@ -23,6 +23,82 @@
 .hero h2{font-size:3rem;}
 .hero p{font-size:1.3rem;font-style:italic;}
 
+  .home-services{
+  padding:60px 20px;
+  text-align:center;
+  background:#f9f9f9;
+}
+
+.home-services h2{
+  font-size:28px;
+  margin-bottom:40px;
+}
+
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.service-card{
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  text-decoration:none;
+  color:#333;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card img{
+  width:70px;
+  margin-bottom:15px;
+}
+
+.service-card h3{
+  margin-bottom:8px;
+  color:#0066ff;
+}
+
+.service-card p{
+  font-size:14px;
+}
+
+.service-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+  .why-choose{
+  padding:60px 20px;
+  background:#fff;
+  text-align:center;
+}
+
+.why-choose h2{
+  font-size:26px;
+  margin-bottom:35px;
+}
+
+.choose-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  max-width:900px;
+  margin:auto;
+}
+
+.choose-item{
+  background:#f0f7ff;
+  padding:18px;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:500;
+  color:#003d99;
+}
+
 </style>
 <body>
 
@@ -34,6 +110,62 @@
 <section class="hero">
 <h2>We Clean. You Relax.</h2>
 <p>Luxury Cleaning for Everyday Living</p>
+</section>
+
+  <section class="home-services">
+  <h2>Our Core Services</h2>
+
+  <div class="services-grid">
+
+    <a href="services.html#basic" class="service-card">
+      <img src="images/basic-cleaning.png" alt="Basic Cleaning">
+      <h3>Basic Cleaning</h3>
+      <p>Everyday cleaning for homes</p>
+    </a>
+
+    <a href="services.html#deep" class="service-card">
+      <img src="images/deep-cleaning.png" alt="Deep Cleaning">
+      <h3>Deep Cleaning</h3>
+      <p>Intense hygiene & detailing</p>
+    </a>
+
+    <a href="services.html#office" class="service-card">
+      <img src="images/office-cleaning.png" alt="Office Cleaning">
+      <h3>Office Cleaning</h3>
+      <p>Professional workspace cleaning</p>
+    </a>
+
+    <a href="services.html#shifting" class="service-card">
+      <img src="images/shifting.png" alt="Shifting Help">
+      <h3>Shifting Help</h3>
+      <p>Packing & moving assistance</p>
+    </a>
+
+  </div>
+</section>
+
+  <section class="why-choose">
+  <h2>Why Choose AtoZ Urban Clean?</h2>
+
+  <div class="choose-grid">
+
+    <div class="choose-item">
+      ✔ Trained Professionals
+    </div>
+
+    <div class="choose-item">
+      ✔ On-Time Cleaners
+    </div>
+
+    <div class="choose-item">
+      ✔ Affordable Pricing
+    </div>
+
+    <div class="choose-item">
+      ✔ Satisfaction Guaranteed
+    </div>
+
+  </div>
 </section>
 
 
