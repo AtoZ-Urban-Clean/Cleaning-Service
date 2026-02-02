@@ -8,7 +8,8 @@
     <nav class="navbar">
       <ul class="nav-list">
 
-        <li class="nav-item has-mega">
+        <!-- BASIC CLEANING -->
+        <li class="nav-item">
           <a class="nav-link">BASIC CLEANING</a>
           <div class="mega-menu">
             <div class="menu-col">
@@ -36,7 +37,8 @@
           </div>
         </li>
 
-        <li class="nav-item has-mega">
+        <!-- PREMIUM CLEANING -->
+        <li class="nav-item">
           <a class="nav-link">PREMIUM CLEANING</a>
           <div class="mega-menu">
             <div class="menu-col">
@@ -50,7 +52,8 @@
           </div>
         </li>
 
-        <li class="nav-item has-mega">
+        <!-- DEEP CLEANING -->
+        <li class="nav-item">
           <a class="nav-link">DEEP CLEANING</a>
           <div class="mega-menu">
             <div class="menu-col">
@@ -64,7 +67,8 @@
           </div>
         </li>
 
-        <li class="nav-item has-mega">
+        <!-- COMMERCIAL -->
+        <li class="nav-item">
           <a class="nav-link">COMMERCIAL</a>
           <div class="mega-menu">
             <div class="menu-col">
@@ -77,7 +81,8 @@
           </div>
         </li>
 
-        <li class="nav-item has-mega">
+        <!-- SHIFTING -->
+        <li class="nav-item">
           <a class="nav-link">SHIFTING</a>
           <div class="mega-menu">
             <div class="menu-col">
@@ -99,153 +104,135 @@
 
   </div>
 </header>
-
-<style>
-/* ---------------- Global Reset ---------------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ------------ Header Layout ------------ */
+/* ========= HEADER MEGA MENU ========== */
 .site-header {
-  background: #fff;
-  width: 100%;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 .site-header .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 25px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 25px;
 }
 
-/* ------------ Logo ------------ */
+/* logo */
 .logo a {
-  text-decoration: none;
-  font-size: 22px;
-  font-weight: 700;
-  color: #0066ff;
+  text-decoration:none;
+  font-size:22px;
+  font-weight:700;
+  color:#0066ff;
 }
 
-/* ------------ Navigation ------------ */
-.navbar .nav-list {
-  list-style: none;
-  display: flex;
-  gap: 30px;
+/* nav */
+.nav-list {
+  list-style:none;
+  display:flex;
+  gap:26px;
 }
 .nav-item {
-  position: relative;
-  padding-bottom: 25px; /* prevents mouse gap */
+  position:relative;
+  padding-bottom:22px; /* prevents gap */
 }
 .nav-link {
-  cursor: pointer;
-  font-weight: 600;
-  color: #333;
-  text-decoration: none;
+  text-decoration:none;
+  cursor:pointer;
+  font-weight:500;
+  color:#333;
 }
 
-/* ------------ Mega Menu ------------ */
+/* mega menu */
 .mega-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  transform: translateX(0);
-  background: #fff;
-  padding: 20px;
-  gap: 25px;
-  display: none;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  z-index: 999;
-  min-width: 500px;
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:#fff;
+  padding:22px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  gap:28px;
+  z-index:999;
+  min-width:480px;
 }
 
-.mega-menu .menu-col h4 {
-  font-size: 16px;
-  color: #0066ff;
-  margin-bottom: 8px;
+.menu-col {
+  min-width:160px;
 }
-.mega-menu .menu-col ul {
-  list-style: none;
+.menu-col h4 {
+  margin-bottom:8px;
+  color:#0066ff;
+  font-size:15px;
 }
-.mega-menu .menu-col ul li a {
-  text-decoration: none;
-  color: #333;
-  display: block;
-  padding: 6px 0;
-  font-size: 14px;
+.menu-col ul {
+  list-style:none;
 }
-.mega-menu .menu-col ul li a:hover {
-  color: #0066ff;
+.menu-col ul li a {
+  text-decoration:none;
+  display:block;
+  padding:6px 0;
+  font-size:14px;
+  color:#333;
+}
+.menu-col ul li a:hover {
+  color:#0066ff;
 }
 
-/* ------------ Desktop Hover ------------ */
-@media (min-width: 901px) {
+/* DESKTOP: hover open */
+@media (min-width:901px){
   .nav-item:hover > .mega-menu {
-    display: flex !important;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    display:flex !important;
+    flex-wrap:wrap;
   }
 }
 
-/* ------------ Header Right ------------ */
+/* right */
 .header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 .header-right input {
-  padding: 6px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding:6px 8px;
+  border:1px solid #ccc;
+  border-radius:4px;
 }
 .bag-btn {
-  text-decoration: none;
-  padding: 6px 10px;
-  background: #ff007f;
-  color: #fff;
-  font-weight: 600;
-  border-radius: 4px;
+  text-decoration:none;
+  padding:6px 12px;
+  background:#ff007f;
+  color:#fff;
+  font-weight:600;
+  border-radius:5px;
 }
 
-/* ------------ Mobile ------------ */
-@media (max-width: 900px) {
-  .navbar .nav-list {
-    flex-direction: column;
-    background: #fff;
-    position: static;
-    width: 100%;
-    padding: 10px 0;
-    gap: 0;
-  }
-  .nav-item {
-    width: 100%;
-    border-top: 1px solid #eee;
-    padding: 12px 16px;
+/* MOBILE */
+@media (max-width:900px){
+  .nav-list {
+    flex-direction:column;
+    width:100%;
   }
   .mega-menu {
-    position: static;
-    transform: none;
-    min-width: 100%;
-    box-shadow: none;
-    padding: 10px 16px;
+    position:static;
+    display:none;
+    box-shadow:none;
+    padding:10px 0;
+    width:100%;
   }
 }
-</style>
-
 <script>
 document.querySelectorAll(".nav-link").forEach(link => {
-  link.addEventListener("click", function () {
-    if (window.innerWidth <= 900) {
+  link.addEventListener("click", function(){
+    if(window.innerWidth <= 900){
       const menu = this.nextElementSibling;
-      document.querySelectorAll(".mega-menu").forEach(m => {
-        if (m !== menu) m.style.display = "none";
+      document.querySelectorAll(".mega-menu").forEach(m=>{
+        if(m !== menu) m.style.display = "none";
       });
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
     }
   });
 });
 </script>
+
