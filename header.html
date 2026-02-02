@@ -1,3 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtoZ Urban Clean Header</title>
+    <style>
+        /* ========= HEADER & MEGA MENU CSS ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .site-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Logo */
+        .logo a {
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0066ff;
+        }
+
+        /* Navigation */
+        .nav-list {
+            list-style: none;
+            display: flex;
+            gap: 26px;
+        }
+
+        .nav-item {
+            position: relative;
+            padding-bottom: 10px; /* Reduced to keep menu closer */
+        }
+
+        .nav-link {
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        /* Mega Menu Core */
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            padding: 22px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            gap: 28px;
+            z-index: 999;
+            min-width: 480px;
+            border-radius: 4px;
+        }
+
+        .menu-col {
+            min-width: 160px;
+        }
+
+        .menu-col h4 {
+            margin-bottom: 8px;
+            color: #0066ff;
+            font-size: 15px;
+            text-transform: uppercase;
+        }
+
+        .menu-col ul {
+            list-style: none;
+        }
+
+        .menu-col ul li a {
+            text-decoration: none;
+            display: block;
+            padding: 6px 0;
+            font-size: 14px;
+            color: #333;
+            transition: color 0.2s;
+        }
+
+        .menu-col ul li a:hover {
+            color: #0066ff;
+        }
+
+        /* Desktop Hover Logic */
+        @media (min-width: 901px) {
+            .nav-item:hover > .mega-menu {
+                display: flex !important;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Search & Bag */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-right input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .bag-btn {
+            text-decoration: none;
+            padding: 8px 16px;
+            background: #ff007f;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 900px) {
+            .site-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .nav-item {
+                padding-bottom: 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .mega-menu {
+                position: static;
+                display: none; /* Controlled by JS */
+                box-shadow: none;
+                padding: 10px 15px;
+                min-width: 100%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .header-right input {
+                flex-grow: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
 <header class="site-header">
   <div class="container">
 
@@ -8,7 +185,6 @@
     <nav class="navbar">
       <ul class="nav-list">
 
-        <!-- BASIC CLEANING -->
         <li class="nav-item">
           <a class="nav-link">BASIC CLEANING</a>
           <div class="mega-menu">
@@ -37,7 +213,6 @@
           </div>
         </li>
 
-        <!-- PREMIUM CLEANING -->
         <li class="nav-item">
           <a class="nav-link">PREMIUM CLEANING</a>
           <div class="mega-menu">
@@ -52,7 +227,6 @@
           </div>
         </li>
 
-        <!-- DEEP CLEANING -->
         <li class="nav-item">
           <a class="nav-link">DEEP CLEANING</a>
           <div class="mega-menu">
@@ -67,7 +241,6 @@
           </div>
         </li>
 
-        <!-- COMMERCIAL -->
         <li class="nav-item">
           <a class="nav-link">COMMERCIAL</a>
           <div class="mega-menu">
@@ -81,7 +254,6 @@
           </div>
         </li>
 
-        <!-- SHIFTING -->
         <li class="nav-item">
           <a class="nav-link">SHIFTING</a>
           <div class="mega-menu">
@@ -104,135 +276,27 @@
 
   </div>
 </header>
-/* ========= HEADER MEGA MENU ========== */
-.site-header {
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-.site-header .container {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:15px 25px;
-}
 
-/* logo */
-.logo a {
-  text-decoration:none;
-  font-size:22px;
-  font-weight:700;
-  color:#0066ff;
-}
-
-/* nav */
-.nav-list {
-  list-style:none;
-  display:flex;
-  gap:26px;
-}
-.nav-item {
-  position:relative;
-  padding-bottom:22px; /* prevents gap */
-}
-.nav-link {
-  text-decoration:none;
-  cursor:pointer;
-  font-weight:500;
-  color:#333;
-}
-
-/* mega menu */
-.mega-menu {
-  display:none;
-  position:absolute;
-  top:100%;
-  left:0;
-  background:#fff;
-  padding:22px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-  gap:28px;
-  z-index:999;
-  min-width:480px;
-}
-
-.menu-col {
-  min-width:160px;
-}
-.menu-col h4 {
-  margin-bottom:8px;
-  color:#0066ff;
-  font-size:15px;
-}
-.menu-col ul {
-  list-style:none;
-}
-.menu-col ul li a {
-  text-decoration:none;
-  display:block;
-  padding:6px 0;
-  font-size:14px;
-  color:#333;
-}
-.menu-col ul li a:hover {
-  color:#0066ff;
-}
-
-/* DESKTOP: hover open */
-@media (min-width:901px){
-  .nav-item:hover > .mega-menu {
-    display:flex !important;
-    flex-wrap:wrap;
-  }
-}
-
-/* right */
-.header-right {
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.header-right input {
-  padding:6px 8px;
-  border:1px solid #ccc;
-  border-radius:4px;
-}
-.bag-btn {
-  text-decoration:none;
-  padding:6px 12px;
-  background:#ff007f;
-  color:#fff;
-  font-weight:600;
-  border-radius:5px;
-}
-
-/* MOBILE */
-@media (max-width:900px){
-  .nav-list {
-    flex-direction:column;
-    width:100%;
-  }
-  .mega-menu {
-    position:static;
-    display:none;
-    box-shadow:none;
-    padding:10px 0;
-    width:100%;
-  }
-}
 <script>
-document.querySelectorAll(".nav-link").forEach(link => {
-  link.addEventListener("click", function(){
-    if(window.innerWidth <= 900){
-      const menu = this.nextElementSibling;
-      document.querySelectorAll(".mega-menu").forEach(m=>{
-        if(m !== menu) m.style.display = "none";
-      });
-      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-    }
-  });
-});
+    document.querySelectorAll(".nav-link").forEach(link => {
+        link.addEventListener("click", function(e) {
+            // Toggle menu only on mobile (below 901px)
+            if (window.innerWidth <= 900) {
+                const menu = this.nextElementSibling;
+                
+                // Close other open menus
+                document.querySelectorAll(".mega-menu").forEach(m => {
+                    if (m !== menu) m.style.display = "none";
+                });
+
+                // Toggle current menu
+                if (menu) {
+                    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+                }
+            }
+        });
+    });
 </script>
 
+</body>
+</html>
