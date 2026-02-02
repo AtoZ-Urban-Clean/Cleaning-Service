@@ -1,50 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>Book Service | AtoZ Urban Clean</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, Arial;
+  background:#f6f6f6;
+}
+header{
+  background:#fff;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:600;
+  border-bottom:1px solid #ddd;
+}
+.container{
+  max-width:600px;
+  margin:20px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+label{
+  display:block;
+  margin-top:12px;
+  font-weight:600;
+}
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+.total{
+  font-size:18px;
+  margin-top:15px;
+  font-weight:600;
+}
+button{
+  width:100%;
+  margin-top:20px;
+  padding:12px;
+  font-size:16px;
+  background:#ff007f;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+.success{
+  text-align:center;
+  display:none;
+}
+.booking-id{
+  font-size:18px;
+  color:green;
+  margin:10px 0;
+}
+.whatsapp{
+  display:block;
+  margin-top:15px;
+  padding:12px;
+  background:#25D366;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+}
+</style>
 </head>
 
 <body>
 
-<h2>Booking</h2>
+<header>Book Your Service</header>
 
-<form id="form">
+<div class="container" id="formBox">
 
-<input id="name" placeholder="Name" required>
-<input id="phone" placeholder="Phone" required>
-<input id="location" placeholder="Location" required>
+<label>Name</label>
+<input type="text" id="name" required>
 
-<button>Confirm Booking</button>
+<label>Mobile Number</label>
+<input type="tel" id="mobile" required>
 
-</form>
+<label>Location</label>
+<input type="text" id="location" required>
+
+<label>Service</label>
+<select id="service" onchange="updatePrice()">
+  <option value="99">Window & Door Cleaning – ₹99</option>
+  <option value="999">Premium Bathroom Cleaning – ₹999</option>
+  <option value="1299">Standard Kitchen Cleaning – ₹1299</option>
+  <option value="1999">Standard Floor Cleaning – ₹1999</option>
+  <option value="5999">Complete Home Cleaning – ₹5999</option>
+</select>
+
+<label>Preferred Date</label>
+<input type="date" id="date">
+
+<label>Preferred Time</label>
+<input type="time" id="time">
+
+<div class="total">
+  Total Amount: ₹<span id="amount">99</span>
+</div>
+
+<button onclick="submitBooking()">Confirm Booking</button>
+</div>
+
+<!-- SUCCESS -->
+<div class="container success" id="successBox">
+  <h2>Booking Confirmed 🎉</h2>
+  <div class="booking-id">Booking ID: <span id="bid"></span></div>
+  <p>Status: <b>Waiting for Confirmation</b></p>
+
+  <a id="waLink" class="whatsapp" target="_blank">
+    Send Booking on WhatsApp
+  </a>
+</div>
 
 <script>
+function updatePrice(){
+  document.getElementById("amount").innerText =
+    document.getElementById("service").value;
+}
 
-document.getElementById("form").onsubmit=function(e){
+function submitBooking(){
+  let name = document.getElementById("name").value;
+  let mobile = document.getElementById("mobile").value;
+  let location = document.getElementById("location").value;
+  let service = document.getElementById("service").selectedOptions[0].text;
+  let price = document.getElementById("service").value;
+  let date = document.getElementById("date").value;
+  let time = document.getElementById("time").value;
 
-e.preventDefault();
+  if(!name || !mobile || !location){
+    alert("Please fill all required fields");
+    return;
+  }
 
-let id="AZ"+Math.floor(Math.random()*100000);
+  let bookingId = "AZC" + Math.floor(Math.random()*100000);
 
-let booking={
-id:id,
-name:name.value,
-phone:phone.value,
-location:location.value,
-status:"Waiting"
-};
+  document.getElementById("bid").innerText = bookingId;
+  document.getElementById("formBox").style.display="none";
+  document.getElementById("successBox").style.display="block";
 
-localStorage.setItem(id,JSON.stringify(booking));
+  let msg =
+`New Booking - AtoZ Urban Clean
+Booking ID: ${bookingId}
+Name: ${name}
+Mobile: ${mobile}
+Location: ${location}
+Service: ${service}
+Date: ${date}
+Time: ${time}
+Total: ₹${price}`;
 
-alert("Booking Confirmed! ID: "+id);
-
-/* WhatsApp */
-window.open(
-"https://wa.me/919489587626?text=New Booking ID:"+id
-);
-
-};
-
+  document.getElementById("waLink").href =
+    "https://wa.me/919489587626?text=" + encodeURIComponent(msg);
+}
 </script>
 
 </body>
