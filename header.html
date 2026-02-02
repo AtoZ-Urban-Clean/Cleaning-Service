@@ -1,250 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AtoZ Urban Clean Header</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtoZ Urban Clean Header</title>
+    <style>
+        /* ========= HEADER & MEGA MENU CSS ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Segoe UI, Arial, sans-serif;
-}
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-.site-header{
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
+        .site-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-.site-header .container{
-  max-width:1400px;
-  margin:auto;
-  padding:15px 25px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
+        /* Logo */
+        .logo a {
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0066ff;
+        }
 
-/* LOGO */
-.logo a{
-  text-decoration:none;
-  font-size:22px;
-  font-weight:700;
-  color:#0066ff;
-}
+        /* Navigation */
+        .nav-list {
+            list-style: none;
+            display: flex;
+            gap: 26px;
+        }
 
-/* NAV */
-.nav-list{
-  list-style:none;
-  display:flex;
-  gap:26px;
-}
+        .nav-item {
+            position: relative;
+            padding-bottom: 10px; /* Reduced to keep menu closer */
+        }
 
-.nav-item{
-  position:relative;
-  padding-bottom:10px;
-}
+        .nav-link {
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
 
-/* hover bridge */
-.nav-item::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:-10px;
-  height:10px;
-}
+        /* Mega Menu Core */
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            padding: 22px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            gap: 28px;
+            z-index: 999;
+            min-width: 480px;
+            border-radius: 4px;
+        }
 
-.nav-link{
-  text-decoration:none;
-  cursor:pointer;
-  font-size:14px;
-  font-weight:500;
-  color:#333;
-  text-transform:uppercase;
-}
+        .menu-col {
+            min-width: 160px;
+        }
 
-/* MEGA MENU */
-.mega-menu{
-  display:none;
-  position:absolute;
-  top:100%;
-  left:0;
-  background:#fff;
-  padding:22px;
-  min-width:480px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-  border-radius:4px;
-  gap:28px;
-  z-index:999;
-}
+        .menu-col h4 {
+            margin-bottom: 8px;
+            color: #0066ff;
+            font-size: 15px;
+            text-transform: uppercase;
+        }
 
-.menu-col{
-  min-width:160px;
-}
+        .menu-col ul {
+            list-style: none;
+        }
 
-.menu-col h4{
-  font-size:15px;
-  margin-bottom:8px;
-  color:#0066ff;
-  text-transform:uppercase;
-}
+        .menu-col ul li a {
+            text-decoration: none;
+            display: block;
+            padding: 6px 0;
+            font-size: 14px;
+            color: #333;
+            transition: color 0.2s;
+        }
 
-.menu-col ul{
-  list-style:none;
-}
+        .menu-col ul li a:hover {
+            color: #0066ff;
+        }
 
-.menu-col a{
-  display:block;
-  padding:6px 0;
-  text-decoration:none;
-  font-size:14px;
-  color:#333;
-}
+        /* Desktop Hover Logic */
+        @media (min-width: 901px) {
+            .nav-item:hover > .mega-menu {
+                display: flex !important;
+                flex-wrap: wrap;
+            }
+        }
 
-.menu-col a:hover{
-  color:#0066ff;
-}
+        /* Search & Bag */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-/* DESKTOP */
-@media(min-width:901px){
-  .nav-item:hover > .mega-menu{
-    display:flex;
-    flex-wrap:wrap;
-  }
-}
+        .header-right input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
 
-/* RIGHT */
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+        .bag-btn {
+            text-decoration: none;
+            padding: 8px 16px;
+            background: #ff007f;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 5px;
+            font-size: 13px;
+        }
 
-.header-right input{
-  padding:8px 12px;
-  border:1px solid #ccc;
-  border-radius:4px;
-}
+        /* Mobile Styles */
+        @media (max-width: 900px) {
+            .site-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
 
-.bag-btn{
-  padding:8px 16px;
-  background:#ff007f;
-  color:#fff;
-  text-decoration:none;
-  border-radius:5px;
-  font-size:13px;
-  font-weight:600;
-}
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
 
-/* MOBILE */
-@media(max-width:900px){
-  .site-header .container{
-    flex-direction:column;
-    gap:15px;
-  }
+            .nav-item {
+                padding-bottom: 0;
+                border-bottom: 1px solid #eee;
+            }
 
-  .nav-list{
-    flex-direction:column;
-    width:100%;
-  }
+            .mega-menu {
+                position: static;
+                display: none; /* Controlled by JS */
+                box-shadow: none;
+                padding: 10px 15px;
+                min-width: 100%;
+                flex-direction: column;
+                gap: 15px;
+            }
 
-  .nav-item{
-    border-bottom:1px solid #eee;
-  }
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
 
-  .mega-menu{
-    position:static;
-    box-shadow:none;
-    padding:10px 15px;
-    min-width:100%;
-    flex-direction:column;
-    gap:15px;
-  }
-
-  .header-right{
-    width:100%;
-  }
-
-  .header-right input{
-    flex:1;
-  }
-}
-</style>
+            .header-right input {
+                flex-grow: 1;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
 <header class="site-header">
-<div class="container">
+  <div class="container">
 
-  <div class="logo">
-    <a href="index.html">AtoZ Urban Clean</a>
+    <div class="logo">
+      <a href="index.html">AtoZ Urban Clean</a>
+    </div>
+
+    <nav class="navbar">
+      <ul class="nav-list">
+
+        <li class="nav-item">
+          <a class="nav-link">BASIC CLEANING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <h4>Essential</h4>
+              <ul>
+                <li><a href="services.html">Window & Door Cleaning</a></li>
+                <li><a href="services.html">Fan Cleaning</a></li>
+                <li><a href="services.html">Exhaust Fan Cleaning</a></li>
+              </ul>
+            </div>
+            <div class="menu-col">
+              <h4>Wet Cleaning</h4>
+              <ul>
+                <li><a href="services.html">Sink & Faucet</a></li>
+                <li><a href="services.html">Bathroom Cleaning</a></li>
+              </ul>
+            </div>
+            <div class="menu-col">
+              <h4>Floor</h4>
+              <ul>
+                <li><a href="services.html">Standard Floor Cleaning</a></li>
+                <li><a href="services.html">Complete Home Indoor</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link">PREMIUM CLEANING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Toilet Cleaning</a></li>
+                <li><a href="services.html">Bedroom Cleaning</a></li>
+                <li><a href="services.html">Kitchen Cleaning</a></li>
+                <li><a href="services.html">Office Cleaning</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link">DEEP CLEANING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Steam Cleaning</a></li>
+                <li><a href="services.html">Bedroom Deep Cleaning</a></li>
+                <li><a href="services.html">Furnished Cleaning</a></li>
+                <li><a href="services.html">Unfurnished Cleaning</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link">COMMERCIAL</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Basic Office Cleaning</a></li>
+                <li><a href="services.html">Standard Office Cleaning</a></li>
+                <li><a href="services.html">Premium Office Cleaning</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link">SHIFTING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Packing</a></li>
+                <li><a href="services.html">Load & Unload</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      <input type="text" placeholder="Search services">
+      <a class="bag-btn" href="booking.html">BAG (0)</a>
+    </div>
+
   </div>
-
-  <nav>
-    <ul class="nav-list">
-
-      <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)">BASIC CLEANING</a>
-        <div class="mega-menu">
-          <div class="menu-col">
-            <h4>Essential</h4>
-            <ul>
-              <li><a href="services.html">Window & Door Cleaning</a></li>
-              <li><a href="services.html">Fan Cleaning</a></li>
-              <li><a href="services.html">Exhaust Fan Cleaning</a></li>
-            </ul>
-          </div>
-          <div class="menu-col">
-            <h4>Wet Cleaning</h4>
-            <ul>
-              <li><a href="services.html">Sink & Faucet</a></li>
-              <li><a href="services.html">Bathroom Cleaning</a></li>
-            </ul>
-          </div>
-          <div class="menu-col">
-            <h4>Floor</h4>
-            <ul>
-              <li><a href="services.html">Standard Floor Cleaning</a></li>
-              <li><a href="services.html">Complete Home Indoor</a></li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <!-- SAME FOR OTHER MENUS (unchanged content) -->
-
-    </ul>
-  </nav>
-
-  <div class="header-right">
-    <input type="text" placeholder="Search services">
-    <a class="bag-btn" href="booking.html">BAG (<span id="bagCount">0</span>)</a>
-  </div>
-
-</div>
 </header>
 
 <script>
-document.querySelectorAll(".nav-link").forEach(link=>{
-  link.addEventListener("click",function(){
-    if(window.innerWidth<=900){
-      const menu=this.nextElementSibling;
-      document.querySelectorAll(".mega-menu").forEach(m=>{
-        if(m!==menu) m.style.display="none";
-      });
-      if(menu){
-        menu.style.display = menu.style.display==="block" ? "none" : "block";
-      }
-    }
-  });
-});
+    document.querySelectorAll(".nav-link").forEach(link => {
+        link.addEventListener("click", function(e) {
+            // Toggle menu only on mobile (below 901px)
+            if (window.innerWidth <= 900) {
+                const menu = this.nextElementSibling;
+                
+                // Close other open menus
+                document.querySelectorAll(".mega-menu").forEach(m => {
+                    if (m !== menu) m.style.display = "none";
+                });
+
+                // Toggle current menu
+                if (menu) {
+                    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+                }
+            }
+        });
+    });
 </script>
 
 </body>
