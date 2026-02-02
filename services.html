@@ -2,225 +2,166 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Our Services | AtoZ Urban Clean</title>
+<title>AtoZ Urban Clean</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- ================== STYLE (NO FOLDER NEEDED) ================== -->
 <style>
 body{
   margin:0;
-  font-family:Segoe UI, Arial, sans-serif;
-  background:#f5f6fa;
+  font-family:Arial, sans-serif;
+  background:#f5f5f5;
 }
 
-/* HEADER */
-.header{
-  background:#0d47a1;
+/* HEADER WITH BACKGROUND IMAGE */
+header{
+  background:url("https://images.unsplash.com/photo-1581578731548-c64695cc6952") center/cover no-repeat;
+  height:320px;
+  position:relative;
   color:#fff;
-  padding:25px;
-  text-align:center;
-}
-.header h1{
-  margin:0;
-  font-size:34px;
-}
-.header p{
-  margin-top:8px;
-  font-size:16px;
-  opacity:0.9;
 }
 
-/* CONTAINER */
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:30px;
+/* HEADER OVERLAY */
+header::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+}
+
+.header-content{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.header-content h1{
+  font-size:36px;
+  margin-bottom:15px;
+}
+
+/* BOOK NOW IMAGE */
+.book-now img{
+  width:160px;
+  cursor:pointer;
+  transition:transform 0.2s;
+}
+.book-now img:hover{
+  transform:scale(1.05);
+}
+
+/* CATEGORY SECTION */
+.section{
+  padding:40px 20px;
+}
+
+.section h2{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+/* CATEGORY CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card{
   background:#fff;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* TITLE */
-.section-title{
-  font-size:26px;
-  margin-bottom:20px;
-  border-left:5px solid #0d47a1;
-  padding-left:12px;
-}
-
-/* TABLE */
-table{
+.card img{
   width:100%;
-  border-collapse:collapse;
-  margin-bottom:40px;
-}
-th,td{
-  padding:12px;
-  border:1px solid #ddd;
-  text-align:left;
-}
-th{
-  background:#e3f2fd;
-}
-.price{
-  text-align:right;
-  font-weight:bold;
+  height:180px;
+  object-fit:cover;
 }
 
-/* CATEGORY ROW */
-.category{
-  background:#bbdefb;
-  font-weight:bold;
-  font-size:17px;
-}
-
-/* NOTE */
-.note{
-  background:#f1f8e9;
+.card div{
   padding:15px;
-  border-left:5px solid #7cb342;
-  margin-bottom:40px;
 }
 
-/* FOOTER */
-footer{
-  background:#222;
+.card h3{
+  margin:0 0 10px;
+}
+
+.card a{
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 15px;
+  background:#28a745;
   color:#fff;
-  text-align:center;
-  padding:20px;
+  text-decoration:none;
+  border-radius:5px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <h1>AtoZ Urban Clean</h1>
-  <p>We Clean. You Relax / Luxury Cleaning for Everyday Living.</p>
-</div>
+<!-- ================== HEADER ================== -->
+<header>
+  <div class="header-content">
+    <h1>AtoZ Urban Clean</h1>
 
-<!-- CONTENT -->
-<div class="container">
-
-  <div class="section-title">Our Services</div>
-
-  <table>
-    <tr>
-      <th style="width:60px;">Si No</th>
-      <th>Description</th>
-      <th style="width:150px;">Price (Rs)</th>
-    </tr>
-
-    <!-- I BASIC CLEANING -->
-    <tr class="category">
-      <td>I</td>
-      <td colspan="2">Basic Cleaning</td>
-    </tr>
-    <tr>
-      <td></td><td>Window & Door Cleaning (1 no)</td><td class="price">99.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Fan Cleaning (1 no)</td><td class="price">99.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Exhaust Fan Cleaning (1 no)</td><td class="price">199.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Sink and Faucet Cleaning (1 no)</td><td class="price">299.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Bathroom Cleaning (Floor & Wall Tiles)</td><td class="price">799.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Premium Toilet Cleaning (Seat, Floor & Wall Tiles)</td><td class="price">999.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Standard Kitchen Cleaning</td><td class="price">1299.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Standard Floor Cleaning (Dusting, Sweeping, Mopping)</td><td class="price">1999.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Complete Home Cleaning (Indoor)</td><td class="price">5999.00</td>
-    </tr>
-
-    <!-- II DEEP CLEANING -->
-    <tr class="category">
-      <td>II</td>
-      <td colspan="2">Deep Cleaning (Strong Descaling, Mould Removal, Steam Cleaning)</td>
-    </tr>
-    <tr>
-      <td></td><td>Premium Bedroom Deep Cleaning (1 no)</td><td class="price">999.00</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td>Premium Kitchen Cleaning (Deep Degreasing, Cabinets Inside & Out, Tiles, Sink)</td>
-      <td class="price">1799.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Less than 1200 sq.ft (Furnished)</td><td class="price">6499.00</td>
-    </tr>
-    <tr>
-      <td></td><td>1200 – 2000 sq.ft (Furnished)</td><td class="price">10299.00</td>
-    </tr>
-    <tr>
-      <td></td><td>2000 – 3000 sq.ft (Furnished)</td><td class="price">15599.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Less than 1200 sq.ft (Unfurnished)</td><td class="price">5999.00</td>
-    </tr>
-    <tr>
-      <td></td><td>1200 – 2000 sq.ft (Unfurnished)</td><td class="price">6999.00</td>
-    </tr>
-    <tr>
-      <td></td><td>2000 – 3000 sq.ft (Unfurnished)</td><td class="price">12599.00</td>
-    </tr>
-
-    <!-- III COMMERCIAL -->
-    <tr class="category">
-      <td>III</td>
-      <td colspan="2">Commercial & Office Cleaning</td>
-    </tr>
-    <tr>
-      <td></td><td>Basic Office Cleaning (Per Sq.ft)</td><td class="price">20.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Standard Office Cleaning</td><td class="price">45.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Premium Office Cleaning</td><td class="price">55.00</td>
-    </tr>
-
-  </table>
-
-  <div class="note">
-    These rates usually include sweeping/mopping floors, dusting desks, cleaning common areas and basic sanitization.  
-    Premium services include deep degreasing, vents, corners and detailed work.
+    <!-- BOOK NOW IMAGE ONLY -->
+    <a class="book-now" href="#booking">
+      <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Book Now">
+    </a>
   </div>
+</header>
 
-  <table>
-    <!-- IV HOUSE SHIFTING -->
-    <tr class="category">
-      <td>IV</td>
-      <td colspan="2">Labour Charges for House Shifting (Packing, Loading, Unloading)</td>
-    </tr>
-    <tr>
-      <td></td><td>Basic Local Area</td><td class="price">2999.00</td>
-    </tr>
-    <tr>
-      <td></td><td>Less than 600 sq.ft</td><td class="price">4999.00</td>
-    </tr>
-    <tr>
-      <td></td><td>600 – 1200 sq.ft</td><td class="price">6999.00</td>
-    </tr>
-    <tr>
-      <td></td><td>1200 – 2000 sq.ft</td><td class="price">9999.00</td>
-    </tr>
-  </table>
+<!-- ================== SERVICES ================== -->
+<section class="section" id="services">
+  <h2>Our Services</h2>
 
-</div>
+  <div class="cards">
 
-<footer>
-  Designed & Developed by <b>Yuva Sivasakthi</b>
-</footer>
+    <!-- HOME CLEANING -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
+      <div>
+        <h3>Home Cleaning</h3>
+        <p>Deep and regular home cleaning.</p>
+        <a href="#booking">Book Now</a>
+      </div>
+    </div>
+
+    <!-- OFFICE CLEANING -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952">
+      <div>
+        <h3>Office Cleaning</h3>
+        <p>Professional office cleaning services.</p>
+        <a href="#booking">Book Now</a>
+      </div>
+    </div>
+
+    <!-- BATHROOM CLEANING -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a">
+      <div>
+        <h3>Bathroom Cleaning</h3>
+        <p>Hygienic bathroom deep cleaning.</p>
+        <a href="#booking">Book Now</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================== BOOKING ================== -->
+<section class="section" id="booking">
+  <h2>Booking Coming Soon</h2>
+  <p style="text-align:center;">
+    WhatsApp booking & customer login will be added.
+  </p>
+</section>
 
 </body>
 </html>
