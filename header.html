@@ -1,265 +1,251 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>AtoZ Urban Clean</title>
+<header class="site-header">
+  <div class="container">
+
+    <div class="logo">
+      <a href="index.html">AtoZ Urban Clean</a>
+    </div>
+
+    <nav class="navbar">
+      <ul class="nav-list">
+
+        <li class="nav-item has-mega">
+          <a class="nav-link">BASIC CLEANING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <h4>Essential</h4>
+              <ul>
+                <li><a href="services.html">Window & Door Cleaning</a></li>
+                <li><a href="services.html">Fan Cleaning</a></li>
+                <li><a href="services.html">Exhaust Fan Cleaning</a></li>
+              </ul>
+            </div>
+            <div class="menu-col">
+              <h4>Wet Cleaning</h4>
+              <ul>
+                <li><a href="services.html">Sink & Faucet</a></li>
+                <li><a href="services.html">Bathroom Cleaning</a></li>
+              </ul>
+            </div>
+            <div class="menu-col">
+              <h4>Floor</h4>
+              <ul>
+                <li><a href="services.html">Standard Floor Cleaning</a></li>
+                <li><a href="services.html">Complete Home Indoor</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-mega">
+          <a class="nav-link">PREMIUM CLEANING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Toilet Cleaning</a></li>
+                <li><a href="services.html">Bedroom Cleaning</a></li>
+                <li><a href="services.html">Kitchen Cleaning</a></li>
+                <li><a href="services.html">Office Cleaning</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-mega">
+          <a class="nav-link">DEEP CLEANING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Steam Cleaning</a></li>
+                <li><a href="services.html">Bedroom Deep Cleaning</a></li>
+                <li><a href="services.html">Furnished Cleaning</a></li>
+                <li><a href="services.html">Unfurnished Cleaning</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-mega">
+          <a class="nav-link">COMMERCIAL</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Basic Office Cleaning</a></li>
+                <li><a href="services.html">Standard Office Cleaning</a></li>
+                <li><a href="services.html">Premium Office Cleaning</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-mega">
+          <a class="nav-link">SHIFTING</a>
+          <div class="mega-menu">
+            <div class="menu-col">
+              <ul>
+                <li><a href="services.html">Packing</a></li>
+                <li><a href="services.html">Load & Unload</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      <input type="text" placeholder="Search services">
+      <a class="bag-btn" href="booking.html">BAG (0)</a>
+    </div>
+
+  </div>
+</header>
 
 <style>
-/* ================= RESET ================= */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Segoe UI, Arial;
+/* ---------------- Global Reset ---------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* ================= HEADER ================= */
-.site-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:15px 25px;
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  position:relative;
-  z-index:1000;
+/* ------------ Header Layout ------------ */
+.site-header {
+  background: #fff;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
 }
 
-.logo{
-  font-size:20px;
-  font-weight:600;
-  color:#0066ff;
+/* ------------ Logo ------------ */
+.logo a {
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0066ff;
 }
 
-/* ================= NAV ================= */
-.nav-list{
-  list-style:none;
-  display:flex;
-  gap:20px;
+/* ------------ Navigation ------------ */
+.navbar .nav-list {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+.nav-item {
+  position: relative;
+  padding-bottom: 25px; /* prevents mouse gap */
+}
+.nav-link {
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
 }
 
-.nav-item{
-  position:relative;
-  padding-bottom:25px; /* IMPORTANT: hover gap fix */
+/* ------------ Mega Menu ------------ */
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform: translateX(0);
+  background: #fff;
+  padding: 20px;
+  gap: 25px;
+  display: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  min-width: 500px;
 }
 
-.nav-link{
-  cursor:pointer;
-  font-weight:500;
-  white-space:nowrap;
+.mega-menu .menu-col h4 {
+  font-size: 16px;
+  color: #0066ff;
+  margin-bottom: 8px;
+}
+.mega-menu .menu-col ul {
+  list-style: none;
+}
+.mega-menu .menu-col ul li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 6px 0;
+  font-size: 14px;
+}
+.mega-menu .menu-col ul li a:hover {
+  color: #0066ff;
 }
 
-/* ================= MEGA MENU ================= */
-.mega-menu{
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(-50%);
-  background:#fff;
-  padding:25px;
-  min-width:520px;
-  display:none;
-  gap:30px;
-  box-shadow:0 12px 30px rgba(0,0,0,0.15);
-  z-index:999;
-}
-
-.menu-col h4{
-  margin-bottom:8px;
-  color:#0066ff;
-}
-
-.menu-col ul{
-  list-style:none;
-}
-
-.menu-col li{
-  margin-bottom:6px;
-}
-
-.menu-col a{
-  text-decoration:none;
-  color:#333;
-}
-
-.menu-col a:hover{
-  color:#0066ff;
-}
-
-/* ================= DESKTOP HOVER ================= */
-@media (min-width:901px){
-  .nav-item:hover > .mega-menu{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+/* ------------ Desktop Hover ------------ */
+@media (min-width: 901px) {
+  .nav-item:hover > .mega-menu {
+    display: flex !important;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 }
 
-/* ================= RIGHT SIDE ================= */
-.right{
-  display:flex;
-  align-items:center;
-  gap:10px;
+/* ------------ Header Right ------------ */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-right input {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.bag-btn {
+  text-decoration: none;
+  padding: 6px 10px;
+  background: #ff007f;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 4px;
 }
 
-.right input{
-  padding:6px 8px;
-  border:1px solid #ccc;
-}
-
-.bag{
-  text-decoration:none;
-  font-weight:600;
-  color:#ff007f;
-}
-
-/* ================= MOBILE ================= */
-@media (max-width:900px){
-  .nav-list{
-    flex-direction:column;
-    background:#fff;
-    position:absolute;
-    top:100%;
-    left:0;
-    width:100%;
-    padding:10px 20px;
-    border-top:1px solid #ddd;
+/* ------------ Mobile ------------ */
+@media (max-width: 900px) {
+  .navbar .nav-list {
+    flex-direction: column;
+    background: #fff;
+    position: static;
+    width: 100%;
+    padding: 10px 0;
+    gap: 0;
   }
-
-  .nav-item{
-    padding-bottom:0;
+  .nav-item {
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding: 12px 16px;
   }
-
-  .mega-menu{
-    position:static;
-    transform:none;
-    min-width:100%;
-    box-shadow:none;
-    padding:15px 0;
+  .mega-menu {
+    position: static;
+    transform: none;
+    min-width: 100%;
+    box-shadow: none;
+    padding: 10px 16px;
   }
 }
 </style>
-</head>
 
-<body>
-
-<header class="site-header">
-
-  <div class="logo">AtoZ Urban Clean</div>
-
-  <nav class="nav">
-    <ul class="nav-list">
-
-      <!-- BASIC CLEANING -->
-      <li class="nav-item">
-        <span class="nav-link">BASIC CLEANING</span>
-        <div class="mega-menu">
-          <div class="menu-col">
-            <h4>Essential</h4>
-            <ul>
-              <li><a href="services.html">Window & Door Cleaning</a></li>
-              <li><a href="services.html">Fan Cleaning</a></li>
-              <li><a href="services.html">Exhaust Fan Cleaning</a></li>
-            </ul>
-          </div>
-          <div class="menu-col">
-            <h4>Wet Cleaning</h4>
-            <ul>
-              <li><a href="services.html">Sink & Faucet</a></li>
-              <li><a href="services.html">Bathroom Cleaning</a></li>
-            </ul>
-          </div>
-          <div class="menu-col">
-            <h4>Floor</h4>
-            <ul>
-              <li><a href="services.html">Standard Floor Cleaning</a></li>
-              <li><a href="services.html">Complete Home Indoor</a></li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <!-- PREMIUM -->
-      <li class="nav-item">
-        <span class="nav-link">PREMIUM CLEANING</span>
-        <div class="mega-menu">
-          <div class="menu-col">
-            <ul>
-              <li><a href="services.html">Toilet Cleaning</a></li>
-              <li><a href="services.html">Bedroom Cleaning</a></li>
-              <li><a href="services.html">Kitchen Cleaning</a></li>
-              <li><a href="services.html">Office Cleaning</a></li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <!-- DEEP -->
-      <li class="nav-item">
-        <span class="nav-link">DEEP CLEANING</span>
-        <div class="mega-menu">
-          <div class="menu-col">
-            <ul>
-              <li><a href="services.html">Steam Cleaning</a></li>
-              <li><a href="services.html">Bedroom Deep Cleaning</a></li>
-              <li><a href="services.html">Furnished Cleaning</a></li>
-              <li><a href="services.html">Unfurnished Cleaning</a></li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <!-- COMMERCIAL -->
-      <li class="nav-item">
-        <span class="nav-link">COMMERCIAL</span>
-        <div class="mega-menu">
-          <div class="menu-col">
-            <ul>
-              <li><a href="services.html">Basic Office Cleaning</a></li>
-              <li><a href="services.html">Standard Office Cleaning</a></li>
-              <li><a href="services.html">Premium Office Cleaning</a></li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <!-- SHIFTING -->
-      <li class="nav-item">
-        <span class="nav-link">SHIFTING</span>
-        <div class="mega-menu">
-          <div class="menu-col">
-            <ul>
-              <li><a href="services.html">Packing</a></li>
-              <li><a href="services.html">Load & Unload</a></li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-    </ul>
-  </nav>
-
-  <div class="right">
-    <input type="text" placeholder="Search services">
-    <a href="booking.html" class="bag">BAG (0)</a>
-  </div>
-
-</header>
-
-<!-- ================= MOBILE CLICK SCRIPT ================= -->
 <script>
-document.querySelectorAll(".nav-link").forEach(link=>{
-  link.addEventListener("click", function(){
-    if(window.innerWidth <= 900){
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", function () {
+    if (window.innerWidth <= 900) {
       const menu = this.nextElementSibling;
-      document.querySelectorAll(".mega-menu").forEach(m=>{
-        if(m !== menu) m.style.display = "none";
+      document.querySelectorAll(".mega-menu").forEach(m => {
+        if (m !== menu) m.style.display = "none";
       });
-      menu.style.display =
-        menu.style.display === "grid" ? "none" : "grid";
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
     }
   });
 });
 </script>
-
-</body>
-</html>
