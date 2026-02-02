@@ -2,166 +2,203 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AtoZ Urban Clean</title>
+<title>AtoZ Urban Clean – Services</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ================== STYLE (NO FOLDER NEEDED) ================== -->
 <style>
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#f5f5f5;
+  font-family:Segoe UI, Arial, sans-serif;
+  background:#f6f6f6;
 }
 
-/* HEADER WITH BACKGROUND IMAGE */
+/* HEADER */
 header{
-  background:url("https://images.unsplash.com/photo-1581578731548-c64695cc6952") center/cover no-repeat;
-  height:320px;
-  position:relative;
-  color:#fff;
-}
-
-/* HEADER OVERLAY */
-header::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-}
-
-.header-content{
-  position:relative;
-  z-index:1;
+  background:#fff;
+  padding:20px;
   text-align:center;
-  top:50%;
-  transform:translateY(-50%);
+  font-size:26px;
+  font-weight:600;
+  border-bottom:1px solid #ddd;
 }
 
-.header-content h1{
-  font-size:36px;
-  margin-bottom:15px;
+/* MAIN LAYOUT */
+.container{
+  display:flex;
+  gap:20px;
+  padding:20px;
 }
 
-/* BOOK NOW IMAGE */
-.book-now img{
-  width:160px;
+/* FILTER SIDEBAR */
+.filters{
+  width:260px;
+  background:#fff;
+  padding:15px;
+  border-radius:8px;
+}
+
+.filter-title{
+  font-weight:600;
+  margin:15px 0 5px;
+}
+
+.filter{
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+  display:flex;
+  justify-content:space-between;
   cursor:pointer;
-  transition:transform 0.2s;
-}
-.book-now img:hover{
-  transform:scale(1.05);
 }
 
-/* CATEGORY SECTION */
-.section{
-  padding:40px 20px;
-}
-
-.section h2{
-  text-align:center;
-  margin-bottom:30px;
-}
-
-/* CATEGORY CARDS */
-.cards{
+/* PRODUCT GRID */
+.products{
+  flex:1;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
   gap:20px;
 }
 
+/* PRODUCT CARD */
 .card{
   background:#fff;
   border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  padding:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
+
+.badges{
+  font-size:12px;
+  margin-bottom:8px;
+}
+.badges span{
+  margin-right:10px;
+  font-weight:600;
+}
+.featured{color:#ff007f;}
+.best{color:#2ecc71;}
 
 .card img{
   width:100%;
   height:180px;
   object-fit:cover;
-}
-
-.card div{
-  padding:15px;
+  border-radius:8px;
 }
 
 .card h3{
-  margin:0 0 10px;
+  font-size:16px;
+  margin:10px 0;
 }
 
-.card a{
-  display:inline-block;
+.price{
+  font-size:15px;
+}
+.price del{
+  color:#888;
+}
+.off{
+  color:#2ecc71;
+  font-weight:600;
+}
+
+.rating{
+  font-size:14px;
+  margin:6px 0;
+}
+
+.book{
+  display:block;
+  text-align:center;
   margin-top:10px;
-  padding:10px 15px;
-  background:#28a745;
+  padding:10px;
+  background:#ff007f;
   color:#fff;
   text-decoration:none;
-  border-radius:5px;
+  border-radius:6px;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .container{
+    flex-direction:column;
+  }
+  .filters{
+    width:100%;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================== HEADER ================== -->
-<header>
-  <div class="header-content">
-    <h1>AtoZ Urban Clean</h1>
+<header>All Services</header>
 
-    <!-- BOOK NOW IMAGE ONLY -->
-    <a class="book-now" href="#booking">
-      <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Book Now">
-    </a>
+<div class="container">
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <div class="filter">Sort By : Popularity <span>⌄</span></div>
+
+    <div class="filter-title">Category</div>
+    <div class="filter">Basic Cleaning <span>⌄</span></div>
+    <div class="filter">Deep Cleaning <span>⌄</span></div>
+    <div class="filter">Office Cleaning <span>⌄</span></div>
+    <div class="filter">House Shifting <span>⌄</span></div>
+
+    <div class="filter-title">Price</div>
+    <div class="filter">Low to High <span>⌄</span></div>
+
+    <div class="filter-title">Rating</div>
+    <div class="filter">4★ & above <span>⌄</span></div>
   </div>
-</header>
 
-<!-- ================== SERVICES ================== -->
-<section class="section" id="services">
-  <h2>Our Services</h2>
+  <!-- PRODUCTS -->
+  <div class="products">
 
-  <div class="cards">
-
-    <!-- HOME CLEANING -->
+    <!-- CARD 1 -->
     <div class="card">
+      <div class="badges">
+        <span class="featured">FEATURED</span>
+        <span class="best">BESTSELLER</span>
+      </div>
       <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
-      <div>
-        <h3>Home Cleaning</h3>
-        <p>Deep and regular home cleaning.</p>
-        <a href="#booking">Book Now</a>
+      <h3>Complete Home Cleaning</h3>
+      <div class="price">
+        <del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span>
       </div>
+      <div class="rating">★★★★☆ (12,450)</div>
+      <a class="book" href="#">Book Now</a>
     </div>
 
-    <!-- OFFICE CLEANING -->
+    <!-- CARD 2 -->
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952">
-      <div>
-        <h3>Office Cleaning</h3>
-        <p>Professional office cleaning services.</p>
-        <a href="#booking">Book Now</a>
+      <div class="badges">
+        <span class="featured">FEATURED</span>
       </div>
-    </div>
-
-    <!-- BATHROOM CLEANING -->
-    <div class="card">
       <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a">
-      <div>
-        <h3>Bathroom Cleaning</h3>
-        <p>Hygienic bathroom deep cleaning.</p>
-        <a href="#booking">Book Now</a>
+      <h3>Premium Bathroom Cleaning</h3>
+      <div class="price">
+        <del>₹1199</del> <b>₹999</b> <span class="off">17% Off</span>
       </div>
+      <div class="rating">★★★★☆ (8,210)</div>
+      <a class="book" href="#">Book Now</a>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="card">
+      <div class="badges">
+        <span class="best">BESTSELLER</span>
+      </div>
+      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952">
+      <h3>Office Deep Cleaning</h3>
+      <div class="price">
+        <del>₹55</del> <b>₹45</b> / sq.ft
+      </div>
+      <div class="rating">★★★★★ (4,112)</div>
+      <a class="book" href="#">Book Now</a>
     </div>
 
   </div>
-</section>
-
-<!-- ================== BOOKING ================== -->
-<section class="section" id="booking">
-  <h2>Booking Coming Soon</h2>
-  <p style="text-align:center;">
-    WhatsApp booking & customer login will be added.
-  </p>
-</section>
+</div>
 
 </body>
 </html>
