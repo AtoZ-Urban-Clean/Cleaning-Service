@@ -1,4 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AtoZ Urban Clean</title>
+
+<style>
+/* ================= RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, Arial;
+}
+
+/* ================= HEADER ================= */
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 25px;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  position:relative;
+  z-index:1000;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:600;
+  color:#0066ff;
+}
+
+/* ================= NAV ================= */
+.nav-list{
+  list-style:none;
+  display:flex;
+  gap:20px;
+}
+
+.nav-item{
+  position:relative;
+  padding-bottom:25px; /* IMPORTANT: hover gap fix */
+}
+
+.nav-link{
+  cursor:pointer;
+  font-weight:500;
+  white-space:nowrap;
+}
+
+/* ================= MEGA MENU ================= */
+.mega-menu{
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  padding:25px;
+  min-width:520px;
+  display:none;
+  gap:30px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.15);
+  z-index:999;
+}
+
+.menu-col h4{
+  margin-bottom:8px;
+  color:#0066ff;
+}
+
+.menu-col ul{
+  list-style:none;
+}
+
+.menu-col li{
+  margin-bottom:6px;
+}
+
+.menu-col a{
+  text-decoration:none;
+  color:#333;
+}
+
+.menu-col a:hover{
+  color:#0066ff;
+}
+
+/* ================= DESKTOP HOVER ================= */
+@media (min-width:901px){
+  .nav-item:hover > .mega-menu{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  }
+}
+
+/* ================= RIGHT SIDE ================= */
+.right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.right input{
+  padding:6px 8px;
+  border:1px solid #ccc;
+}
+
+.bag{
+  text-decoration:none;
+  font-weight:600;
+  color:#ff007f;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width:900px){
+  .nav-list{
+    flex-direction:column;
+    background:#fff;
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    padding:10px 20px;
+    border-top:1px solid #ddd;
+  }
+
+  .nav-item{
+    padding-bottom:0;
+  }
+
+  .mega-menu{
+    position:static;
+    transform:none;
+    min-width:100%;
+    box-shadow:none;
+    padding:15px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
 <header class="site-header">
+
   <div class="logo">AtoZ Urban Clean</div>
 
   <nav class="nav">
@@ -95,132 +240,26 @@
 
   <div class="right">
     <input type="text" placeholder="Search services">
-    <a class="bag" href="booking.html">BAG (0)</a>
+    <a href="booking.html" class="bag">BAG (0)</a>
   </div>
+
 </header>
 
-<!-- ================= CSS ================= -->
-<style>
-.site-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:15px 25px;
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  font-family:Segoe UI, Arial;
-}
-
-.logo{
-  color:#0066ff;
-  font-size:20px;
-  font-weight:600;
-}
-
-.nav-list{
-  list-style:none;
-  display:flex;
-  margin:0;
-  padding:0;
-}
-
-.nav-item{
-  position:relative;
-  padding:0 12px;
-}
-
-.nav-link{
-  cursor:pointer;
-  font-weight:500;
-}
-
-.mega-menu{
-  display:none;
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(-50%);
-  background:#fff;
-  padding:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:20px;
-  z-index:999;
-  min-width:500px;
-}
-
-.menu-col h4{
-  margin:0 0 8px;
-}
-
-.menu-col ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-.menu-col li{
-  margin-bottom:6px;
-}
-
-.menu-col a{
-  text-decoration:none;
-  color:#333;
-}
-
-.menu-col a:hover{
-  color:#0066ff;
-}
-
-/* DESKTOP HOVER */
-@media(min-width:901px){
-  .nav-item:hover .mega-menu{
-    display:grid;
-  }
-}
-
-/* RIGHT */
-.right{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.right input{
-  padding:6px;
-  border:1px solid #ccc;
-}
-.bag{
-  color:#ff007f;
-  text-decoration:none;
-  font-weight:600;
-}
-
-/* MOBILE */
-@media(max-width:900px){
-  .nav-list{
-    flex-direction:column;
-  }
-  .mega-menu{
-    position:static;
-    transform:none;
-    min-width:100%;
-  }
-}
-</style>
-
-<!-- ================= JS (MOBILE CLICK) ================= -->
+<!-- ================= MOBILE CLICK SCRIPT ================= -->
 <script>
 document.querySelectorAll(".nav-link").forEach(link=>{
-  link.addEventListener("click", function(e){
+  link.addEventListener("click", function(){
     if(window.innerWidth <= 900){
       const menu = this.nextElementSibling;
       document.querySelectorAll(".mega-menu").forEach(m=>{
-        if(m!==menu) m.style.display="none";
+        if(m !== menu) m.style.display = "none";
       });
       menu.style.display =
-        menu.style.display==="grid" ? "none" : "grid";
+        menu.style.display === "grid" ? "none" : "grid";
     }
   });
 });
 </script>
+
+</body>
+</html>
