@@ -130,6 +130,9 @@ header{
 
 <body>
 
+<!-- HEADER LOAD -->
+<div id="header"></div>
+
 <header>All Services</header>
 
 <div class="container">
@@ -305,6 +308,17 @@ header{
     </div>
   
 </div>
+<!-- FOOTER LOAD -->
+<div id="footer"></div>
 
+<script>
+fetch("header.html")
+  .then(res => res.text())
+  .then(data => document.getElementById("header").innerHTML = data);
+
+fetch("footer.html")
+  .then(res => res.text())
+  .then(data => document.getElementById("footer").innerHTML = data);
+</script>
 </body>
 </html>
