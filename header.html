@@ -30,7 +30,6 @@
             margin: 0 auto;
         }
 
-        /* Logo */
         .logo a {
             text-decoration: none;
             font-size: 22px;
@@ -38,7 +37,6 @@
             color: #0066ff;
         }
 
-        /* Navigation */
         .nav-list {
             list-style: none;
             display: flex;
@@ -47,7 +45,7 @@
 
         .nav-item {
             position: relative;
-            padding-bottom: 10px; /* Reduced to keep menu closer */
+            padding-bottom: 10px;
         }
 
         .nav-link {
@@ -59,7 +57,6 @@
             font-size: 14px;
         }
 
-        /* Mega Menu Core */
         .mega-menu {
             display: none;
             position: absolute;
@@ -95,14 +92,8 @@
             padding: 6px 0;
             font-size: 14px;
             color: #333;
-            transition: color 0.2s;
         }
 
-        .menu-col ul li a:hover {
-            color: #0066ff;
-        }
-
-        /* Desktop Hover Logic */
         @media (min-width: 901px) {
             .nav-item:hover > .mega-menu {
                 display: flex !important;
@@ -110,7 +101,6 @@
             }
         }
 
-        /* Search & Bag */
         .header-right {
             display: flex;
             align-items: center;
@@ -121,7 +111,6 @@
             padding: 8px 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            outline: none;
         }
 
         .bag-btn {
@@ -134,7 +123,6 @@
             font-size: 13px;
         }
 
-        /* Mobile Styles */
         @media (max-width: 900px) {
             .site-header .container {
                 flex-direction: column;
@@ -154,7 +142,7 @@
 
             .mega-menu {
                 position: static;
-                display: none; /* Controlled by JS */
+                display: none;
                 box-shadow: none;
                 padding: 10px 15px;
                 min-width: 100%;
@@ -278,25 +266,32 @@
 </header>
 
 <script>
-    document.querySelectorAll(".nav-link").forEach(link => {
-        link.addEventListener("click", function(e) {
-            // Toggle menu only on mobile (below 901px)
-            if (window.innerWidth <= 900) {
-                const menu = this.nextElementSibling;
-                
-                // Close other open menus
-                document.querySelectorAll(".mega-menu").forEach(m => {
-                    if (m !== menu) m.style.display = "none";
-                });
-
-                // Toggle current menu
-                if (menu) {
-                    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-                }
+/* MOBILE MENU TOGGLE – unchanged */
+document.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", function() {
+        if (window.innerWidth <= 900) {
+            const menu = this.nextElementSibling;
+            document.querySelectorAll(".mega-menu").forEach(m => {
+                if (m !== menu) m.style.display = "none";
+            });
+            if (menu) {
+                menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
             }
-        });
+        }
     });
+});
+
+/* 🔥 FIX: HOME PAGE BAG HIDE */
+(function () {
+    const bagBtn = document.querySelector(".bag-btn");
+    const path = window.location.pathname;
+
+    if (path.endsWith("index.html") || path === "/" || path === "/Cleaning-Service/") {
+        bagBtn.style.display = "none";
+    }
+})();
 </script>
+
 <script src="js/cart.js"></script>
 </body>
 </html>
