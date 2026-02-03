@@ -1,18 +1,22 @@
+/* GLOBAL CART */
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-function addToBag(name, price){
-  cart.push({name, price});
+function addToCart(name, price){
+  cart.push({ name, price });
   localStorage.setItem("cart", JSON.stringify(cart));
-
   updateBagCount();
-  alert(name + " added to bag");
+  alert("Service added to Bag");
 }
 
 function updateBagCount(){
   const bag = document.querySelector(".bag-btn");
   if(bag){
-    bag.innerText = "BAG (" + cart.length + ")";
+    bag.innerHTML = `BAG (${cart.length})`;
   }
+}
+
+function getCartTotal(){
+  return cart.reduce((t,i)=>t + Number(i.price), 0);
 }
 
 updateBagCount();
