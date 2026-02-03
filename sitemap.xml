@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://atoz-urban-clean.github.io/Cleaning-Service/</loc>
+    <loc>https://atoz-urban-clean.github.io/Cleaning-Service/index.html/</loc>
   </url>
 
   <url>
@@ -11,6 +11,10 @@
 
   <url>
     <loc>https://atoz-urban-clean.github.io/Cleaning-Service/booking.html</loc>
+  </url>
+
+    <url>
+    <loc>https://atoz-urban-clean.github.io/Cleaning-Service/tracking.html</loc>
   </url>
 
 </urlset>
