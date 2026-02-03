@@ -92,7 +92,7 @@ header{
 <body>
 
 <div id="header"></div>
-<header>All Services</header>
+<header id="pageHeader">All Services</header>
 
 <div class="container">
 
@@ -386,6 +386,20 @@ header{
 
 <div id="footer"></div>
 
+<script>
+const categoryFilter = document.getElementById("categoryFilter");
+const pageHeader = document.getElementById("pageHeader");
+
+categoryFilter.addEventListener("change", function () {
+  if (this.value === "all") {
+    pageHeader.innerText = "All Services";
+  } else {
+    pageHeader.innerText = this.options[this.selectedIndex].text;
+  }
+});
+</script>
+
+  
 <script>
 fetch("header.html").then(r=>r.text()).then(d=>header.innerHTML=d);
 fetch("footer.html").then(r=>r.text()).then(d=>footer.innerHTML=d);
