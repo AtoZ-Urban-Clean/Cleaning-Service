@@ -1,166 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AtoZ Urban Clean Header</title>
-    <style>
-        /* ========= HEADER & MEGA MENU CSS ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AtoZ Urban Clean</title>
 
-        .site-header {
-            background: #fff;
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
 
-        .site-header .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 25px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+/* ================= HEADER ================= */
+.site-header{
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
 
-        .logo a {
-            text-decoration: none;
-            font-size: 22px;
-            font-weight: 700;
-            color: #0066ff;
-        }
+.site-header .container{
+  max-width:1400px;
+  margin:auto;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
-        .nav-list {
-            list-style: none;
-            display: flex;
-            gap: 26px;
-        }
+/* Logo */
+.logo a{
+  text-decoration:none;
+  font-size:22px;
+  font-weight:700;
+  color:#0066ff;
+}
 
-        .nav-item {
-            position: relative;
-            padding-bottom: 10px;
-        }
+/* ================= DESKTOP NAV ================= */
+.nav-list{
+  list-style:none;
+  display:flex;
+  gap:25px;
+}
 
-        .nav-link {
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: 500;
-            color: #333;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
+.nav-item{
+  position:relative;
+}
 
-        .mega-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #fff;
-            padding: 22px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            gap: 28px;
-            z-index: 999;
-            min-width: 480px;
-            border-radius: 4px;
-        }
+.nav-link{
+  cursor:pointer;
+  font-size:14px;
+  font-weight:500;
+}
 
-        .menu-col {
-            min-width: 160px;
-        }
+/* Mega menu */
+.mega-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:#fff;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  gap:30px;
+  min-width:480px;
+}
 
-        .menu-col h4 {
-            margin-bottom: 8px;
-            color: #0066ff;
-            font-size: 15px;
-            text-transform: uppercase;
-        }
+.menu-col{
+  min-width:160px;
+}
 
-        .menu-col ul {
-            list-style: none;
-        }
+.menu-col h4{
+  margin-bottom:8px;
+  color:#0066ff;
+}
 
-        .menu-col ul li a {
-            text-decoration: none;
-            display: block;
-            padding: 6px 0;
-            font-size: 14px;
-            color: #333;
-        }
+.menu-col ul{
+  list-style:none;
+}
 
-        @media (min-width: 901px) {
-            .nav-item:hover > .mega-menu {
-                display: flex !important;
-                flex-wrap: wrap;
-            }
-        }
+.menu-col ul li a{
+  text-decoration:none;
+  display:block;
+  padding:6px 0;
+  color:#333;
+}
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.menu-col ul li a:hover{
+  color:#0066ff;
+}
 
-        .header-right input {
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+/* Desktop hover */
+@media(min-width:901px){
+  .nav-item:hover>.mega-menu{
+    display:flex;
+  }
+}
 
-        .bag-btn {
-            text-decoration: none;
-            padding: 8px 16px;
-            background: #ff007f;
-            color: #fff;
-            font-weight: 600;
-            border-radius: 5px;
-            font-size: 13px;
-        }
+/* ================= RIGHT ================= */
+.header-right{
+  display:flex;
+  gap:10px;
+}
 
-        @media (max-width: 900px) {
-            .site-header .container {
-                flex-direction: column;
-                gap: 15px;
-            }
+.header-right input{
+  padding:8px 10px;
+  border:1px solid #ccc;
+  border-radius:4px;
+}
 
-            .nav-list {
-                flex-direction: column;
-                width: 100%;
-                gap: 10px;
-            }
+.bag-btn{
+  background:#ff007f;
+  color:#fff;
+  padding:8px 16px;
+  border-radius:5px;
+  text-decoration:none;
+  font-weight:600;
+}
 
-            .nav-item {
-                padding-bottom: 0;
-                border-bottom: 1px solid #eee;
-            }
+/* ================= MOBILE ================= */
+.mobile-actions{
+  display:none;
+  gap:10px;
+}
 
-            .mega-menu {
-                position: static;
-                display: none;
-                box-shadow: none;
-                padding: 10px 15px;
-                min-width: 100%;
-                flex-direction: column;
-                gap: 15px;
-            }
+.menu-btn{
+  font-size:24px;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
 
-            .header-right {
-                width: 100%;
-                justify-content: space-between;
-            }
+/* Mobile menu modal */
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  z-index:2000;
+}
 
-            .header-right input {
-                flex-grow: 1;
-            }
-        }
-    </style>
+.mobile-menu-content{
+  width:85%;
+  height:100%;
+  background:#fff;
+  padding:20px;
+}
+
+.mobile-menu-content h2{
+  color:#0066ff;
+  margin-bottom:15px;
+}
+
+.mobile-menu-content a{
+  display:block;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+  font-weight:500;
+}
+
+.mobile-menu-content input{
+  width:100%;
+  margin-top:15px;
+  padding:10px;
+}
+
+.close{
+  font-size:26px;
+  float:right;
+  cursor:pointer;
+}
+
+@media(max-width:900px){
+  .nav-list{display:none;}
+  .header-right{display:none;}
+  .mobile-actions{display:flex;}
+}
+</style>
 </head>
+
 <body>
 
 <header class="site-header">
@@ -170,11 +191,12 @@
       <a href="index.html">AtoZ Urban Clean</a>
     </div>
 
-    <nav class="navbar">
+    <!-- DESKTOP NAV -->
+    <nav>
       <ul class="nav-list">
 
         <li class="nav-item">
-          <a class="nav-link">BASIC CLEANING</a>
+          <span class="nav-link">BASIC CLEANING</span>
           <div class="mega-menu">
             <div class="menu-col">
               <h4>Essential</h4>
@@ -202,7 +224,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">PREMIUM CLEANING</a>
+          <span class="nav-link">PREMIUM CLEANING</span>
           <div class="mega-menu">
             <div class="menu-col">
               <ul>
@@ -216,7 +238,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">DEEP CLEANING</a>
+          <span class="nav-link">DEEP CLEANING</span>
           <div class="mega-menu">
             <div class="menu-col">
               <ul>
@@ -230,7 +252,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">COMMERCIAL</a>
+          <span class="nav-link">COMMERCIAL</span>
           <div class="mega-menu">
             <div class="menu-col">
               <ul>
@@ -243,7 +265,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">SHIFTING</a>
+          <span class="nav-link">SHIFTING</span>
           <div class="mega-menu">
             <div class="menu-col">
               <ul>
@@ -257,41 +279,43 @@
       </ul>
     </nav>
 
+    <!-- DESKTOP RIGHT -->
     <div class="header-right">
       <input type="text" placeholder="Search services">
-      <a class="bag-btn" href="booking.html">BAG</a>
+      <a href="booking.html" class="bag-btn">BAG</a>
+    </div>
+
+    <!-- MOBILE ACTIONS -->
+    <div class="mobile-actions">
+      <button class="menu-btn" onclick="openMenu()">☰</button>
+      <a href="booking.html" class="bag-btn">BAG</a>
     </div>
 
   </div>
 </header>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-content">
+    <span class="close" onclick="closeMenu()">×</span>
+    <h2>AtoZ Urban Clean</h2>
+    <a>BASIC CLEANING</a>
+    <a>PREMIUM CLEANING</a>
+    <a>DEEP CLEANING</a>
+    <a>COMMERCIAL</a>
+    <a>SHIFTING</a>
+    <input type="text" placeholder="Search services">
+  </div>
+</div>
+
 <script>
-/* MOBILE MENU TOGGLE – unchanged */
-document.querySelectorAll(".nav-link").forEach(link => {
-    link.addEventListener("click", function() {
-        if (window.innerWidth <= 900) {
-            const menu = this.nextElementSibling;
-            document.querySelectorAll(".mega-menu").forEach(m => {
-                if (m !== menu) m.style.display = "none";
-            });
-            if (menu) {
-                menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-            }
-        }
-    });
-});
-
-/* 🔥 FIX: HOME PAGE BAG HIDE */
-(function () {
-    const bagBtn = document.querySelector(".bag-btn");
-    const path = window.location.pathname;
-
-    if (path.endsWith("index.html") || path === "/" || path === "/Cleaning-Service/") {
-        bagBtn.style.display = "none";
-    }
-})();
+function openMenu(){
+  document.getElementById("mobileMenu").style.display="block";
+}
+function closeMenu(){
+  document.getElementById("mobileMenu").style.display="none";
+}
 </script>
 
-<script src="js/cart.js"></script>
 </body>
 </html>
