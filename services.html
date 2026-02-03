@@ -132,16 +132,23 @@ header{
 <img src="Window & Door cleaning.jpg">
 <h3>Window Cleaning</h3>
 <h5>Quantity 1</h5>
-<div class="price"><del>₹6999</del> <b>₹5999</b> <span class="off">14% Off</span></div>
-<a class="book" href="#">Book Now</a>
+<div class="price"><del>₹6999</del> <b>₹99</b> <span class="off">14% Off</span></div>
+<a class="book" href="booking.html"
+   onclick="addToCart('Window Cleaning',99)">
+   Book Now
+</a>
 </div>
 
 <div class="card" data-category="bathroom" data-price="4999" data-rating="4">
 <img src="Bathroom Cleaning (Floor & wall tiles).jpg">
 <h3>Bathroom Cleaning</h3>
 <h5>Floor & Wall Tiles</h5>
-<div class="price"><del>₹5999</del> <b>₹4999</b></div>
-<a class="book" href="#">Book Now</a>
+<div class="price"><del>₹5999</del> <b>₹999</b></div>
+<a class="book" href="booking.html"
+   onclick="addToCart('Bathroom Cleaning',999)">
+   Book Now
+</a>
+
 </div>
 
 <div class="card" data-category="deep" data-price="7999" data-rating="5">
@@ -149,7 +156,10 @@ header{
 <h3>Deep Cleaning</h3>
 <h5>Steam Cleaning</h5>
 <div class="price"><del>₹8999</del> <b>₹7999</b></div>
-<a class="book" href="#">Book Now</a>
+<a class="book" href="booking.html"
+   onclick="addToCart('Deep Cleaning',5999)">
+   Book Now
+</a>
 </div>
 
 <div class="card" data-category="kitchen" data-price="6999" data-rating="4">
@@ -157,7 +167,11 @@ header{
 <h3>Kitchen Cleaning</h3>
 <h5>Premium Deep Cleaning</h5>
 <div class="price"><del>₹7999</del> <b>₹6999</b></div>
-<a class="book" href="#">Book Now</a>
+<a class="book" href="booking.html"
+   onclick="addToCart('Premium Kitchen Cleaning',5999)">
+   Book Now
+</a>
+
 </div>
 
 </div>
@@ -195,6 +209,7 @@ function applyFilters(){
 
 category.onchange = priceSort.onchange = rating.onchange = applyFilters;
 </script>
+<script src="js/cart.js"></script>
 
 </body>
 </html>
