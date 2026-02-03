@@ -27,22 +27,29 @@ header{
   border-radius:10px;
   box-shadow:0 4px 12px rgba(0,0,0,0.1);
 }
+h3{margin-top:0;}
 label{
   display:block;
   margin-top:12px;
   font-weight:600;
 }
-input, select, textarea{
+input{
   width:100%;
   padding:10px;
   margin-top:6px;
   border:1px solid #ccc;
   border-radius:6px;
 }
+.service-item{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px dashed #ddd;
+}
 .total{
   font-size:18px;
   margin-top:15px;
-  font-weight:600;
+  font-weight:700;
 }
 button{
   width:100%;
@@ -80,37 +87,32 @@ button{
 
 <header>Book Your Service</header>
 
+<!-- BOOKING FORM -->
 <div class="container" id="formBox">
 
-<label>Name</label>
-<input type="text" id="name" required>
-
-<label>Mobile Number</label>
-<input type="tel" id="mobile" required>
-
-<label>Location</label>
-<input type="text" id="location" required>
-
-<label>Service</label>
-<select id="service" onchange="updatePrice()">
-  <option value="99">Window & Door Cleaning – ₹99</option>
-  <option value="999">Premium Bathroom Cleaning – ₹999</option>
-  <option value="1299">Standard Kitchen Cleaning – ₹1299</option>
-  <option value="1999">Standard Floor Cleaning – ₹1999</option>
-  <option value="5999">Complete Home Cleaning – ₹5999</option>
-</select>
-
-<label>Preferred Date</label>
-<input type="date" id="date">
-
-<label>Preferred Time</label>
-<input type="time" id="time">
+<h3>Selected Services</h3>
+<div id="serviceList"></div>
 
 <div class="total">
-  Total Amount: ₹<span id="amount">99</span>
+Total Amount: ₹<span id="amount">0</span>
 </div>
 
-<button onclick="submitBooking()">Confirm Booking</button>
+<label>Name</label>
+<input type="text" id="name">
+
+<label>Mobile Number</label>
+<input type="tel" id="mobile">
+
+<label>Location</label>
+<input type="text" id="location">
+
+<label>Date</label>
+<input type="date" id="date">
+
+<label>Time</label>
+<input type="time" id="time">
+
+<button onclick="confirmBooking()">Confirm Booking</button>
 </div>
 
 <!-- SUCCESS -->
@@ -125,46 +127,79 @@ button{
 </div>
 
 <script>
-function updatePrice(){
-  document.getElementById("amount").innerText =
-    document.getElementById("service").value;
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+const list = document.getElementById("serviceList");
+const amount = document.getElementById("amount");
+
+function loadCart(){
+  if(cart.length === 0){
+    list.innerHTML = "<p>No services selected</p>";
+    return;
+  }
+
+  let total = 0;
+  let html = "";
+
+  cart.forEach(item=>{
+    total += Number(item.price);
+    html += `
+      <div class="service-item">
+        <span>${item.name}</span>
+        <b>₹${item.price}</b>
+      </div>`;
+  });
+
+  list.innerHTML = html;
+  amount.innerText = total;
 }
 
-function submitBooking(){
-  let name = document.getElementById("name").value;
-  let mobile = document.getElementById("mobile").value;
-  let location = document.getElementById("location").value;
-  let service = document.getElementById("service").selectedOptions[0].text;
-  let price = document.getElementById("service").value;
-  let date = document.getElementById("date").value;
-  let time = document.getElementById("time").value;
+loadCart();
+
+function confirmBooking(){
+  const name = document.getElementById("name").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
 
   if(!name || !mobile || !location){
     alert("Please fill all required fields");
     return;
   }
 
-  let bookingId = "AZC" + Math.floor(Math.random()*100000);
+  if(cart.length === 0){
+    alert("No services selected");
+    return;
+  }
 
-  document.getElementById("bid").innerText = bookingId;
-  document.getElementById("formBox").style.display="none";
-  document.getElementById("successBox").style.display="block";
+  const bookingId = "AZC" + Math.floor(Math.random()*100000);
 
-  let msg =
+  localStorage.setItem(bookingId,"waiting");
+
+  const serviceNames = cart.map(i=>i.name).join(", ");
+  const total = amount.innerText;
+
+  const message =
 `New Booking - AtoZ Urban Clean
 Booking ID: ${bookingId}
 Name: ${name}
 Mobile: ${mobile}
 Location: ${location}
-Service: ${service}
 Date: ${date}
 Time: ${time}
-Total: ₹${price}`;
+Services: ${serviceNames}
+Total: ₹${total}`;
+
+  document.getElementById("bid").innerText = bookingId;
+  document.getElementById("formBox").style.display="none";
+  document.getElementById("successBox").style.display="block";
 
   document.getElementById("waLink").href =
-    "https://wa.me/919489587626?text=" + encodeURIComponent(msg);
+    "https://wa.me/919489587626?text=" + encodeURIComponent(message);
+
+  localStorage.removeItem("cart");
 }
 </script>
-localStorage.setItem(bookingId,"waiting");
+
 </body>
 </html>
