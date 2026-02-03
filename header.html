@@ -33,13 +33,14 @@
         /* Logo */
         .logo a {
             text-decoration: none;
-            font-size: clamp(18px, 4vw, 22px);
+            font-size: 22px;
             font-weight: 700;
             color: #0066ff;
         }
 
         /* Navigation */
         .nav-list {
+            list-style: none;
             display: flex;
             gap: 26px;
         }
@@ -102,12 +103,17 @@
         }
 
         /* Desktop Hover Logic */
-
+        @media (min-width: 901px) {
+            .nav-item:hover > .mega-menu {
+                display: flex !important;
+                flex-wrap: wrap;
+            }
+        }
 
         /* Search & Bag */
         .header-right {
             display: flex;
-             width:100%;
+            align-items: center;
             gap: 10px;
         }
 
@@ -116,7 +122,6 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             outline: none;
-            flex:1;
         }
 
         .bag-btn {
@@ -130,13 +135,42 @@
         }
 
         /* Mobile Styles */
-@media (max-width: 900px){
-  .site-header .container{
-    flex-direction: column;
-    gap: 10px;
-  }
-}
+        @media (max-width: 900px) {
+            .site-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
 
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .nav-item {
+                padding-bottom: 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .mega-menu {
+                position: static;
+                display: none; /* Controlled by JS */
+                box-shadow: none;
+                padding: 10px 15px;
+                min-width: 100%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .header-right input {
+                flex-grow: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -244,27 +278,25 @@
 </header>
 
 <script>
-document.querySelectorAll(".nav-link").forEach(link => {
-  link.addEventListener("click", function (e) {
+    document.querySelectorAll(".nav-link").forEach(link => {
+        link.addEventListener("click", function(e) {
+            // Toggle menu only on mobile (below 901px)
+            if (window.innerWidth <= 900) {
+                const menu = this.nextElementSibling;
+                
+                // Close other open menus
+                document.querySelectorAll(".mega-menu").forEach(m => {
+                    if (m !== menu) m.style.display = "none";
+                });
 
-    if (window.innerWidth <= 900) {
-      e.preventDefault();
-
-      const menu = this.nextElementSibling;
-
-      document.querySelectorAll(".mega-menu").forEach(m => {
-        if (m !== menu) m.style.display = "none";
-      });
-
-      if (menu) {
-        menu.style.display =
-          menu.style.display === "flex" ? "none" : "flex";
-      }
-    }
-  });
-});
+                // Toggle current menu
+                if (menu) {
+                    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+                }
+            }
+        });
+    });
 </script>
-
 <script src="js/cart.js"></script>
 </body>
 </html>
