@@ -1,3 +1,4 @@
+header.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,61 +104,12 @@
         }
 
         /* Desktop Hover Logic */
- @media (max-width: 900px) {
-
-  .site-header .container{
-    display:grid;
-    grid-template-columns: 1fr auto;
-    gap:12px;
-  }
-
-  /* Logo left, bag right */
-  .logo{
-    grid-column:1/2;
-  }
-
-  .header-right{
-    grid-column:2/3;
-    justify-content:flex-end;
-  }
-
-  /* Search goes full width next row */
-  .header-right input{
-    grid-column:1/3;
-    width:100%;
-    margin-top:10px;
-  }
-
-  .navbar{
-    grid-column:1/3;
-  }
-
-  .nav-list{
-    width:100%;
-  }
-
-  .nav-item{
-    border-bottom:1px solid #eee;
-  }
-
-  .nav-link{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 0;
-  }
-
-  .nav-link::after{
-    content:"▼";
-    font-size:12px;
-  }
-
-  .mega-menu{
-    display:none;
-    padding:10px 0;
-    box-shadow:none;
-  }
-}
+        @media (min-width: 901px) {
+            .nav-item:hover > .mega-menu {
+                display: flex !important;
+                flex-wrap: wrap;
+            }
+        }
 
         /* Search & Bag */
         .header-right {
@@ -318,11 +270,10 @@
       </ul>
     </nav>
 
-<div class="header-right">
-  <a class="bag-btn" href="booking.html">BAG</a>
-  <input type="text" placeholder="Search services">
-</div>
-
+    <div class="header-right">
+      <input type="text" placeholder="Search services">
+      <a class="bag-btn" href="booking.html">BAG</a>
+    </div>
 
   </div>
 </header>
