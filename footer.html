@@ -7,7 +7,7 @@
 
   <div class="col">
     <h4>About Us</h4>
-    <p>We Clean. You Relax / Luxury Cleaning for Everyday Living.</p>
+    <p>We Clean. You Relax<br>Luxury Cleaning for Everyday Living.</p>
   </div>
 
   <div class="col">
@@ -17,33 +17,70 @@
   </div>
 
   <div class="bottom">
-    Designed & Developed by <b>Yuva Sivasakthi</b><br>
-    Revision – 02-02-2026
+    Designed & Developed by <span>Yuva Sivasakthi</span><br>
+    <small>Revision – 02-02-2026</small>
   </div>
 </footer>
 
+
 <style>
 .site-footer{
-  background:#f5f5f5;
-  padding:30px;
+  background:#0b2a4a; /* dark blue */
+  padding:40px 30px 0;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
+  gap:25px;
   font-family:Segoe UI, Arial;
+  color:#e6eef7;
 }
+
 .site-footer h4{
-  margin-bottom:10px;
+  margin-bottom:12px;
+  font-size:16px;
+  color:#ffffff;
+  letter-spacing:0.5px;
 }
+
+.site-footer p{
+  font-size:14px;
+  line-height:1.6;
+  margin:0 0 6px;
+}
+
 .site-footer a{
+  display:inline-block;
+  margin-bottom:6px;
+  font-size:14px;
   text-decoration:none;
-  color:#0066ff;
+  color:#7cc7ff;
 }
+
+.site-footer a:hover{
+  text-decoration:underline;
+}
+
+/* Bottom bar */
 .bottom{
   grid-column:1/-1;
+  margin-top:30px;
+  background:#081e33;
   text-align:center;
-  margin-top:20px;
-  background:#444;
-  color:#fff;
-  padding:10px;
+  padding:14px 10px;
+  font-size:13px;
+  color:#cfd9e3;
 }
+
+.bottom span{
+  font-weight:600;
+  font-size:14px;
+  color:#ffffff;
+}
+
+.bottom small{
+  display:block;
+  margin-top:4px;
+  font-size:12px;
+  color:#9fb4c8;
+}
+
 </style>
