@@ -9,68 +9,118 @@
 body{
   margin:0;
   font-family:Segoe UI, Arial;
-  background:#f6f6f6;
+  background:#f4f6f9;
 }
+
+/* HEADER */
 header{
-  background:#fff;
-  padding:15px;
+  background:#0b2a5a;
+  color:#fff;
+  padding:16px;
   text-align:center;
   font-size:22px;
-  font-weight:600;
-  border-bottom:1px solid #ddd;
+  font-weight:700;
+  cursor:pointer;
 }
+
+/* BOX */
 .container{
   max-width:600px;
   margin:20px auto;
   background:#fff;
   padding:20px;
-  border-radius:10px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
+
 h3{margin-top:0;}
+
 label{
   display:block;
-  margin-top:12px;
+  margin-top:14px;
   font-weight:600;
 }
+
 input{
   width:100%;
-  padding:10px;
+  padding:11px;
   margin-top:6px;
   border:1px solid #ccc;
   border-radius:6px;
 }
+
+/* SERVICE LIST */
 .service-item{
   display:flex;
   justify-content:space-between;
-  padding:8px 0;
+  align-items:center;
+  padding:10px 0;
   border-bottom:1px dashed #ddd;
 }
+
+.qty{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.qty button{
+  width:26px;
+  height:26px;
+  border:none;
+  background:#ddd;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.remove{
+  color:red;
+  cursor:pointer;
+  font-size:14px;
+}
+
+/* TOTAL */
 .total{
   font-size:18px;
   margin-top:15px;
   font-weight:700;
 }
-button{
+
+/* BUTTONS */
+button.main{
   width:100%;
   margin-top:20px;
-  padding:12px;
+  padding:13px;
   font-size:16px;
   background:#ff007f;
   color:#fff;
   border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.gps{
+  margin-top:8px;
+  background:#0066ff;
+  color:#fff;
+  padding:8px 12px;
+  border:none;
   border-radius:6px;
   cursor:pointer;
 }
+
+/* SUCCESS */
 .success{
   text-align:center;
   display:none;
 }
+
 .booking-id{
   font-size:18px;
   color:green;
   margin:10px 0;
 }
+
 .whatsapp{
   display:block;
   margin-top:15px;
@@ -80,31 +130,43 @@ button{
   text-decoration:none;
   border-radius:6px;
 }
+.email{
+  display:block;
+  margin-top:10px;
+  padding:12px;
+  background:#444;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+}
 </style>
 </head>
 
 <body>
 
-<header>Book Your Service</header>
+<header onclick="location.href='index.html'">
+  AtoZ Urban Clean
+</header>
 
-<!-- BOOKING FORM -->
+<!-- BOOKING -->
 <div class="container" id="formBox">
 
 <h3>Selected Services</h3>
 <div id="serviceList"></div>
 
 <div class="total">
-Total Amount: ₹<span id="amount">0</span>
+Total: ₹<span id="amount">0</span>
 </div>
 
 <label>Name</label>
 <input type="text" id="name">
 
-<label>Mobile Number</label>
+<label>Mobile</label>
 <input type="tel" id="mobile">
 
 <label>Location</label>
 <input type="text" id="location">
+<button class="gps" onclick="getLocation()">📍 Use Current Location</button>
 
 <label>Date</label>
 <input type="date" id="date">
@@ -112,90 +174,118 @@ Total Amount: ₹<span id="amount">0</span>
 <label>Time</label>
 <input type="time" id="time">
 
-<button onclick="confirmBooking()">Confirm Booking</button>
+<button class="main" onclick="confirmBooking()">Confirm Booking</button>
 </div>
 
 <!-- SUCCESS -->
 <div class="container success" id="successBox">
   <h2>Booking Confirmed 🎉</h2>
   <div class="booking-id">Booking ID: <span id="bid"></span></div>
-  <p>Status: <b>Waiting for Confirmation</b></p>
 
   <a id="waLink" class="whatsapp" target="_blank">
     Send Booking on WhatsApp
   </a>
+
+  <a id="mailLink" class="email">
+    Send Booking via Email
+  </a>
 </div>
 
 <script>
-const cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const list = document.getElementById("serviceList");
 const amount = document.getElementById("amount");
 
-function loadCart(){
+function render(){
   if(cart.length === 0){
-    list.innerHTML = "<p>No services selected</p>";
+    list.innerHTML="<p>No services selected</p>";
+    amount.innerText=0;
     return;
   }
 
-  let total = 0;
-  let html = "";
+  let total=0;
+  list.innerHTML="";
 
-  cart.forEach(item=>{
-    total += Number(item.price);
-    html += `
-      <div class="service-item">
-        <span>${item.name}</span>
-        <b>₹${item.price}</b>
-      </div>`;
+  cart.forEach((item,i)=>{
+    total += item.price * item.qty;
+    list.innerHTML += `
+    <div class="service-item">
+      <div>
+        <b>${item.name}</b><br>
+        ₹${item.price}
+      </div>
+      <div class="qty">
+        <button onclick="changeQty(${i},-1)">−</button>
+        ${item.qty}
+        <button onclick="changeQty(${i},1)">+</button>
+        <span class="remove" onclick="removeItem(${i})">❌</span>
+      </div>
+    </div>`;
   });
 
-  list.innerHTML = html;
-  amount.innerText = total;
+  amount.innerText=total;
 }
 
-loadCart();
+function changeQty(i,v){
+  cart[i].qty+=v;
+  if(cart[i].qty<=0) cart.splice(i,1);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  render();
+}
 
+function removeItem(i){
+  cart.splice(i,1);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  render();
+}
+
+render();
+
+/* GPS */
+function getLocation(){
+  if(!navigator.geolocation){
+    alert("GPS not supported");
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    document.getElementById("location").value =
+      `Lat:${pos.coords.latitude}, Lng:${pos.coords.longitude}`;
+  });
+}
+
+/* CONFIRM */
 function confirmBooking(){
-  const name = document.getElementById("name").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-  const location = document.getElementById("location").value.trim();
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
+  const name=nameEl.value=nameEl=document.getElementById("name").value;
+  const mobile=document.getElementById("mobile").value;
+  const location=document.getElementById("location").value;
 
-  if(!name || !mobile || !location){
-    alert("Please fill all required fields");
+  if(!name||!mobile||!location||cart.length===0){
+    alert("Fill all details");
     return;
   }
 
-  if(cart.length === 0){
-    alert("No services selected");
-    return;
-  }
+  const bookingId="AZC"+Math.floor(Math.random()*100000);
+  const services=cart.map(i=>`${i.name} x${i.qty}`).join(", ");
+  const total=amount.innerText;
 
-  const bookingId = "AZC" + Math.floor(Math.random()*100000);
-
-  localStorage.setItem(bookingId,"waiting");
-
-  const serviceNames = cart.map(i=>i.name).join(", ");
-  const total = amount.innerText;
-
-  const message =
+  const msg=
 `New Booking - AtoZ Urban Clean
-Booking ID: ${bookingId}
+ID: ${bookingId}
 Name: ${name}
 Mobile: ${mobile}
 Location: ${location}
-Date: ${date}
-Time: ${time}
-Services: ${serviceNames}
+Services: ${services}
 Total: ₹${total}`;
 
-  document.getElementById("bid").innerText = bookingId;
+  document.getElementById("bid").innerText=bookingId;
   document.getElementById("formBox").style.display="none";
   document.getElementById("successBox").style.display="block";
 
-  document.getElementById("waLink").href =
-    "https://wa.me/919489587626?text=" + encodeURIComponent(message);
+  document.getElementById("waLink").href=
+   "https://wa.me/919489587626?text="+encodeURIComponent(msg);
+
+  document.getElementById("mailLink").href=
+   "mailto:yuvasivasakthi.2002@gmail.com?subject=New Booking&body="+encodeURIComponent(msg);
 
   localStorage.removeItem("cart");
 }
