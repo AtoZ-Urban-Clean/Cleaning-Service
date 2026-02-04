@@ -1,100 +1,138 @@
-<footer class="site-footer">
-  <div class="col">
-    <h4>Contact Details</h4>
-    <p>📞 9489587626</p>
-    <p>📍 Location</p>
+<footer class="uc-footer">
+
+  <div class="uc-footer-top">
+
+    <div class="uc-col">
+      <h4>AtoZ Urban Clean</h4>
+      <p class="tagline">We Clean. You Relax.</p>
+      <p class="desc">Luxury cleaning for everyday living. Trusted professionals at your doorstep.</p>
+    </div>
+
+    <div class="uc-col">
+      <h4>Services</h4>
+      <a href="services.html#basic">Basic Cleaning</a>
+      <a href="services.html#deep">Deep Cleaning</a>
+      <a href="services.html#office">Office Cleaning</a>
+      <a href="services.html#shifting">Shifting Help</a>
+    </div>
+
+    <div class="uc-col">
+      <h4>Booking</h4>
+      <a href="booking.html">Book a Service</a>
+      <a href="tracking.html">Track Booking</a>
+      <a href="#">Pricing</a>
+    </div>
+
+    <div class="uc-col">
+      <h4>Contact</h4>
+      <p>📞 +91 94895 87626</p>
+      <p>📍 Tamil Nadu, India</p>
+
+      <div class="social">
+        <a href="#">🌐</a>
+        <a href="#">📘</a>
+        <a href="#">📸</a>
+        <a href="#">💬</a>
+      </div>
+    </div>
+
   </div>
 
-  <div class="col">
-    <h4>About Us</h4>
-    <p>We Clean. You Relax<br>Luxury Cleaning for Everyday Living.</p>
+  <div class="uc-footer-bottom">
+    <span>© 2026 AtoZ Urban Clean. All rights reserved.</span>
+    <span>Designed & Developed by <b>Yuva Sivasakthi</b></span>
   </div>
 
-  <div class="col">
-    <h4>Booking</h4>
-    <a href="booking.html">Book Now</a><br>
-    <a href="tracking.html">Track Booking</a>
-  </div>
-
-  <div class="bottom">
-    Designed & Developed by <span>Yuva Sivasakthi</span><br>
-    <small>Revision 02-02-2026</small>
-  </div>
 </footer>
-
-
 <style>
-
-.site-footer{
-  width:100%;
+  .uc-footer{
   background:#0b2a5a;
-  padding:50px 20px;
-  display:flex;
-  justify-content:center;   /* 🔥 whole footer center */
-  font-family:Segoe UI, Arial;
   color:#fff;
+  font-family:Segoe UI, Arial;
 }
 
-/* INNER WRAPPER */
-.site-footer > .col,
-.site-footer > .bottom{
-  max-width:1100px;
-}
-
-/* GRID INSIDE */
-.site-footer{
+/* TOP SECTION */
+.uc-footer-top{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 20px;
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  text-align:center;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:40px;
 }
 
-/* COLUMN */
-.site-footer .col{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-}
-
-/* HEADINGS */
-.site-footer h4{
-  font-size:18px;
+.uc-col h4{
+  font-size:17px;
+  margin-bottom:14px;
   font-weight:600;
-  margin-bottom:12px;
 }
 
-/* TEXT */
-.site-footer p,
-.site-footer a{
+.uc-col a,
+.uc-col p{
   font-size:14px;
   color:#d6e3ff;
   text-decoration:none;
+  margin-bottom:8px;
+  display:block;
 }
 
-.site-footer a:hover{
-  color:#fff;
+.uc-col a:hover{
+  color:#ffffff;
+}
+
+/* BRAND TEXT */
+.tagline{
+  font-weight:600;
+  font-size:15px;
+  margin-bottom:6px;
+}
+
+.desc{
+  font-size:13px;
+  line-height:1.6;
+  opacity:0.9;
+}
+
+/* SOCIAL */
+.social{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+}
+
+.social a{
+  width:34px;
+  height:34px;
+  background:#133b7a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:16px;
+  transition:0.3s;
+}
+
+.social a:hover{
+  background:#1f5fff;
 }
 
 /* BOTTOM BAR */
-.bottom{
-  grid-column:1 / -1;
-  margin-top:35px;
+.uc-footer-bottom{
   background:#081f42;
-  padding:14px;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
   font-size:13px;
   color:#cfd9ff;
 }
 
-.bottom b{
-  font-size:14px;
-}
-
-/* 📱 MOBILE */
+/* MOBILE */
 @media(max-width:768px){
-  .site-footer{
-    grid-template-columns:1fr;
-    gap:30px;
+  .uc-footer-bottom{
+    text-align:center;
+    gap:8px;
+    justify-content:center;
   }
 }
 
