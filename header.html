@@ -6,280 +6,187 @@
 <title>AtoZ Urban Clean</title>
 
 <style>
+/* ================= GLOBAL STYLES ================= */
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* ================= HEADER ================= */
-.site-header{
+body { background: #fdfdfd; }
+
+/* ================= HEADER BASE ================= */
+.site-header {
   background:#fff;
-  border-bottom:1px solid #ddd;
+  border-bottom:1px solid #eee;
   position:sticky;
   top:0;
   z-index:1000;
 }
 
-.site-header .container{
+.container {
   max-width:1400px;
   margin:auto;
-  padding:15px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  padding:12px 20px;
 }
 
 /* Logo */
-.logo a{
+.logo a {
   text-decoration:none;
-  font-size:22px;
-  font-weight:700;
+  font-size:20px;
+  font-weight:800;
   color:#0066ff;
+  letter-spacing: -0.5px;
+}
+
+/* Row wrapper for Logo, Search, Bag */
+.header-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
 }
 
 /* ================= DESKTOP NAV ================= */
-.nav-list{
+.nav-list {
   list-style:none;
   display:flex;
   gap:25px;
 }
 
-.nav-item{
-  position:relative;
-}
+.nav-item { position:relative; }
 
-.nav-link{
+.nav-link {
   cursor:pointer;
-  font-size:14px;
-  font-weight:500;
+  font-size:13px;
+  font-weight:600;
+  color: #444;
+  text-transform: uppercase;
 }
 
 /* Mega menu */
-.mega-menu{
+.mega-menu {
   display:none;
   position:absolute;
   top:100%;
   left:0;
   background:#fff;
   padding:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
   gap:30px;
   min-width:480px;
+  border-radius: 0 0 8px 8px;
 }
 
-.menu-col{
-  min-width:160px;
-}
-
-.menu-col h4{
-  margin-bottom:8px;
-  color:#0066ff;
-}
-
-.menu-col ul{
-  list-style:none;
-}
-
-.menu-col ul li a{
+.menu-col { min-width:140px; }
+.menu-col h4 { margin-bottom:10px; color:#0066ff; font-size: 14px; }
+.menu-col ul { list-style:none; }
+.menu-col ul li a {
   text-decoration:none;
   display:block;
-  padding:6px 0;
-  color:#333;
+  padding:5px 0;
+  color:#555;
+  font-size: 13.5px;
 }
+.menu-col ul li a:hover { color:#0066ff; }
 
-.menu-col ul li a:hover{
-  color:#0066ff;
-}
-
-/* Desktop hover */
 @media(min-width:901px){
-  .nav-item:hover>.mega-menu{
-    display:flex;
-  }
+  .nav-item:hover > .mega-menu { display:flex; }
+  .mobile-filter-nav { display: none; } /* Hide mobile ribbon on desktop */
 }
 
-/* ================= RIGHT ================= */
-.header-right{
+/* ================= SEARCH & BAG ================= */
+.header-right {
   display:flex;
-  gap:10px;
+  align-items: center;
+  gap:12px;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
-.header-right input{
-  padding:8px 10px;
-  border:1px solid #ccc;
-  border-radius:4px;
+.search-box {
+  width: 100%;
+  max-width: 300px;
+  position: relative;
 }
 
-.bag-btn{
+.search-box input {
+  width: 100%;
+  padding: 8px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  background: #f9f9f9;
+}
+
+.bag-btn {
   background:#ff007f;
   color:#fff;
   padding:8px 16px;
-  border-radius:5px;
+  border-radius:6px;
   text-decoration:none;
-  font-weight:600;
+  font-weight:700;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
-/* ================= MOBILE ================= */
-.mobile-actions{
-  display:none;
-  gap:10px;
-}
-
-.menu-btn{
-  font-size:24px;
-  background:none;
-  border:none;
-  cursor:pointer;
-}
-
-/* Mobile menu modal */
-.mobile-menu{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.4);
-  display:none;
-  z-index:2000;
-}
-
-.mobile-menu-content{
-  width:85%;
-  height:100%;
-  background:#fff;
-  padding:20px;
-}
-
-.mobile-menu-content h2{
-  color:#0066ff;
-  margin-bottom:15px;
-}
-
-.mobile-menu-content a{
-  display:block;
-  padding:12px 0;
-  border-bottom:1px solid #eee;
-  font-weight:500;
-}
-
-.mobile-menu-content input{
-  width:100%;
-  margin-top:15px;
-  padding:10px;
-}
-
-.close{
-  font-size:26px;
-  float:right;
-  cursor:pointer;
-}
-@media (max-width: 768px) {
-  .c-header-top {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-  }
-
-  .c-main-nav {
-    display: none;
-  }
-
-  .c-logo img {
-    width: 55px;
-  }
-}
-
-  
+/* ================= MOBILE OPTIMIZATION (THE "STEP DOWN") ================= */
 @media(max-width:900px){
-  .nav-list{display:none;}
-  .header-right{display:none;}
-  .mobile-actions{display:flex;}
-}
-
-/* ===== MOBILE MENU MODAL FIX ===== */
-.c-modal--menu {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0,0,0,.45);
-  display: none;
-}
-
-.c-modal--menu.active {
-  display: block;
-}
-
-.c-modal__dialog {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 85%;
-  max-width: 320px;
-  height: 100%;
-  background: #fff;
-  transform: translateX(-100%);
-  transition: transform .3s ease;
-}
-
-.c-modal--menu.active .c-modal__dialog {
-  transform: translateX(0);
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: 0;
-  font-size: 22px;
-}
-
-.menu-container {
-  padding: 60px 16px 20px;
-}
-
-.ada-menu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ada-menu li {
-  border-bottom: 1px solid #eee;
-}
-
-.ada-menu a,
-.ada-menu button {
-  width: 100%;
-  padding: 14px;
-  font-size: 15px;
-  background: none;
-  border: 0;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* submenu */
-.menu-level-1 {
-  display: none;
-}
-
-.menu-level-1.active {
-  display: block;
-}
-
-.menu-level-0.hidden {
-  display: none;
-}
-
-/* disable scroll when menu open */
-body.menu-open {
-  overflow: hidden;
-}
-
+  .container { padding: 10px 15px; }
   
+  /* Desktop Nav list hides */
+  .nav-list { display:none; }
+
+  /* Logo, Search, Bag all on one line */
+  .header-main-row {
+    gap: 8px;
+  }
+  
+  .logo a { font-size: 17px; }
+  
+  .search-box { max-width: none; flex-grow: 1; }
+  .search-box input { padding: 6px 12px; font-size: 13px; }
+  
+  .bag-btn { padding: 7px 12px; font-size: 12px; }
+
+  /* The "Step Down" Service Filter Ribbon */
+  .mobile-filter-nav {
+    margin-top: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  
+  .mobile-filter-nav::-webkit-scrollbar { display: none; } /* Hide scrollbar */
+
+  .filter-list {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .filter-list a {
+    text-decoration: none;
+    background: #f0f3f6;
+    color: #333;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid #eee;
+  }
+  
+  .filter-list a.active {
+    background: #0066ff;
+    color: #fff;
+    border-color: #0066ff;
+  }
+}
 </style>
 </head>
 
@@ -287,182 +194,91 @@ body.menu-open {
 
 <header class="site-header">
   <div class="container">
+    
+    <div class="header-main-row">
+      <div class="logo">
+        <a href="index.html">AtoZ Urban</a>
+      </div>
 
-    <div class="logo">
-      <a href="index.html">AtoZ Urban Clean</a>
+      <div class="search-box">
+        <input type="text" placeholder="Search services...">
+      </div>
+
+      <div class="header-right-actions">
+        <a href="booking.html" class="bag-btn">BAG (0)</a>
+      </div>
     </div>
 
-    <!-- DESKTOP NAV -->
-    <nav>
+    <nav style="margin-top: 15px;" class="desktop-nav">
       <ul class="nav-list">
-
         <li class="nav-item">
           <span class="nav-link">BASIC CLEANING</span>
           <div class="mega-menu">
             <div class="menu-col">
               <h4>Essential</h4>
               <ul>
-                <li><a href="services.html">Window & Door Cleaning</a></li>
+                <li><a href="services.html">Window & Door</a></li>
                 <li><a href="services.html">Fan Cleaning</a></li>
-                <li><a href="services.html">Exhaust Fan Cleaning</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Wet Cleaning</h4>
-              <ul>
-                <li><a href="services.html">Sink & Faucet</a></li>
-                <li><a href="services.html">Bathroom Cleaning</a></li>
+                <li><a href="services.html">Exhaust Fan</a></li>
               </ul>
             </div>
             <div class="menu-col">
               <h4>Floor</h4>
               <ul>
-                <li><a href="services.html">Standard Floor Cleaning</a></li>
-                <li><a href="services.html">Complete Home Indoor</a></li>
+                <li><a href="services.html">Standard Floor</a></li>
+                <li><a href="services.html">Complete Home</a></li>
               </ul>
             </div>
           </div>
         </li>
-
-        <li class="nav-item">
-          <span class="nav-link">PREMIUM CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Toilet Cleaning</a></li>
-                <li><a href="services.html">Bedroom Cleaning</a></li>
-                <li><a href="services.html">Kitchen Cleaning</a></li>
-                <li><a href="services.html">Office Cleaning</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">DEEP CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Steam Cleaning</a></li>
-                <li><a href="services.html">Bedroom Deep Cleaning</a></li>
-                <li><a href="services.html">Furnished Cleaning</a></li>
-                <li><a href="services.html">Unfurnished Cleaning</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">COMMERCIAL</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Basic Office Cleaning</a></li>
-                <li><a href="services.html">Standard Office Cleaning</a></li>
-                <li><a href="services.html">Premium Office Cleaning</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">SHIFTING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Packing</a></li>
-                <li><a href="services.html">Load & Unload</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
+        <li class="nav-item"><span class="nav-link">PREMIUM</span></li>
+        <li class="nav-item"><span class="nav-link">DEEP CLEAN</span></li>
+        <li class="nav-item"><span class="nav-link">COMMERCIAL</span></li>
+        <li class="nav-item"><span class="nav-link">SHIFTING</span></li>
       </ul>
     </nav>
 
-    <!-- DESKTOP RIGHT -->
-    <div class="header-right">
-      <input type="text" placeholder="Search services">
-      <a href="booking.html" class="bag-btn">BAG</a>
-    </div>
-
-    <!-- MOBILE ACTIONS -->
-    <div class="mobile-actions">
-      <button class="menu-btn" onclick="openMenu()">☰</button>
-      <a href="booking.html" class="bag-btn">BAG</a>
-    </div>
+    <nav class="mobile-filter-nav">
+      <ul class="filter-list">
+        <li><a href="services.html#basic" class="active">Basic</a></li>
+        <li><a href="services.html#premium">Premium</a></li>
+        <li><a href="services.html#deep">Deep Clean</a></li>
+        <li><a href="services.html#office">Office</a></li>
+        <li><a href="services.html#shifting">Shifting</a></li>
+        <li><a href="services.html#moving">Packing</a></li>
+      </ul>
+    </nav>
 
   </div>
 </header>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-content">
-    <span class="close" onclick="closeMenu()">×</span>
-    <h2>AtoZ Urban Clean</h2>
-    <a>BASIC CLEANING</a>
-    <a>PREMIUM CLEANING</a>
-    <a>DEEP CLEANING</a>
-    <a>COMMERCIAL</a>
-    <a>SHIFTING</a>
-    <input type="text" placeholder="Search services">
-  </div>
+<div style="padding: 20px; text-align: center; color: #888;">
+  <p>Scroll down to see the sticky header in action.</p>
+  <div style="height: 2000px;"></div>
 </div>
 
 <script>
-function openMenu(){
-  document.getElementById("mobileMenu").style.display="block";
-}
-function closeMenu(){
-  document.getElementById("mobileMenu").style.display="none";
-}
-</script>
-
-<script>
-const menuBtn = document.querySelector('.c-menu-btn');
-const modal = document.getElementById('mobile-menu-modal');
-const closeBtn = modal.querySelector('.close-button');
-const body = document.body;
-
-/* OPEN MENU */
-menuBtn.addEventListener('click', () => {
-  modal.classList.add('active');
-  body.classList.add('menu-open');
-});
-
-/* CLOSE MENU */
-closeBtn.addEventListener('click', closeMenu);
-modal.addEventListener('click', e => {
-  if (e.target === modal) closeMenu();
-});
-
-function closeMenu() {
-  modal.classList.remove('active');
-  body.classList.remove('menu-open');
-  resetMenu();
-}
-
-/* SUB MENU */
-document.querySelectorAll('.menu-level-0 button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelector('.menu-level-0').classList.add('hidden');
-    document.getElementById(btn.getAttribute('aria-controls')).parentElement.classList.add('active');
+  // Simple active state toggle for mobile filters
+  const filters = document.querySelectorAll('.filter-list a');
+  filters.forEach(filter => {
+    filter.addEventListener('click', function() {
+      filters.forEach(f => f.classList.remove('active'));
+      this.classList.add('active');
+    });
   });
-});
 
-/* BACK BUTTON */
-document.querySelectorAll('.back-button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    resetMenu();
-  });
-});
-
-function resetMenu(){
-  document.querySelector('.menu-level-0').classList.remove('hidden');
-  document.querySelectorAll('.menu-level-1').forEach(m => m.classList.remove('active'));
-}
-</script>
-
+  // Example: Updating Bag count from localStorage (if you have cart logic)
+  function updateBagCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const bagBtns = document.querySelectorAll('.bag-btn');
+    bagBtns.forEach(btn => {
+      btn.textContent = `BAG (${cart.length})`;
+    });
+  }
   
+  // Initialize count on load
+  window.onload = updateBagCount;
+</script>
+
 </body>
 </html>
