@@ -5,15 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* === MOBILE MODAL BASE === */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+
+        /* === SITE HEADER === */
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .site-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0066ff;
+        }
+
+        /* === DESKTOP NAVIGATION === */
+        .nav-list { list-style: none; display: flex; gap: 20px; }
+        .nav-link { cursor: pointer; font-size: 13px; font-weight: 600; color: #333; text-transform: uppercase; }
+
+        .nav-item { position: relative; padding: 10px 0; }
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            gap: 30px;
+            min-width: 500px;
+            border-radius: 4px;
+        }
+        .nav-item:hover .mega-menu { display: flex; }
+
+        .menu-col h4 { color: #0066ff; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; }
+        .menu-col ul { list-style: none; }
+        .menu-col ul li a { text-decoration: none; color: #555; font-size: 13px; display: block; padding: 4px 0; }
+
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .header-right input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+
+        .bag-btn {
+            background: #ff007f;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* === MOBILE UI ELEMENTS === */
+        .mobile-actions { display: none; align-items: center; gap: 15px; }
+        .menu-btn { background: none; border: none; font-size: 22px; cursor: pointer; color: #333; }
+
+        @media (max-width: 900px) {
+            .nav-list, .header-right { display: none; }
+            .mobile-actions { display: flex; }
+            .logo a { font-size: 18px; }
+        }
+
+        /* === MOBILE SIDE MODAL === */
         #mobile-menu-modal {
             position: fixed;
             inset: 0;
             z-index: 9999;
-            visibility: hidden; /* Use visibility for smoother transitions */
+            visibility: hidden;
             transition: visibility 0.3s;
         }
-
         #mobile-menu-modal.active { visibility: visible; }
 
         .c-modal__scrim {
@@ -23,7 +95,6 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
         #mobile-menu-modal.active .c-modal__scrim { opacity: 1; }
 
         .c-modal__dialog {
@@ -31,19 +102,16 @@
             top: 0;
             left: 0;
             width: 85%;
-            max-width: 320px;
+            max-width: 300px;
             height: 100%;
             background: #fff;
             transform: translateX(-100%);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
         }
-
         #mobile-menu-modal.active .c-modal__dialog { transform: translateX(0); }
 
-        /* === MENU CONTENT === */
         .c-modal__content { height: 100%; overflow: hidden; position: relative; }
         
         .close-button {
@@ -52,20 +120,14 @@
             right: 15px;
             background: none;
             border: none;
-            font-size: 24px;
-            color: #333;
+            font-size: 22px;
             z-index: 10;
         }
 
-        .menu-container {
-            padding: 60px 0 20px;
-            height: 100%;
-            position: relative;
-        }
+        .menu-container { padding-top: 60px; height: 100%; position: relative; }
 
-        .ada-menu { list-style: none; padding: 0; margin: 0; }
+        .ada-menu { list-style: none; padding: 0; }
         .ada-menu li { border-bottom: 1px solid #eee; }
-
         .ada-menu a, .ada-menu button {
             width: 100%;
             padding: 15px 20px;
@@ -74,15 +136,13 @@
             align-items: center;
             text-decoration: none;
             color: #333;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             background: none;
             border: none;
             text-align: left;
-            cursor: pointer;
         }
 
-        /* === MULTI-LEVEL LOGIC === */
         .menu-level-0 { transition: transform 0.3s ease; }
         .menu-level-1 {
             position: absolute;
@@ -94,20 +154,13 @@
             transform: translateX(100%);
             transition: transform 0.3s ease;
             visibility: hidden;
+            overflow-y: auto;
         }
-
         .menu-level-1.active { transform: translateX(0); visibility: visible; }
         .menu-level-0.shifted { transform: translateX(-100%); }
 
-        .back-button { background: #f8f9fa !important; font-weight: 700 !important; color: #0066ff !important; }
-        
-        /* === MOBILE HEADER ONE LINE === */
-        .site-header { background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; padding: 10px 15px; }
-        .header-main-row { display: flex; align-items: center; gap: 10px; }
-        .search-box { flex-grow: 1; }
-        .search-box input { width: 100%; padding: 8px 12px; border-radius: 20px; border: 1px solid #ddd; outline: none; font-size: 14px; }
-        .menu-toggle { background: none; border: none; font-size: 20px; cursor: pointer; }
-        .bag-btn { background: #ff007f; color: #fff; padding: 7px 12px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold; white-space: nowrap; }
+        .back-button { background: #f9f9f9 !important; color: #0066ff !important; font-weight: 700 !important; }
+        .sub-header { padding: 15px 20px; background: #eee; font-size: 12px; font-weight: bold; color: #666; }
 
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
     </style>
@@ -116,217 +169,92 @@
 
 <header class="site-header">
   <div class="container">
-
     <div class="logo">
       <a href="index.html">AtoZ Urban Clean</a>
     </div>
 
-    <!-- DESKTOP NAV -->
-    <nav>
-      <ul class="nav-list">
-
-        <li class="nav-item">
-          <span class="nav-link">BASIC CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <h4>Essential</h4>
-              <ul>
-                <li><a href="services.html">Window & Door Cleaning</a></li>
-                <li><a href="services.html">Fan Cleaning</a></li>
-                <li><a href="services.html">Exhaust Fan Cleaning</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Wet Cleaning</h4>
-              <ul>
-                <li><a href="services.html">Sink & Faucet</a></li>
-                <li><a href="services.html">Bathroom Cleaning</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Floor</h4>
-              <ul>
-                <li><a href="services.html">Standard Floor Cleaning</a></li>
-                <li><a href="services.html">Complete Home Indoor</a></li>
-              </ul>
-            </div>
+    <nav class="nav-list">
+      <div class="nav-item">
+        <span class="nav-link">Cleaning Services <i class="fas fa-chevron-down" style="font-size:10px"></i></span>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <h4>Basic</h4>
+            <ul>
+              <li><a href="services.html">Fan Cleaning</a></li>
+              <li><a href="services.html">Window Cleaning</a></li>
+            </ul>
           </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">PREMIUM CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Toilet Cleaning</a></li>
-                <li><a href="services.html">Bedroom Cleaning</a></li>
-                <li><a href="services.html">Kitchen Cleaning</a></li>
-                <li><a href="services.html">Office Cleaning</a></li>
-              </ul>
-            </div>
+          <div class="menu-col">
+            <h4>Premium</h4>
+            <ul>
+              <li><a href="services.html">Kitchen Cleaning</a></li>
+              <li><a href="services.html">Bathroom Cleaning</a></li>
+            </ul>
           </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">DEEP CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Steam Cleaning</a></li>
-                <li><a href="services.html">Bedroom Deep Cleaning</a></li>
-                <li><a href="services.html">Furnished Cleaning</a></li>
-                <li><a href="services.html">Unfurnished Cleaning</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">COMMERCIAL</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Basic Office Cleaning</a></li>
-                <li><a href="services.html">Standard Office Cleaning</a></li>
-                <li><a href="services.html">Premium Office Cleaning</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">SHIFTING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Packing</a></li>
-                <li><a href="services.html">Load & Unload</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-      </ul>
+        </div>
+      </div>
+      <div class="nav-item"><a href="services.html" class="nav-link">Office</a></div>
+      <div class="nav-item"><a href="services.html" class="nav-link">Shifting</a></div>
     </nav>
 
-    <!-- DESKTOP RIGHT -->
     <div class="header-right">
-      <input type="text" placeholder="Search services">
+      <input type="text" placeholder="Search...">
       <a href="booking.html" class="bag-btn">BAG</a>
     </div>
 
-    <!-- MOBILE ACTIONS -->
     <div class="mobile-actions">
-      <button class="menu-btn" onclick="openMenu()">☰</button>
+      <button class="menu-btn" onclick="toggleMenu(true)"><i class="fas fa-bars"></i></button>
       <a href="booking.html" class="bag-btn">BAG</a>
     </div>
-
   </div>
 </header>
 
-<div id="mobile-menu-modal" class="c-modal c-modal--menu">
+<div id="mobile-menu-modal" class="c-modal">
     <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
-    
     <div class="c-modal__dialog">
         <div class="c-modal__content">
-            <h2 id="mobile-menu-title" class="sr-only">Mobile menu</h2>
-            <button class="close-button" onclick="toggleMenu(false)">
-                <i class="fas fa-times"></i>
-            </button>
-
+            <button class="close-button" onclick="toggleMenu(false)"><i class="fas fa-times"></i></button>
             <div class="menu-container">
+                
                 <div class="menu-level-0" id="lvl-0">
                     <ul class="ada-menu">
                         <li><a href="index.html">Home</a></li>
-                        <li>
-                            <button onclick="openSub('BASIC CLEANING')">
-                                Services <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </li>
-                        <li>
-                            <button onclick="openSub('PREMIUM CLEANING')">
-                                Cleaning Types <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </li>
-                        <li>
-                            <button onclick="openSub('DEEP CLEANING')">
-                                Cleaning Types <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </li>
-                        <li>
-                            <button onclick="openSub('COMMERCIAL')">
-                                Cleaning Types <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </li>
-			<li>
-                            <button onclick="openSub('SHIFTING')">
-                                Cleaning Types <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </li>
-
-                        <li><a href="#">Contact</a></li>
+                        <li><button onclick="openSub('sub-basic')">Basic Cleaning <i class="fas fa-chevron-right"></i></button></li>
+                        <li><button onclick="openSub('sub-premium')">Premium Cleaning <i class="fas fa-chevron-right"></i></button></li>
+                        <li><button onclick="openSub('sub-deep')">Deep Cleaning <i class="fas fa-chevron-right"></i></button></li>
+                        <li><button onclick="openSub('sub-comm')">Commercial <i class="fas fa-chevron-right"></i></button></li>
+                        <li><button onclick="openSub('sub-shift')">Shifting <i class="fas fa-chevron-right"></i></button></li>
                     </ul>
                 </div>
 
-                <div class="menu-level-1" id="BASIC CLEANING">
+                <div class="menu-level-1" id="sub-basic">
                     <ul class="ada-menu">
                         <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-              <h4>Essential</h4>
-              <ul>
-                <li><a href="services.html">Window & Door Cleaning</a></li>
-                <li><a href="services.html">Fan Cleaning</a></li>
-                <li><a href="services.html">Exhaust Fan Cleaning</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Wet Cleaning</h4>
-              <ul>
-                <li><a href="services.html">Sink & Faucet</a></li>
-                <li><a href="services.html">Bathroom Cleaning</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Floor</h4>
-              <ul>
-                <li><a href="services.html">Standard Floor Cleaning</a></li>
-                <li><a href="services.html">Complete Home Indoor</a></li>
-              </ul>
-            </div>
+                        <div class="sub-header">ESSENTIAL</div>
+                        <li><a href="services.html">Window & Door Cleaning</a></li>
+                        <li><a href="services.html">Fan Cleaning</a></li>
+                        <div class="sub-header">WET CLEANING</div>
+                        <li><a href="services.html">Sink & Faucet</a></li>
+                        <li><a href="services.html">Bathroom Cleaning</a></li>
                     </ul>
                 </div>
-                <div class="menu-level-1" id="PREMIUM CLEANING">
+
+                <div class="menu-level-1" id="sub-premium">
                     <ul class="ada-menu">
                         <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-                             <li><a href="services.html">Toilet Cleaning</a></li>
-                <li><a href="services.html">Bedroom Cleaning</a></li>
-                <li><a href="services.html">Kitchen Cleaning</a></li>
-                <li><a href="services.html">Office Cleaning</a></li>
+                        <li><a href="services.html">Toilet Cleaning</a></li>
+                        <li><a href="services.html">Kitchen Cleaning</a></li>
                     </ul>
                 </div>
-                <div class="menu-level-1" id="DEEP CLEANING">
+
+                <div class="menu-level-1" id="sub-deep">
                     <ul class="ada-menu">
                         <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-                <li><a href="services.html">Steam Cleaning</a></li>
-                <li><a href="services.html">Bedroom Deep Cleaning</a></li>
-                <li><a href="services.html">Furnished Cleaning</a></li>
-                <li><a href="services.html">Unfurnished Cleaning</a></li>
+                        <li><a href="services.html">Steam Cleaning</a></li>
+                        <li><a href="services.html">Full Home Deep Clean</a></li>
                     </ul>
                 </div>
-                <div class="menu-level-1" id="COMMERCIAL">
-                    <ul class="ada-menu">
-                        <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-                <li><a href="services.html">Basic Office Cleaning</a></li>
-                <li><a href="services.html">Standard Office Cleaning</a></li>
-                <li><a href="services.html">Premium Office Cleaning</a></li>
-                    </ul>
-                </div>
-                <div class="menu-level-1" id="SHIFTING">
-                    <ul class="ada-menu">
-                        <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-                <li><a href="services.html">Packing</a></li>
-                <li><a href="services.html">Load & Unload</a></li>
-                    </ul>
-                </div>
+
             </div>
         </div>
     </div>
@@ -341,7 +269,7 @@
         } else {
             modal.classList.remove('active');
             document.body.style.overflow = '';
-            closeSub(); // Reset submenus when closing
+            closeSub();
         }
     }
 
@@ -352,8 +280,8 @@
 
     function closeSub() {
         document.getElementById('lvl-0').classList.remove('shifted');
-        const subMenus = document.querySelectorAll('.menu-level-1');
-        subMenus.forEach(m => m.classList.remove('active'));
+        const subs = document.querySelectorAll('.menu-level-1');
+        subs.forEach(s => s.classList.remove('active'));
     }
 </script>
 
