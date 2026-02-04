@@ -1,283 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AtoZ Urban Clean</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* === MOBILE MODAL BASE === */
+        #mobile-menu-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            visibility: hidden; /* Use visibility for smoother transitions */
+            transition: visibility 0.3s;
+        }
 
-<style>
-/* ================= GLOBAL STYLES ================= */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', Arial, sans-serif;
-}
+        #mobile-menu-modal.active { visibility: visible; }
 
-body { background: #fdfdfd; }
+        .c-modal__scrim {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-/* ================= HEADER BASE ================= */
-.site-header {
-  background:#fff;
-  border-bottom:1px solid #eee;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
+        #mobile-menu-modal.active .c-modal__scrim { opacity: 1; }
 
-.container {
-  max-width:1400px;
-  margin:auto;
-  padding:12px 20px;
-}
+        .c-modal__dialog {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 85%;
+            max-width: 320px;
+            height: 100%;
+            background: #fff;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        }
 
-/* Logo */
-.logo a {
-  text-decoration:none;
-  font-size:20px;
-  font-weight:800;
-  color:#0066ff;
-  letter-spacing: -0.5px;
-}
+        #mobile-menu-modal.active .c-modal__dialog { transform: translateX(0); }
 
-/* Row wrapper for Logo, Search, Bag */
-.header-main-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-}
+        /* === MENU CONTENT === */
+        .c-modal__content { height: 100%; overflow: hidden; position: relative; }
+        
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            z-index: 10;
+        }
 
-/* ================= DESKTOP NAV ================= */
-.nav-list {
-  list-style:none;
-  display:flex;
-  gap:25px;
-}
+        .menu-container {
+            padding: 60px 0 20px;
+            height: 100%;
+            position: relative;
+        }
 
-.nav-item { position:relative; }
+        .ada-menu { list-style: none; padding: 0; margin: 0; }
+        .ada-menu li { border-bottom: 1px solid #eee; }
 
-.nav-link {
-  cursor:pointer;
-  font-size:13px;
-  font-weight:600;
-  color: #444;
-  text-transform: uppercase;
-}
+        .ada-menu a, .ada-menu button {
+            width: 100%;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 15px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
 
-/* Mega menu */
-.mega-menu {
-  display:none;
-  position:absolute;
-  top:100%;
-  left:0;
-  background:#fff;
-  padding:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,.1);
-  gap:30px;
-  min-width:480px;
-  border-radius: 0 0 8px 8px;
-}
+        /* === MULTI-LEVEL LOGIC === */
+        .menu-level-0 { transition: transform 0.3s ease; }
+        .menu-level-1 {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 60px);
+            background: #fff;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            visibility: hidden;
+        }
 
-.menu-col { min-width:140px; }
-.menu-col h4 { margin-bottom:10px; color:#0066ff; font-size: 14px; }
-.menu-col ul { list-style:none; }
-.menu-col ul li a {
-  text-decoration:none;
-  display:block;
-  padding:5px 0;
-  color:#555;
-  font-size: 13.5px;
-}
-.menu-col ul li a:hover { color:#0066ff; }
+        .menu-level-1.active { transform: translateX(0); visibility: visible; }
+        .menu-level-0.shifted { transform: translateX(-100%); }
 
-@media(min-width:901px){
-  .nav-item:hover > .mega-menu { display:flex; }
-  .mobile-filter-nav { display: none; } /* Hide mobile ribbon on desktop */
-}
+        .back-button { background: #f8f9fa !important; font-weight: 700 !important; color: #0066ff !important; }
+        
+        /* === MOBILE HEADER ONE LINE === */
+        .site-header { background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; padding: 10px 15px; }
+        .header-main-row { display: flex; align-items: center; gap: 10px; }
+        .search-box { flex-grow: 1; }
+        .search-box input { width: 100%; padding: 8px 12px; border-radius: 20px; border: 1px solid #ddd; outline: none; font-size: 14px; }
+        .menu-toggle { background: none; border: none; font-size: 20px; cursor: pointer; }
+        .bag-btn { background: #ff007f; color: #fff; padding: 7px 12px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold; white-space: nowrap; }
 
-/* ================= SEARCH & BAG ================= */
-.header-right {
-  display:flex;
-  align-items: center;
-  gap:12px;
-  flex-grow: 1;
-  justify-content: flex-end;
-}
-
-.search-box {
-  width: 100%;
-  max-width: 300px;
-  position: relative;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 8px 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 20px;
-  font-size: 14px;
-  outline: none;
-  background: #f9f9f9;
-}
-
-.bag-btn {
-  background:#ff007f;
-  color:#fff;
-  padding:8px 16px;
-  border-radius:6px;
-  text-decoration:none;
-  font-weight:700;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-/* ================= MOBILE OPTIMIZATION (THE "STEP DOWN") ================= */
-@media(max-width:900px){
-  .container { padding: 10px 15px; }
-  
-  /* Desktop Nav list hides */
-  .nav-list { display:none; }
-
-  /* Logo, Search, Bag all on one line */
-  .header-main-row {
-    gap: 8px;
-  }
-  
-  .logo a { font-size: 17px; }
-  
-  .search-box { max-width: none; flex-grow: 1; }
-  .search-box input { padding: 6px 12px; font-size: 13px; }
-  
-  .bag-btn { padding: 7px 12px; font-size: 12px; }
-
-  /* The "Step Down" Service Filter Ribbon */
-  .mobile-filter-nav {
-    margin-top: 12px;
-    overflow-x: auto;
-    white-space: nowrap;
-    display: block;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
-  }
-  
-  .mobile-filter-nav::-webkit-scrollbar { display: none; } /* Hide scrollbar */
-
-  .filter-list {
-    display: flex;
-    gap: 8px;
-    list-style: none;
-  }
-
-  .filter-list a {
-    text-decoration: none;
-    background: #f0f3f6;
-    color: #333;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-    border: 1px solid #eee;
-  }
-  
-  .filter-list a.active {
-    background: #0066ff;
-    color: #fff;
-    border-color: #0066ff;
-  }
-}
-</style>
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
 </head>
-
 <body>
 
 <header class="site-header">
-  <div class="container">
-    
     <div class="header-main-row">
-      <div class="logo">
-        <a href="index.html">AtoZ Urban</a>
-      </div>
-
-      <div class="search-box">
-        <input type="text" placeholder="Search services...">
-      </div>
-
-      <div class="header-right-actions">
-        <a href="booking.html" class="bag-btn">BAG (0)</a>
-      </div>
+        <button class="menu-toggle" onclick="toggleMenu(true)"><i class="fas fa-bars"></i></button>
+        <div class="logo"><a href="#" style="text-decoration:none; color:#0066ff; font-weight:bold;">AtoZ</a></div>
+        <div class="search-box"><input type="text" placeholder="Search..."></div>
+        <a href="#" class="bag-btn">BAG (0)</a>
     </div>
-
-    <nav style="margin-top: 15px;" class="desktop-nav">
-      <ul class="nav-list">
-        <li class="nav-item">
-          <span class="nav-link">BASIC CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <h4>Essential</h4>
-              <ul>
-                <li><a href="services.html">Window & Door</a></li>
-                <li><a href="services.html">Fan Cleaning</a></li>
-                <li><a href="services.html">Exhaust Fan</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Floor</h4>
-              <ul>
-                <li><a href="services.html">Standard Floor</a></li>
-                <li><a href="services.html">Complete Home</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li class="nav-item"><span class="nav-link">PREMIUM</span></li>
-        <li class="nav-item"><span class="nav-link">DEEP CLEAN</span></li>
-        <li class="nav-item"><span class="nav-link">COMMERCIAL</span></li>
-        <li class="nav-item"><span class="nav-link">SHIFTING</span></li>
-      </ul>
-    </nav>
-
-    <nav class="mobile-filter-nav">
-      <ul class="filter-list">
-        <li><a href="services.html#basic" class="active">Basic</a></li>
-        <li><a href="services.html#premium">Premium</a></li>
-        <li><a href="services.html#deep">Deep Clean</a></li>
-        <li><a href="services.html#office">Office</a></li>
-        <li><a href="services.html#shifting">Shifting</a></li>
-        <li><a href="services.html#moving">Packing</a></li>
-      </ul>
-    </nav>
-
-  </div>
 </header>
 
-<div style="padding: 20px; text-align: center; color: #888;">
-  <p>Scroll down to see the sticky header in action.</p>
-  <div style="height: 2000px;"></div>
+<div id="mobile-menu-modal" class="c-modal c-modal--menu">
+    <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
+    
+    <div class="c-modal__dialog">
+        <div class="c-modal__content">
+            <h2 id="mobile-menu-title" class="sr-only">Mobile menu</h2>
+            <button class="close-button" onclick="toggleMenu(false)">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="menu-container">
+                <div class="menu-level-0" id="lvl-0">
+                    <ul class="ada-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li>
+                            <button onclick="openSub('services-menu')">
+                                Services <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="openSub('cleaning-menu')">
+                                Cleaning Types <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-level-1" id="services-menu">
+                    <ul class="ada-menu">
+                        <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
+                        <li><a href="#"><strong>All Services</strong></a></li>
+                        <li><a href="#">Residential</a></li>
+                        <li><a href="#">Commercial</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-level-1" id="cleaning-menu">
+                    <ul class="ada-menu">
+                        <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
+                        <li><a href="#">Deep Cleaning</a></li>
+                        <li><a href="#">Standard Cleaning</a></li>
+                        <li><a href="#">Move-in/out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-  // Simple active state toggle for mobile filters
-  const filters = document.querySelectorAll('.filter-list a');
-  filters.forEach(filter => {
-    filter.addEventListener('click', function() {
-      filters.forEach(f => f.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
+    function toggleMenu(isOpen) {
+        const modal = document.getElementById('mobile-menu-modal');
+        if (isOpen) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        } else {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            closeSub(); // Reset submenus when closing
+        }
+    }
 
-  // Example: Updating Bag count from localStorage (if you have cart logic)
-  function updateBagCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const bagBtns = document.querySelectorAll('.bag-btn');
-    bagBtns.forEach(btn => {
-      btn.textContent = `BAG (${cart.length})`;
-    });
-  }
-  
-  // Initialize count on load
-  window.onload = updateBagCount;
+    function openSub(menuId) {
+        document.getElementById('lvl-0').classList.add('shifted');
+        document.getElementById(menuId).classList.add('active');
+    }
+
+    function closeSub() {
+        document.getElementById('lvl-0').classList.remove('shifted');
+        const subMenus = document.querySelectorAll('.menu-level-1');
+        subMenus.forEach(m => m.classList.remove('active'));
+    }
 </script>
 
 </body>
