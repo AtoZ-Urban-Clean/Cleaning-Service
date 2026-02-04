@@ -189,43 +189,72 @@ function getLocation() {
         });
     }
 }
-
 function confirmBooking(){
-    const name = document.getElementById("name").value.trim();
-    const mobile = document.getElementById("mobile").value.trim();
-    const location = document.getElementById("location").value.trim();
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
+  const name = document.getElementById("name").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
 
-    if(!name || !mobile || !location || !date || !time){
-        alert("Please fill in all details");
-        return;
-    }
+  if(!name || !mobile || !location){
+    alert("Please fill all required fields");
+    return;
+  }
 
-    const bookingId = "AZC" + Math.floor(1000 + Math.random()*9000);
-    const serviceDetails = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
-    const total = amountDisplay.innerText;
+  if(cart.length === 0){
+    alert("No services selected");
+    return;
+  }
 
-    const summary = `Booking ID: ${bookingId}\nCustomer: ${name}\nMobile: ${mobile}\nLocation: ${location}\nSchedule: ${date} at ${time}\nServices: ${serviceDetails}\nTotal: ₹${total}`;
+  const bookingId = "AZC" + Math.floor(100000 + Math.random()*900000);
 
-    // 1. AUTOMATIC EMAIL TRIGGER
-    const adminEmail = "yuvasivasakthi.2002@gmail.com";
-    const subject = encodeURIComponent(`New Booking: ${bookingId} - ${name}`);
-    const emailBody = encodeURIComponent(summary);
-    window.location.href = `mailto:${adminEmail}?subject=${subject}&body=${emailBody}`;
+  let total = 0;
+  let services = "";
 
-    // 2. PREPARE WHATSAPP
-    const waNumber = "919489587626";
-    const waText = encodeURIComponent(`*NEW BOOKING - AtoZ Urban Clean*\n----------------------------\n${summary}`);
-    document.getElementById("waLink").href = `https://wa.me/${waNumber}?text=${waText}`;
+  cart.forEach(i=>{
+    total += Number(i.price) * (i.qty || 1);
+    services += `• ${i.name} x${i.qty || 1}\n`;
+  });
 
-    // UI UPDATE
-    document.getElementById("bid").innerText = bookingId;
-    document.getElementById("formBox").style.display="none";
-    document.getElementById("successBox").style.display="block";
+  const message =
+`New Booking - AtoZ Urban Clean
 
-    localStorage.removeItem("cart");
+Booking ID: ${bookingId}
+Name: ${name}
+Mobile: ${mobile}
+Location: ${location}
+Date: ${date}
+Time: ${time}
+
+Services:
+${services}
+
+Total Amount: ₹${total}
+Status: Waiting for Confirmation`;
+
+  // Show success UI
+  document.getElementById("bid").innerText = bookingId;
+  document.getElementById("formBox").style.display = "none";
+  document.getElementById("successBox").style.display = "block";
+
+  // WhatsApp auto-open
+  window.open(
+    "https://wa.me/" + ADMIN_PHONE + "?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+
+  // Email auto-open
+  window.open(
+    "mailto:" + ADMIN_EMAIL +
+    "?subject=New Booking - " + bookingId +
+    "&body=" + encodeURIComponent(message),
+    "_blank"
+  );
+
+  localStorage.removeItem("cart");
 }
+
+
 
 loadCart();
 </script>
