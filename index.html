@@ -26,6 +26,53 @@
 
 .hero h2{font-size:3rem;}
 .hero p{font-size:1.3rem;font-style:italic;}
+/* WRAPPER */
+.services-wrapper{
+  position:relative;
+}
+
+/* NAV BUTTONS */
+.nav-btn{
+  display:none;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:#0066ff;
+  color:#fff;
+  border:none;
+  font-size:20px;
+  padding:10px 14px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:2;
+}
+
+.nav-btn.prev{left:-10px;}
+.nav-btn.next{right:-10px;}
+
+/* MOBILE SLIDER */
+@media(max-width:768px){
+  .services-grid{
+    display:flex;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    gap:15px;
+    padding:10px 0;
+  }
+
+  .service-card{
+    min-width:85%;
+    flex-shrink:0;
+  }
+
+  .services-grid::-webkit-scrollbar{
+    display:none;
+  }
+
+  .nav-btn{
+    display:block;
+  }
+}
 
   .home-services{
   padding:60px 20px;
@@ -107,6 +154,7 @@
 <body>
 
 <!-- HEADER LOAD -->
+  
 <div id="header"></div>
 
 <!-- PAGE CONTENT -->
@@ -119,7 +167,10 @@
   <section class="home-services">
   <h2>Our Core Services</h2>
 
-  <div class="services-grid">
+<div class="services-wrapper">
+  <button class="nav-btn prev" onclick="scrollServices(-1)">❮</button>
+
+  <div class="services-grid" id="servicesGrid">
 
     <a href="services.html#basic" class="service-card">
       <img src="Floor Cleaning (dusting, sweeping, mopping all areas).jpg" alt="Basic Cleaning">
@@ -146,6 +197,10 @@
     </a>
 
   </div>
+
+  <button class="nav-btn next" onclick="scrollServices(1)">❯</button>
+</div>
+
 </section>
 
   <section class="why-choose">
@@ -177,13 +232,31 @@
 <div id="footer"></div>
 
 <script>
-fetch("header.html")
-  .then(res => res.text())
-  .then(data => document.getElementById("header").innerHTML = data);
-
 fetch("footer.html")
   .then(res => res.text())
   .then(data => document.getElementById("footer").innerHTML = data);
+</script>
+
+  <script>
+fetch("header.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("header").innerHTML = data;
+
+    // 🔥 BIND AFTER LOAD
+    document.querySelector(".menu-btn")
+      .addEventListener("click", () => {
+        document.getElementById("mobile-menu-modal").classList.add("active");
+      });
+  });
+</script>
+
+<script>
+function scrollServices(dir){
+  const grid = document.getElementById("servicesGrid");
+  const cardWidth = grid.querySelector(".service-card").offsetWidth;
+  grid.scrollLeft += dir * cardWidth;
+}
 </script>
 
 </body>
