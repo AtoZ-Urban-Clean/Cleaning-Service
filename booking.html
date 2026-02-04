@@ -9,23 +9,39 @@
 <style>
 body{ margin:0; font-family:'Segoe UI', Arial; background:#f6f6f6; color: #333; }
 
-/* Clickable Company Header */
+/* Adjusted Header Layout */
 header {
-  background:#fff; padding:15px; text-align:center; border-bottom:1px solid #ddd;
+  background:#fff; 
+  padding:15px 20px; 
+  display: flex; 
+  align-items: center; 
+  border-bottom:1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
-header a {
-  text-decoration: none; color: #0066ff; font-size: 24px; font-weight: 800;
+header .company-name {
+  flex: 1; /* Pushes the next item to the center */
+  text-align: left;
 }
+header .company-name a {
+  text-decoration: none; color: #0066ff; font-size: 20px; font-weight: 800;
+}
+header .page-title {
+  flex: 2; /* Centers the title */
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #555;
+}
+header .spacer { flex: 1; } /* Keeps the title perfectly centered */
 
 .container{ max-width:600px; margin:20px auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
 
-/* Service List UI */
 .service-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
 .clear-btn { background: #eee; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
 
-.service-item{
-  display:flex; align-items: center; padding:12px 0; border-bottom:1px solid #eee; gap: 10px;
-}
+.service-item{ display:flex; align-items: center; padding:12px 0; border-bottom:1px solid #eee; gap: 10px; }
 .item-info { flex-grow: 1; }
 .qty-controls { display: flex; align-items: center; gap: 8px; }
 .qty-btn { background: #f0f0f0; border: 1px solid #ccc; width: 25px; height: 25px; cursor: pointer; border-radius: 4px; }
@@ -37,23 +53,29 @@ label{ display:block; margin-top:15px; font-weight:600; font-size: 14px; }
 .input-group { position: relative; }
 input{ width:100%; padding:12px; margin-top:6px; border:1px solid #ccc; border-radius:6px; box-sizing: border-box; }
 
-/* GPS Button */
-.gps-btn {
-  position: absolute; right: 10px; top: 15px; background: none; border: none; color: #0066ff; cursor: pointer; font-size: 18px;
-}
+.gps-btn { position: absolute; right: 10px; top: 15px; background: none; border: none; color: #0066ff; cursor: pointer; font-size: 18px; }
 
 button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; background:#ff007f; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight: bold; }
 
 .success{ text-align:center; display:none; }
 .booking-id{ font-size:22px; color:green; margin:15px 0; font-weight: bold; }
 .whatsapp{ display:block; margin-top:15px; padding:15px; background:#25D366; color:#fff; text-decoration:none; border-radius:6px; font-weight: bold; }
+
+@media (max-width: 600px) {
+    header .page-title { font-size: 14px; }
+    header .company-name a { font-size: 16px; }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-    <a href="index.html">AtoZ Urban Clean</a>
+    <div class="company-name">
+        <a href="index.html">AtoZ Urban Clean</a>
+    </div>
+    <div class="page-title">BOOK MY SERVICE</div>
+    <div class="spacer"></div>
 </header>
 
 <div class="container" id="formBox">
@@ -64,9 +86,7 @@ button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; back
     
     <div id="serviceList"></div>
 
-    <div class="total">
-        Total: ₹<span id="amount">0</span>
-    </div>
+    <div class="total">Total: ₹<span id="amount">0</span></div>
 
     <label>Full Name</label>
     <input type="text" id="name" placeholder="Enter your name">
@@ -93,7 +113,7 @@ button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; back
   <i class="fas fa-check-circle" style="font-size: 50px; color: #25D366;"></i>
   <h2>Booking Confirmed!</h2>
   <div class="booking-id">ID: <span id="bid"></span></div>
-  <p>Admin has been notified. Please click below to share details via WhatsApp.</p>
+  <p>An email notification has been sent to Admin. Click below to also send details via WhatsApp.</p>
 
   <a id="waLink" class="whatsapp" target="_blank">
     <i class="fab fa-whatsapp"></i> Send Details to Admin
@@ -111,15 +131,12 @@ function loadCart(){
         amountDisplay.innerText = "0";
         return;
     }
-
     let total = 0;
     list.innerHTML = "";
-
     cart.forEach((item, index) => {
         const itemQty = item.qty || 1;
         const itemTotal = Number(item.price) * itemQty;
         total += itemTotal;
-
         const div = document.createElement("div");
         div.className = "service-item";
         div.innerHTML = `
@@ -137,7 +154,6 @@ function loadCart(){
         `;
         list.appendChild(div);
     });
-
     amountDisplay.innerText = total;
 }
 
@@ -153,10 +169,7 @@ function removeItem(index) {
 }
 
 function clearAll() {
-    if(confirm("Remove all items?")) {
-        cart = [];
-        saveAndReload();
-    }
+    if(confirm("Remove all items?")) { cart = []; saveAndReload(); }
 }
 
 function saveAndReload() {
@@ -164,7 +177,6 @@ function saveAndReload() {
     loadCart();
 }
 
-// GPS FUNCTION
 function getLocation() {
     const locInput = document.getElementById("location");
     if (navigator.geolocation) {
@@ -175,8 +187,6 @@ function getLocation() {
             alert("Unable to retrieve location. Please type manually.");
             locInput.value = "";
         });
-    } else {
-        alert("Geolocation not supported by your browser.");
     }
 }
 
@@ -192,38 +202,27 @@ function confirmBooking(){
         return;
     }
 
-    if(cart.length === 0){
-        alert("Your bag is empty!");
-        return;
-    }
-
     const bookingId = "AZC" + Math.floor(1000 + Math.random()*9000);
     const serviceDetails = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
     const total = amountDisplay.innerText;
 
-    const message = 
-`*NEW BOOKING - AtoZ Urban Clean*
-----------------------------
-*Booking ID:* ${bookingId}
-*Customer:* ${name}
-*Mobile:* ${mobile}
-*Location:* ${location}
-*Schedule:* ${date} at ${time}
-*Services:* ${serviceDetails}
-----------------------------
-*Total Amount: ₹${total}*`;
+    const summary = `Booking ID: ${bookingId}\nCustomer: ${name}\nMobile: ${mobile}\nLocation: ${location}\nSchedule: ${date} at ${time}\nServices: ${serviceDetails}\nTotal: ₹${total}`;
 
-    // Show Success Box
+    // 1. AUTOMATIC EMAIL TRIGGER
+    const adminEmail = "yuvasivasakthi.2002@gmail.com";
+    const subject = encodeURIComponent(`New Booking: ${bookingId} - ${name}`);
+    const emailBody = encodeURIComponent(summary);
+    window.location.href = `mailto:${adminEmail}?subject=${subject}&body=${emailBody}`;
+
+    // 2. PREPARE WHATSAPP
+    const waNumber = "919489587626";
+    const waText = encodeURIComponent(`*NEW BOOKING - AtoZ Urban Clean*\n----------------------------\n${summary}`);
+    document.getElementById("waLink").href = `https://wa.me/${waNumber}?text=${waText}`;
+
+    // UI UPDATE
     document.getElementById("bid").innerText = bookingId;
     document.getElementById("formBox").style.display="none";
     document.getElementById("successBox").style.display="block";
-
-    // WhatsApp Link for Admin
-    const waNumber = "919489587626";
-    document.getElementById("waLink").href = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
-
-    // Optional: Log to console for Admin Mail ID reference (yuvasivasakthi.2002)
-    console.log("Booking data sent to Admin: yuvasivasakthi.2002@gmail.com");
 
     localStorage.removeItem("cart");
 }
