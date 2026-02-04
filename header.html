@@ -173,12 +173,113 @@
   float:right;
   cursor:pointer;
 }
+@media (max-width: 768px) {
+  .c-header-top {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
 
+  .c-main-nav {
+    display: none;
+  }
+
+  .c-logo img {
+    width: 55px;
+  }
+}
+
+  
 @media(max-width:900px){
   .nav-list{display:none;}
   .header-right{display:none;}
   .mobile-actions{display:flex;}
 }
+
+/* ===== MOBILE MENU MODAL FIX ===== */
+.c-modal--menu {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.45);
+  display: none;
+}
+
+.c-modal--menu.active {
+  display: block;
+}
+
+.c-modal__dialog {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 85%;
+  max-width: 320px;
+  height: 100%;
+  background: #fff;
+  transform: translateX(-100%);
+  transition: transform .3s ease;
+}
+
+.c-modal--menu.active .c-modal__dialog {
+  transform: translateX(0);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: 0;
+  font-size: 22px;
+}
+
+.menu-container {
+  padding: 60px 16px 20px;
+}
+
+.ada-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ada-menu li {
+  border-bottom: 1px solid #eee;
+}
+
+.ada-menu a,
+.ada-menu button {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  background: none;
+  border: 0;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* submenu */
+.menu-level-1 {
+  display: none;
+}
+
+.menu-level-1.active {
+  display: block;
+}
+
+.menu-level-0.hidden {
+  display: none;
+}
+
+/* disable scroll when menu open */
+body.menu-open {
+  overflow: hidden;
+}
+
+  
 </style>
 </head>
 
@@ -317,5 +418,51 @@ function closeMenu(){
 }
 </script>
 
+<script>
+const menuBtn = document.querySelector('.c-menu-btn');
+const modal = document.getElementById('mobile-menu-modal');
+const closeBtn = modal.querySelector('.close-button');
+const body = document.body;
+
+/* OPEN MENU */
+menuBtn.addEventListener('click', () => {
+  modal.classList.add('active');
+  body.classList.add('menu-open');
+});
+
+/* CLOSE MENU */
+closeBtn.addEventListener('click', closeMenu);
+modal.addEventListener('click', e => {
+  if (e.target === modal) closeMenu();
+});
+
+function closeMenu() {
+  modal.classList.remove('active');
+  body.classList.remove('menu-open');
+  resetMenu();
+}
+
+/* SUB MENU */
+document.querySelectorAll('.menu-level-0 button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelector('.menu-level-0').classList.add('hidden');
+    document.getElementById(btn.getAttribute('aria-controls')).parentElement.classList.add('active');
+  });
+});
+
+/* BACK BUTTON */
+document.querySelectorAll('.back-button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    resetMenu();
+  });
+});
+
+function resetMenu(){
+  document.querySelector('.menu-level-0').classList.remove('hidden');
+  document.querySelectorAll('.menu-level-1').forEach(m => m.classList.remove('active'));
+}
+</script>
+
+  
 </body>
 </html>
