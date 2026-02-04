@@ -98,6 +98,59 @@
   font-weight:500;
   color:#003d99;
 }
+.services-wrapper{
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.services-track{
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.service-card{
+  min-width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 25px;
+  margin: 0 10px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.nav-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #0066ff;
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nav-btn.prev{ left: 5px; }
+.nav-btn.next{ right: 5px; }
+
+/* Desktop view */
+@media (min-width: 768px){
+  .services-track{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+    transform: none !important;
+  }
+  .service-card{
+    min-width: auto;
+  }
+  .nav-btn{ display: none; }
+}
 
 </style>
 <body>
@@ -115,8 +168,11 @@
   <section class="home-services">
   <h2>Our Core Services</h2>
 
-  <div class="services-grid">
+    <div class="services-wrapper">
+    <button class="nav-btn prev" onclick="scrollServices(-1)">❮</button>
 
+     <div class="services-track" id="servicesTrack">
+       
     <a href="services.html#basic" class="service-card">
       <img src="Floor Cleaning (dusting, sweeping, mopping all areas).jpg" alt="Basic Cleaning">
       <h3>Basic Cleaning</h3>
@@ -140,7 +196,8 @@
       <h3>Shifting Help</h3>
       <p>Packing & moving assistance</p>
     </a>
-
+</div>
+      <button class="nav-btn next" onclick="scrollServices(1)">❯</button>
   </div>
 </section>
 
@@ -179,45 +236,61 @@ fetch("header.html")
     document.getElementById("header").innerHTML = data;
 
     const modal = document.getElementById("mobile-menu-modal");
+    const menuBtn = document.querySelector(".menu-btn");
+    const closeBtn = modal.querySelector(".close-button");
+    const scrim = modal.querySelector(".c-modal__scrim");
 
-    document.querySelector(".back-button")
-      .addEventListener("click", () => {
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
-      });
+    /* OPEN MENU */
+    menuBtn.addEventListener("click", () => {
+      modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    });
 
-    modal.querySelector(".sub-header")
-      .addEventListener("click", () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      });
+    /* CLOSE MENU */
+    function closeMenu(){
+      modal.classList.remove("active");
+      document.body.style.overflow = "";
+    }
 
-    modal.querySelector(".menu-level-0")
-      .addEventListener("click", () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
+    closeBtn.addEventListener("click", closeMenu);
+    scrim.addEventListener("click", closeMenu);
+
+    /* SUB MENU OPEN */
+    document.querySelectorAll("[data-submenu]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector(".menu-level-0").classList.add("shifted");
+        document.getElementById(btn.dataset.submenu).classList.add("active");
       });
-    modal.querySelector(".menu-level-1")
-      .addEventListener("click", () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
+    });
+
+    /* BACK BUTTON */
+    document.querySelectorAll(".back-button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector(".menu-level-0").classList.remove("shifted");
+        document.querySelectorAll(".menu-level-1").forEach(m => m.classList.remove("active"));
       });
-    modal.querySelector(".menu-level-0.shifted")
-      .addEventListener("click", () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      });
-   modal.querySelector(".menu-level-1.active ")
-      .addEventListener("click", () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      });
+    });
 
   });
 
 fetch("footer.html")
   .then(res => res.text())
   .then(data => document.getElementById("footer").innerHTML = data);
+</script>
+<script>
+let index = 0;
+
+function scrollServices(direction){
+  const track = document.getElementById("servicesTrack");
+  const total = track.children.length;
+
+  index += direction;
+
+  if(index < 0) index = total - 1;
+  if(index >= total) index = 0;
+
+  track.style.transform = `translateX(-${index * 100}%)`;
+}
 </script>
 
 </body>
