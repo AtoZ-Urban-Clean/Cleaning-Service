@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
         /* === SITE HEADER === */
         .site-header {
@@ -20,149 +20,109 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 20px;
+            padding: 10px 20px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .logo a {
             text-decoration: none;
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
             color: #0066ff;
+            letter-spacing: -0.5px;
         }
 
         /* === DESKTOP NAVIGATION === */
-        .nav-list { list-style: none; display: flex; gap: 20px; }
-        .nav-link { cursor: pointer; font-size: 13px; font-weight: 600; color: #333; text-transform: uppercase; }
+        .desktop-nav { display: flex; list-style: none; gap: 5px; }
+        .nav-item { position: relative; }
+        .nav-link { 
+            padding: 15px 12px;
+            display: block;
+            cursor: pointer; 
+            font-size: 12px; 
+            font-weight: 700; 
+            color: #333; 
+            text-transform: uppercase; 
+            text-decoration: none;
+        }
 
-        .nav-item { position: relative; padding: 10px 0; }
         .mega-menu {
             display: none;
             position: absolute;
             top: 100%;
             left: 0;
             background: #fff;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            gap: 30px;
-            min-width: 500px;
-            border-radius: 4px;
+            padding: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            gap: 40px;
+            min-width: 600px;
+            border-bottom: 3px solid #0066ff;
         }
         .nav-item:hover .mega-menu { display: flex; }
 
-        .menu-col h4 { color: #0066ff; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; }
+        .menu-col h4 { color: #0066ff; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .menu-col ul { list-style: none; }
-        .menu-col ul li a { text-decoration: none; color: #555; font-size: 13px; display: block; padding: 4px 0; }
+        .menu-col ul li a { text-decoration: none; color: #666; font-size: 13px; display: block; padding: 6px 0; transition: color 0.2s; }
+        .menu-col ul li a:hover { color: #0066ff; }
 
-        .header-right { display: flex; align-items: center; gap: 10px; }
-        .header-right input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .header-right input { padding: 8px 15px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 14px; width: 180px; }
 
         .bag-btn {
             background: #ff007f;
             color: #fff;
-            padding: 8px 16px;
-            border-radius: 5px;
+            padding: 9px 18px;
+            border-radius: 4px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 13px;
+            font-weight: 700;
+            font-size: 12px;
+            transition: opacity 0.2s;
         }
+        .bag-btn:hover { opacity: 0.9; }
 
-        /* === MOBILE UI ELEMENTS === */
-        .mobile-actions { display: none; align-items: center; gap: 15px; }
-        .menu-btn { background: none; border: none; font-size: 22px; cursor: pointer; color: #333; }
+        /* === MOBILE UI === */
+        .mobile-actions { display: none; align-items: center; gap: 12px; }
+        .menu-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #333; }
 
-        @media (max-width: 900px) {
-            .nav-list, .header-right { display: none; }
+        @media (max-width: 1024px) {
+            .desktop-nav, .header-right { display: none; }
             .mobile-actions { display: flex; }
-            .logo a { font-size: 18px; }
         }
 
         /* === MOBILE SIDE MODAL === */
-        #mobile-menu-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            visibility: hidden;
-            transition: visibility 0.3s;
-        }
+        #mobile-menu-modal { position: fixed; inset: 0; z-index: 9999; visibility: hidden; transition: visibility 0.3s; }
         #mobile-menu-modal.active { visibility: visible; }
-
-        .c-modal__scrim {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+        .c-modal__scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease; }
         #mobile-menu-modal.active .c-modal__scrim { opacity: 1; }
 
         .c-modal__dialog {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 85%;
-            max-width: 300px;
-            height: 100%;
-            background: #fff;
-            transform: translateX(-100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
+            position: absolute; top: 0; left: 0; width: 85%; max-width: 320px; height: 100%;
+            background: #fff; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         #mobile-menu-modal.active .c-modal__dialog { transform: translateX(0); }
-
         .c-modal__content { height: 100%; overflow: hidden; position: relative; }
-        
-        .close-button {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 22px;
-            z-index: 10;
-        }
+        .close-button { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 22px; z-index: 10; cursor: pointer; }
 
         .menu-container { padding-top: 60px; height: 100%; position: relative; }
-
         .ada-menu { list-style: none; padding: 0; }
-        .ada-menu li { border-bottom: 1px solid #eee; }
+        .ada-menu li { border-bottom: 1px solid #f1f1f1; }
         .ada-menu a, .ada-menu button {
-            width: 100%;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-            font-weight: 500;
-            background: none;
-            border: none;
-            text-align: left;
+            width: 100%; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+            text-decoration: none; color: #333; font-size: 14px; font-weight: 600; background: none; border: none; text-align: left;
         }
 
         .menu-level-0 { transition: transform 0.3s ease; }
         .menu-level-1 {
-            position: absolute;
-            top: 60px;
-            left: 0;
-            width: 100%;
-            height: calc(100% - 60px);
-            background: #fff;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            visibility: hidden;
-            overflow-y: auto;
+            position: absolute; top: 60px; left: 0; width: 100%; height: calc(100% - 60px);
+            background: #fff; transform: translateX(100%); transition: transform 0.3s ease;
+            visibility: hidden; overflow-y: auto;
         }
         .menu-level-1.active { transform: translateX(0); visibility: visible; }
         .menu-level-0.shifted { transform: translateX(-100%); }
 
-        .back-button { background: #f9f9f9 !important; color: #0066ff !important; font-weight: 700 !important; }
-        .sub-header { padding: 15px 20px; background: #eee; font-size: 12px; font-weight: bold; color: #666; }
-
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+        .back-button { background: #f8f9fa !important; color: #0066ff !important; font-weight: 700 !important; }
+        .sub-header { padding: 12px 20px; background: #f1f1f1; font-size: 11px; font-weight: 800; color: #888; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -173,93 +133,42 @@
       <a href="index.html">AtoZ Urban Clean</a>
     </div>
 
-<li class="nav-item">
-          <span class="nav-link">BASIC CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <h4>Essential</h4>
-              <ul>
-                <li><a href="services.html">Window & Door Cleaning</a></li>
-                <li><a href="services.html">Fan Cleaning</a></li>
-                <li><a href="services.html">Exhaust Fan Cleaning</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Wet Cleaning</h4>
-              <ul>
-                <li><a href="services.html">Sink & Faucet</a></li>
-                <li><a href="services.html">Bathroom Cleaning</a></li>
-              </ul>
-            </div>
-            <div class="menu-col">
-              <h4>Floor</h4>
-              <ul>
-                <li><a href="services.html">Standard Floor Cleaning</a></li>
-                <li><a href="services.html">Complete Home Indoor</a></li>
-              </ul>
-            </div>
+    <ul class="desktop-nav">
+      <li class="nav-item">
+        <a href="#" class="nav-link">Basic Cleaning <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i></a>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <h4>Essential</h4>
+            <ul>
+              <li><a href="services.html">Window & Door</a></li>
+              <li><a href="services.html">Fan Cleaning</a></li>
+              <li><a href="services.html">Exhaust Fan</a></li>
+            </ul>
           </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">PREMIUM CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Toilet Cleaning</a></li>
-                <li><a href="services.html">Bedroom Cleaning</a></li>
-                <li><a href="services.html">Kitchen Cleaning</a></li>
-                <li><a href="services.html">Office Cleaning</a></li>
-              </ul>
-            </div>
+          <div class="menu-col">
+            <h4>Wet Cleaning</h4>
+            <ul>
+              <li><a href="services.html">Sink & Faucet</a></li>
+              <li><a href="services.html">Bathroom Clean</a></li>
+            </ul>
           </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">DEEP CLEANING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Steam Cleaning</a></li>
-                <li><a href="services.html">Bedroom Deep Cleaning</a></li>
-                <li><a href="services.html">Furnished Cleaning</a></li>
-                <li><a href="services.html">Unfurnished Cleaning</a></li>
-              </ul>
-            </div>
+          <div class="menu-col">
+            <h4>Floor</h4>
+            <ul>
+              <li><a href="services.html">Standard Floor</a></li>
+              <li><a href="services.html">Complete Indoor</a></li>
+            </ul>
           </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">COMMERCIAL</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Basic Office Cleaning</a></li>
-                <li><a href="services.html">Standard Office Cleaning</a></li>
-                <li><a href="services.html">Premium Office Cleaning</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <span class="nav-link">SHIFTING</span>
-          <div class="mega-menu">
-            <div class="menu-col">
-              <ul>
-                <li><a href="services.html">Packing</a></li>
-                <li><a href="services.html">Load & Unload</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-      </ul>
-    </nav>
+        </div>
+      </li>
+      <li class="nav-item"><a href="services.html" class="nav-link">Premium</a></li>
+      <li class="nav-item"><a href="services.html" class="nav-link">Deep Clean</a></li>
+      <li class="nav-item"><a href="services.html" class="nav-link">Commercial</a></li>
+    </ul>
 
     <div class="header-right">
-      <input type="text" placeholder="Search...">
-      <a href="booking.html" class="bag-btn">BAG</a>
+      <input type="text" placeholder="Search services...">
+      <a href="booking.html" class="bag-btn">BAG (0)</a>
     </div>
 
     <div class="mobile-actions">
@@ -284,6 +193,7 @@
                         <li><button onclick="openSub('sub-deep')">Deep Cleaning <i class="fas fa-chevron-right"></i></button></li>
                         <li><button onclick="openSub('sub-comm')">Commercial <i class="fas fa-chevron-right"></i></button></li>
                         <li><button onclick="openSub('sub-shift')">Shifting <i class="fas fa-chevron-right"></i></button></li>
+                        <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
 
@@ -296,18 +206,8 @@
                         <div class="sub-header">WET CLEANING</div>
                         <li><a href="services.html">Sink & Faucet</a></li>
                         <li><a href="services.html">Bathroom Cleaning</a></li>
-                         <div class="sub-header">Floor</div>
-                        <li><a href="services.html">Standard Floor Cleaning</a></li>
-                        <li><a href="services.html">Complete Indoor Home Cleaning</a></li>
-                    </ul>
-                </div>
-
-                <div class="menu-level-1" id="sub-premium">
-                    <ul class="ada-menu">
-                        <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-                        <li><a href="services.html">Bedroom Cleaning</a></li>
-                        <li><a href="services.html">Kitchen Cleaning</a></li>
-                        <li><a href="services.html">Office Cleaning</a></li>
+                        <div class="sub-header">FLOOR</div>
+                        <li><a href="services.html">Standard Floor</a></li>
                     </ul>
                 </div>
 
@@ -315,26 +215,11 @@
                     <ul class="ada-menu">
                         <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
                         <li><a href="services.html">Steam Cleaning</a></li>
-                <li><a href="services.html">Bedroom Deep Cleaning</a></li>
-                <li><a href="services.html">Furnished Cleaning</a></li>
-                <li><a href="services.html">Unfurnished Cleaning</a></li>
+                        <li><a href="services.html">Bedroom Deep Cleaning</a></li>
+                        <li><a href="services.html">Full Home Furnished</a></li>
                     </ul>
                 </div>
-                <div class="menu-level-1" id="sub-comm">
-                    <ul class="ada-menu">
-                        <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-                <li><a href="services.html">Basic Office Cleaning</a></li>
-                <li><a href="services.html">Standard Office Cleaning</a></li>
-                <li><a href="services.html">Premium Office Cleaning</a></li>
-                    </ul>
-                </div>
-                 <div class="menu-level-1" id="sub-shift">
-                    <ul class="ada-menu">
-                        <li><button class="back-button" onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
-                <li><a href="services.html">Packing</a></li>
-                <li><a href="services.html">Load & Unload</a></li>
-                    </ul>
-                </div>
+
             </div>
         </div>
     </div>
@@ -343,14 +228,9 @@
 <script>
     function toggleMenu(isOpen) {
         const modal = document.getElementById('mobile-menu-modal');
-        if (isOpen) {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        } else {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-            closeSub();
-        }
+        modal.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (!isOpen) closeSub();
     }
 
     function openSub(menuId) {
@@ -360,8 +240,7 @@
 
     function closeSub() {
         document.getElementById('lvl-0').classList.remove('shifted');
-        const subs = document.querySelectorAll('.menu-level-1');
-        subs.forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.menu-level-1').forEach(s => s.classList.remove('active'));
     }
 </script>
 
