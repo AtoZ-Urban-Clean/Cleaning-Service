@@ -18,41 +18,53 @@
 
   <div class="bottom">
     Designed & Developed by <span>Yuva Sivasakthi</span><br>
-    <small>Revision – 02-02-2026</small>
+    <small>Revision 02-02-2026</small>
   </div>
 </footer>
 
 
 <style>
+
 .site-footer{
-  background:#0b2a5a;           /* dark blue */
-  padding:40px 20px;
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:30px;
+  width:100%;
+  background:#0b2a5a;
+  padding:50px 20px;
+  display:flex;
+  justify-content:center;   /* 🔥 whole footer center */
   font-family:Segoe UI, Arial;
-  text-align:center;
   color:#fff;
 }
 
-/* Footer columns */
+/* INNER WRAPPER */
+.site-footer > .col,
+.site-footer > .bottom{
+  max-width:1100px;
+}
+
+/* GRID INSIDE */
+.site-footer{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  text-align:center;
+  gap:40px;
+}
+
+/* COLUMN */
 .site-footer .col{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:flex-start;
-  gap:8px;
+  gap:10px;
 }
 
-/* Headings */
+/* HEADINGS */
 .site-footer h4{
-  margin-bottom:12px;
   font-size:18px;
   font-weight:600;
-  color:#ffffff;
+  margin-bottom:12px;
 }
 
-/* Text & links */
+/* TEXT */
 .site-footer p,
 .site-footer a{
   font-size:14px;
@@ -61,31 +73,28 @@
 }
 
 .site-footer a:hover{
-  color:#ffffff;
-  text-decoration:underline;
+  color:#fff;
 }
 
-/* Bottom bar */
+/* BOTTOM BAR */
 .bottom{
   grid-column:1 / -1;
-  margin-top:30px;
+  margin-top:35px;
   background:#081f42;
-  padding:12px;
+  padding:14px;
   font-size:13px;
-  text-align:center;
   color:#cfd9ff;
 }
 
 .bottom b{
   font-size:14px;
-  font-weight:600;
 }
 
-/* 📱 MOBILE VIEW */
-@media (max-width:768px){
+/* 📱 MOBILE */
+@media(max-width:768px){
   .site-footer{
     grid-template-columns:1fr;
-    gap:25px;
+    gap:30px;
   }
 }
 
