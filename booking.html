@@ -96,11 +96,14 @@ button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; back
     <label>Mobile Number</label>
     <input type="tel" id="mobile" placeholder="Enter mobile number">
 
-    <label>Location</label>
-    <div class="input-group">
-        <input type="text" id="location" placeholder="Address or GPS location">
-        <button class="gps-btn" onclick="getLocation()" title="Use GPS"><i class="fas fa-location-crosshairs"></i></button>
-    </div>
+<label>Location</label>
+<div class="input-group">
+  <input type="text" id="location" placeholder="Pick exact location from Google Maps" readonly>
+  <button class="gps-btn" onclick="openGoogleMaps()" title="Pick from Google Maps">
+    <i class="fas fa-map-marked-alt"></i>
+  </button>
+</div>
+
 
     <label>Preferred Date & Time</label>
     <div style="display: flex; gap: 10px;">
@@ -179,64 +182,31 @@ function saveAndReload() {
     loadCart();
 }
 
-async function getLocation() {
-  const locInput = document.getElementById("location");
-
-  if (!navigator.geolocation) {
-    alert("GPS not supported");
-    return;
-  }
-
-  locInput.value = "Getting exact address… please wait";
-
-  navigator.geolocation.getCurrentPosition(
-    async (pos) => {
+function openGoogleMaps() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
 
-      // Retry reverse geocoding (district → full address takes time)
-      for (let i = 0; i < 3; i++) {
-        try {
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&addressdetails=1`
-          );
-          const data = await res.json();
-          const a = data.address || {};
+      // Open Google Maps picker
+      window.open(
+        `https://www.google.com/maps?q=${lat},${lon}`,
+        "_blank"
+      );
 
-          const address = [
-            a.house_number,
-            a.road,
-            a.neighbourhood,
-            a.suburb,
-            a.village,
-            a.city || a.town,
-            a.state,
-            a.postcode
-          ].filter(Boolean).join(", ");
+      // Auto-fill lat/long (fallback)
+      document.getElementById("location").value =
+        `Lat: ${lat.toFixed(6)}, Long: ${lon.toFixed(6)} (Select exact spot in Maps)`;
 
-          if (address.split(",").length >= 4) {
-            locInput.value = address;
-            return;
-          }
-
-        } catch (e) {}
-
-        // wait before retry
-        await new Promise(r => setTimeout(r, 1500));
-      }
-
-      // fallback
-      locInput.value = "Exact address not found, please type manually";
-    },
-    () => {
-      alert("Location permission denied");
-      locInput.value = "";
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 15000
-    }
-  );
+    }, () => {
+      // If GPS denied → open Maps directly
+      window.open("https://www.google.com/maps", "_blank");
+    }, {
+      enableHighAccuracy: true
+    });
+  } else {
+    window.open("https://www.google.com/maps", "_blank");
+  }
 }
 
 function confirmBooking(){
