@@ -8,6 +8,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+  /* ===== GLOBAL HEADER STYLES ===== */
+.site-header {
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
+}
+
+.site-header .container {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 15px;
+}
+
+/* Logo smaller mobile */
+@media (max-width:900px) {
+  .site-header .logo a {
+    font-size:16px;
+  }
+}
+
+/* inline search + actions on mobile */
+@media (max-width:900px) {
+  .site-header .container {
+    flex-wrap:nowrap !important;
+    gap:6px;
+  }
+  .header-right input {
+    flex:1;
+    min-width:0;
+    display:block;
+    font-size:13px;
+    padding:6px 8px;
+  }
+  .mobile-actions {
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .bag-btn {
+    font-size:12px;
+    padding:6px 10px;
+    white-space:nowrap;
+  }
+}
+
 body{
   margin:0;
   font-family:Segoe UI, Arial, sans-serif;
@@ -521,6 +572,7 @@ body{
 
 <script>
 // --- 1. HEADER & FOOTER FETCHING ---
+
 fetch("header.html")
   .then(res => res.text())
   .then(data => {
@@ -565,7 +617,7 @@ fetch("header.html")
     // Update bag count if available
     if (window.updateBagCount) updateBagCount();
   })
-  .catch(err => console.error("Failed to load header:", err));
+  .catch(console.error);
 
 
 fetch("footer.html")
