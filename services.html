@@ -1,711 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="atoz.png">
-
-<meta charset="UTF-8">
-<title>AtoZ Urban Clean – Services</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="atoz.png">
+    <meta charset="UTF-8">
+    <title>AtoZ Urban Clean – Services</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
+    /* === BASE STYLES === */
+    body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; padding-top: 70px; }
+    * { box-sizing: border-box; }
 
-  /* ===== GLOBAL HEADER STYLES ===== */
-.site-header {
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:1000;
-}
+    /* === INTEGRATED HEADER STYLES === */
+    .site-header { background: #fff; border-bottom: 1px solid #ddd; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
+    .site-header .header-container { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; max-width: 1400px; margin: 0 auto; }
+    .logo a { text-decoration: none; font-size: 22px; font-weight: 800; color: #0066ff; }
+    
+    .desktop-nav { display: flex; list-style: none; gap: 5px; margin: 0; padding: 0; }
+    .nav-item { position: relative; }
+    .nav-link { padding: 15px 12px; display: block; cursor: pointer; font-size: 12px; font-weight: 700; color: #333; text-transform: uppercase; text-decoration: none; }
+    
+    .mega-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); gap: 40px; min-width: 600px; border-bottom: 3px solid #0066ff; }
+    .nav-item:hover .mega-menu { display: flex; }
+    .menu-col h4 { color: #0066ff; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; border-bottom: 1px solid #eee; }
+    .menu-col ul { list-style: none; padding: 0; }
+    .menu-col ul li a { text-decoration: none; color: #666; font-size: 13px; display: block; padding: 6px 0; }
 
-.site-header .container {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 15px;
-}
+    .header-right { display: flex; align-items: center; gap: 15px; }
+    .header-right input { padding: 8px 15px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 14px; width: 180px; }
+    
+    .bag-btn { background:#ff007f; color:#fff; padding:9px 16px; border-radius:4px; font-weight:700; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+    .bag-count { background:#fff; color:#ff007f; border-radius:10px; padding:2px 6px; font-size:11px; min-width:16px; text-align:center; }
 
-/* Logo smaller mobile */
-@media (max-width:900px) {
-  .site-header .logo a {
-    font-size:16px;
-  }
-}
+    /* === SERVICES PAGE LAYOUT === */
+    #pageHeader { background:#fff; padding:20px; text-align:center; font-size:26px; font-weight:600; border-bottom:1px solid #ddd; margin: 0; }
+    .main-container { display:flex; gap:20px; padding:20px; }
 
-/* inline search + actions on mobile */
-@media (max-width:900px) {
-  .site-header .container {
-    flex-wrap:nowrap !important;
-    gap:6px;
-  }
-  .header-right input {
-    flex:1;
-    min-width:0;
-    display:block;
-    font-size:13px;
-    padding:6px 8px;
-  }
-  .mobile-actions {
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .bag-btn {
-    font-size:12px;
-    padding:6px 10px;
-    white-space:nowrap;
-  }
-}
+    .filters { width:260px; background:#fff; padding:15px; border-radius:8px; height: fit-content; position: sticky; top: 90px; }
+    .filter-title { font-weight:600; margin:15px 0 5px; }
+    .filters select { width:100%; padding:8px; margin-bottom:10px; border: 1px solid #ddd; border-radius: 4px; }
 
-body{
-  margin:0;
-  font-family:Segoe UI, Arial, sans-serif;
-  background:#f6f6f6;
-}
-  
+    .products { flex:1; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:20px; }
+    .card { background:#fff; border-radius:10px; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.08); }
+    .card img { width:100%; height:180px; object-fit:cover; border-radius:8px; }
+    .card h3 { margin:10px 0 5px; font-size: 18px; }
+    .price del { color:#888; margin-right: 5px; }
+    .price b { color: #333; font-size: 18px; }
+    .book { display:block; text-align:center; margin-top:10px; padding:10px; background:#ff007f; color:#fff; text-decoration:none; border-radius:6px; font-weight: 600; }
 
-/* HEADER */
+    /* === MOBILE MENU MODAL === */
+    .mobile-actions { display: none; align-items: center; gap: 12px; }
+    .menu-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #333; }
+    #mobile-menu-modal { position: fixed; inset: 0; z-index: 9999; visibility: hidden; }
+    #mobile-menu-modal.active { visibility: visible; }
+    .c-modal__scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); }
+    .c-modal__dialog { position: absolute; top: 0; left: 0; width: 85%; max-width: 320px; height: 100%; background: #fff; transform: translateX(-100%); transition: 0.3s; }
+    #mobile-menu-modal.active .c-modal__dialog { transform: translateX(0); }
+    .menu-container { padding-top: 60px; position: relative; height: 100%; overflow-x: hidden; }
+    .ada-menu { list-style:none; padding:0; }
+    .ada-menu li { border-bottom:1px solid #eee; }
+    .ada-menu a, .ada-menu button { width:100%; padding:15px 20px; display:flex; justify-content:space-between; background:none; border:none; font-size:14px; font-weight:600; text-decoration:none; color:#333; cursor:pointer; }
+    .menu-level-1 { position: absolute; top: 60px; left: 0; width: 100%; height: 100%; background: #fff; transform: translateX(100%); transition: 0.3s; visibility: hidden; }
+    .menu-level-1.active { transform: translateX(0); visibility: visible; }
+    .menu-level-0.shifted { transform: translateX(-100%); transition: 0.3s; }
 
-
-/* LAYOUT */
-.container{
-  display:flex;
-  gap:20px;
-  padding:20px;
-}
-
-/* FILTERS */
-.filters{
-  width:260px;
-  background:#fff;
-  padding:15px;
-  border-radius:8px;
-}
-.filter-title{
-  font-weight:600;
-  margin:15px 0 5px;
-}
-.filters select{
-  width:100%;
-  padding:8px;
-  margin-bottom:10px;
-}
-
-/* PRODUCTS */
-.products{
-  flex:1;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:20px;
-}
-
-/* CARD */
-.card{
-  background:#fff;
-  border-radius:10px;
-  padding:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
-}
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:8px;
-}
-.card h3{margin:10px 0 5px;}
-.price del{color:#888;}
-.off{color:#2ecc71;font-weight:600;}
-.book{
-  display:block;
-  text-align:center;
-  margin-top:10px;
-  padding:10px;
-  background:#ff007f;
-  color:#fff;
-  text-decoration:none;
-  border-radius:6px;
-}
-.nav-btn{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #0066ff;
-  color: #fff;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.nav-btn.prev{ left: 5px; }
-.nav-btn.next{ right: 5px; }
-/* ===============================
-   MOBILE HEADER – MATCH ALL PAGES
-
-
-@media (max-width: 900px) {
-
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 12px;
-    gap: 8px;
-  }
-
-  /* LOGO */
-  .logo {
-    font-size: 14px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  /* SEARCH */
-  .header-right input {
-    flex: 1;
-    min-width: 0;
-    font-size: 13px;
-    padding: 6px 8px;
-  }
-
-  /* BAG */
-  .bag-btn {
-    font-size: 12px;
-    padding: 6px 10px;
-    white-space: nowrap;
-  }
-
-  /* MOBILE ACTIONS (MENU) */
-  .mobile-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .menu-btn {
-    font-size: 18px;
-    background: none;
-    border: none;
-  }
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .container{flex-direction:column;}
-  .filters{width:100%;}
-   .filters {     display: none;   }
-    .services-track{
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 20px;
-    transform: none !important;
-  }
-  .service-card{
-    min-width: auto;
-  }
-  .nav-btn{ display: none; }
-}
-  
+    @media(max-width:1024px){
+        .desktop-nav, .header-right { display: none; }
+        .mobile-actions { display: flex; }
+        .main-container { flex-direction: column; }
+        .filters { width: 100%; position: static; }
+    }
 </style>
 </head>
 
 <body>
 
-<div id="header"></div>
+<header class="site-header">
+  <div class="header-container">
+    <div class="logo"><a href="index.html">AtoZ Urban Clean</a></div>
 
-<div class="container">
+    <ul class="desktop-nav">
+      <li class="nav-item">
+        <a href="#" class="nav-link">Cleaning <i class="fas fa-chevron-down"></i></a>
+        <div class="mega-menu">
+          <div class="menu-col">
+            <h4>Types</h4>
+            <ul>
+              <li><a href="services.html#basic">Basic Cleaning</a></li>
+              <li><a href="services.html#premium">Premium Cleaning</a></li>
+              <li><a href="services.html#deep">Deep Cleaning</a></li>
+            </ul>
+          </div>
+          <div class="menu-col">
+            <h4>Commercial</h4>
+            <ul>
+              <li><a href="services.html#Commercial">Office Cleaning</a></li>
+              <li><a href="services.html#shifting">House Shifting</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
 
-<!-- FILTER PANEL -->
-<div class="filters">
+    <div class="header-right">
+      <input type="text" id="headerSearch" placeholder="Search services...">
+      <a href="booking.html" class="bag-btn">BAG <span class="bag-count">0</span></a>
+    </div>
 
-  <div class="filter-title">Category</div>
-  <select id="categoryFilter">
-    <option value="all">All</option>
-    <option value="basic">Basic Cleaning</option>
-    <option value="deep">Deep Cleaning</option>
-    <option value="Commercial">Commercial </option>
-    <option value="premium">Premium Cleaning</option>
-    <option value="shifting">House Shifting</option>
-  </select>
+    <div class="mobile-actions">
+      <button class="menu-btn" onclick="toggleMenu(true)"><i class="fas fa-bars"></i></button>
+      <a href="booking.html" class="bag-btn">BAG <span class="bag-count">0</span></a>
+    </div>
+  </div>
+</header>
 
-  <div class="filter-title">Price</div>
-  <select id="priceSort">
-    <option value="none">Default</option>
-    <option value="low">Low to High</option>
-    <option value="high">High to Low</option>
-  </select>
-
-  <div class="filter-title">Rating</div>
-  <select id="ratingFilter">
-    <option value="all">All</option>
-    <option value="4">4★ & above</option>
-    <option value="5">5★ only</option>
-  </select>
-
+<div id="mobile-menu-modal" class="c-modal">
+    <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
+    <div class="c-modal__dialog">
+        <div class="menu-container">
+            <div class="menu-level-0" id="lvl-0">
+                <ul class="ada-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><button onclick="openSub('sub-clean')">Services <i class="fas fa-chevron-right"></i></button></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="menu-level-1" id="sub-clean">
+                <ul class="ada-menu">
+                    <li><button onclick="closeSub()"><i class="fas fa-chevron-left"></i> Back</button></li>
+                    <li><a href="services.html#basic">Basic Cleaning</a></li>
+                    <li><a href="services.html#premium">Premium Cleaning</a></li>
+                    <li><a href="services.html#deep">Deep Cleaning</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- PRODUCTS -->
-<div class="products" id="productList">
+<header id="pageHeader">All Services</header>
 
-<!-- CARD 1-->
-<div class="card" data-category="basic" data-price="99" data-rating="5">
-<img src="Window & Door cleaning.jpg">
-<h3>Window Cleaning</h3>
-<h5>Quantity 1</h5>
-<div class="price"><del>₹200</del> <b>₹99</b></div>
-<a class="book" href="#"
-   onclick="addToCart('Window Cleaning',99); return false;">
-   Book Now
-</a>
+<div class="main-container">
+    <div class="filters">
+        <div class="filter-title">Category</div>
+        <select id="categoryFilter">
+            <option value="all">All</option>
+            <option value="basic">Basic Cleaning</option>
+            <option value="deep">Deep Cleaning</option>
+            <option value="Commercial">Commercial</option>
+            <option value="premium">Premium Cleaning</option>
+            <option value="shifting">House Shifting</option>
+        </select>
 
-</div>
+        <div class="filter-title">Price</div>
+        <select id="priceSort">
+            <option value="none">Default</option>
+            <option value="low">Low to High</option>
+            <option value="high">High to Low</option>
+        </select>
 
-<!-- CARD 2-->
-<div class="card" data-category="basic" data-price="99" data-rating="5">
-<img src="Door cleaning.jpg">
-<h3>Door Cleaning</h3>
-<h5>Quantity 1</h5>
-<div class="price"><del>₹200</del> <b>₹99</b></div>
-<a class="book" href="#"
-   onclick="addToCart('Door Cleaning',99); return false;">
-   Book Now
-</a>
-</div>
+        <div class="filter-title">Rating</div>
+        <select id="ratingFilter">
+            <option value="all">All</option>
+            <option value="4">4★ & above</option>
+            <option value="5">5★ only</option>
+        </select>
+    </div>
 
-<!-- CARD 3-->
-<div class="card" data-category="basic" data-price="99" data-rating="5">
-<img src="Fan Cleaning.jpg">
-<h3>Fan Cleaning</h3>
-<h5>Quantity 1</h5>
-<div class="price"><del>₹200</del> <b>₹99</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Fan Cleaning',99); return false;">
-   Book Now
-</a>
+    <div class="products" id="productList">
+        <div class="card" data-category="basic" data-price="99" data-rating="5">
+            <img src="Window & Door cleaning.jpg">
+            <h3>Window Cleaning</h3>
+            <div class="price"><del>₹200</del> <b>₹99</b></div>
+            <a class="book" href="#" onclick="addToCart('Window Cleaning',99); return false;">Book Now</a>
+        </div>
+        <div class="card" data-category="basic" data-price="99" data-rating="5">
+            <img src="Door cleaning.jpg">
+            <h3>Door Cleaning</h3>
+            <div class="price"><del>₹200</del> <b>₹99</b></div>
+            <a class="book" href="#" onclick="addToCart('Door Cleaning',99); return false;">Book Now</a>
+        </div>
+        <div class="card" data-category="basic" data-price="99" data-rating="5">
+            <img src="Fan Cleaning.jpg">
+            <h3>Fan Cleaning</h3>
+            <div class="price"><del>₹200</del> <b>₹99</b></div>
+            <a class="book" href="#" onclick="addToCart('Fan Cleaning',99); return false;">Book Now</a>
+        </div>
+        </div>
 </div>
-
-<!-- CARD 4-->
-<div class="card" data-category="basic" data-price="199" data-rating="5">
-<img src="Exhaust Fan.jpg">
-<h3>Exhaust Fan Cleaning</h3>
-<h5>Quantity 1</h5>
-<div class="price"><del>₹300</del> <b>₹199</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Exhaust Fan Cleaning',199) ;return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 5-->
-<div class="card" data-category="basic" data-price="299" data-rating="5">
-<img src="Sink and Faucet Cleaning.jpg">
-<h3>Sink and Faucet Cleaning</h3>
-<h5>Quantity 1</h5>
-<div class="price"><del>₹400</del> <b>₹299</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Sink and Faucet Cleaning',299) ;return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 6-->
-<div class="card" data-category="basic" data-price="799" data-rating="4">
-<img src="Bathroom Cleaning (Floor & wall tiles).jpg">
-<h3>Bathroom Cleaning</h3>
-<h5>Floor & Wall Tiles</h5>
-<div class="price"><del>₹999</del> <b>₹799</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Bathroom Cleaning',799);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 7-->
-<div class="card" data-category="premium" data-price="999" data-rating="4">
-<img src="Premium Toilet Cleaning (Seat,Floor & Wall tiles).jpg">
-<h3>Premium Toilet Cleaning</h3>
-<h5>Seat,Floor & Wall tiles</h5>
-<div class="price"><del>₹1999</del> <b>₹999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Bathroom Cleaning',999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 8-->
-<div class="card" data-category="premium" data-price="1299" data-rating="4">
-<img src="Standard Kitchen Cleaning.jpg">
-<h3>Standard Kitchen Cleaning </h3>
-<h5>StandardCleaning</h5>
-<div class="price"><del>₹2999</del> <b>1299</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Standard Kitchen Cleaning',1299);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 9-->
-<div class="card" data-category="premium" data-price="1999" data-rating="4">
-<img src="Floor Cleaning (dusting, sweeping, mopping all areas).jpg">
-<h3>Standard Floor Cleaning</h3>
-<h5>Dusting, Sweeping, Mopping all areas</h5>
-<div class="price"><del>₹2999</del> <b>1999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Standard Floor Cleaning',1999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 10-->
-<div class="card" data-category="premium" data-price="5999" data-rating="4">
-<img src="Complete Home Cleaning indoor.jpg">
-<h3>Complete Home Cleaning indoor</h3>
-<h5>Indoor cleaning</h5>
-<div class="price"><del>₹6999</del> <b>5999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Standard Floor Cleaning',5999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 11-->
-<div class="card" data-category="premium" data-price="999" data-rating="5">
-<img src="Premium Bedroom Deep Cleaning.jpg">
-<h3>Premium Bedroom Deep Cleaning</h3>
-<h5>Single Bedroom</h5>
-<div class="price"><del>₹1999</del> <b>₹999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Premium Bedroom Deep Cleaning',999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 12-->
-<div class="card" data-category="premium" data-price="1799" data-rating="4">
-<img src="Premium Kitchen cleaning.jpg">
-<h3>Premium Kitchen Cleaning</h3>
-<h5>Scrubbing tiles, Deep degreasing, Cabinets inside & out, Sink & Faucet Cleaning, etc</h5>
-<div class="price"><del>₹2999</del> <b>1799</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Premium Kitchen Cleaning',1799);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 13-->
-<div class="card" data-category="Commercial" data-price="20" data-rating="4">
-<img src="Basic Office Cleaning.jpg">
-<h3>Basic Office Cleaning</h3>
-<h5>Per SQ Ft</h5>
-<div class="price"><del>₹99</del> <b>20</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Basic Office Cleaning',20);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 14-->
-<div class="card" data-category="Commercial" data-price="45" data-rating="4">
-<img src="Standard Office Cleaning.jpg">
-<h3>Standard Office Cleaning</h3>
-<h5>Per SQ Ft</h5>
-<div class="price"><del>₹199</del> <b>45</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Standard Office Cleaning',45);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 15-->
-<div class="card" data-category="Commercial" data-price="55" data-rating="4">
-<img src="Premium Office Cleaning.jpg">
-<h3>Premium Office Cleaning</h3>
-<h5>Per SQ Ft</h5>
-<div class="price"><del>₹299</del> <b>55</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Premium Office Cleaning',55);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 16-->
-<div class="card" data-category="deep" data-price="6499" data-rating="4">
-<img src="Furnished.jpg">
-<h3>Furnished House Cleaning</h3>
-<h5>Less than 1200 square foot</h5>
-<div class="price"><del>₹7999</del> <b>6499</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Furnished House Cleaning',6499);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 17-->
-<div class="card" data-category="deep" data-price="10299" data-rating="4">
-<img src="Furnished.jpg">
-<h3>Furnished House Cleaning</h3>
-<h5>From 1200 to 2000 square foot</h5>
-<div class="price"><del>₹11999</del> <b>10299</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Furnished House Cleaning',10299);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 18-->
-<div class="card" data-category="deep" data-price="15599" data-rating="4">
-<img src="Furnished.jpg">
-<h3>Furnished House Cleaning</h3>
-<h5>From 2000 to 3000 square foot</h5>
-<div class="price"><del>₹16999</del> <b>15599</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Furnished House Cleaning',15599);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 19-->
-<div class="card" data-category="deep" data-price="5999" data-rating="4">
-<img src="UnFurnished.jpg">
-<h3>Unfurnished House Cleaning</h3>
-<h5>Less than 1200 square foot</h5>
-<div class="price"><del>₹6999</del> <b>5999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Unfurnished House Cleaning',5999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 20-->
-<div class="card" data-category="deep" data-price="6999" data-rating="4">
-<img src="UnFurnished.jpg">
-<h3>Unfurnished House Cleaning</h3>
-<h5>From 1200 to 2000 square foot</h5>
-<div class="price"><del>₹9999</del> <b>6999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Unfurnished House Cleaning',6999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 21-->
-<div class="card" data-category="deep" data-price="12599" data-rating="4">
-<img src="UnFurnished.jpg">
-<h3>Unfurnished House Cleaning</h3>
-<h5>From 2000 to 3000 square foot</h5>
-<div class="price"><del>15599</del> <b>12599</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Unfurnished House Cleaning',12599);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 22-->
-<div class="card" data-category="shifting" data-price="2999" data-rating="4">
-<img src="House Shifting.jpg">
-<h3>House Shifting</h3>
-<h5>Basic Local area Packing, Loading, Unloading </h5>
-<div class="price"><del>5599</del> <b>2999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Unfurnished House Cleaning',2999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 23-->
-<div class="card" data-category="shifting" data-price="4999" data-rating="4">
-<img src="House Shifting.jpg">
-<h3>House Shifting</h3>
-<h5>Less than 600 sqft - Packing, Loading, Unloading</h5>
-<div class="price"><del>6599</del> <b>4999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Unfurnished House Cleaning',4999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 24-->
-<div class="card" data-category="shifting" data-price="6999" data-rating="4">
-<img src="House Shifting-3.jpg">
-<h3>House Shifting</h3>
-<h5>Less than 1200 sqft - Packing, Loading, Unloading</h5>
-<div class="price"><del>7599</del> <b>6999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Unfurnished House Cleaning',6999);return false;">
-   Book Now
-</a>
-</div>
-
-<!-- CARD 25-->
-<div class="card" data-category="shifting" data-price="9999" data-rating="4">
-<img src="House Shifting-3.jpg">
-<h3>House Shifting</h3>
-<h5>1200 sqft to 2000 sqft - Packing, Loading, Unloading</h5>
-<div class="price"><del>12599</del> <b>9999</b></div>
-<a class="book" href="booking.html"
-   onclick="addToCart('Unfurnished House Cleaning',9999);return false;">
-   Book Now
-</a>
-</div>
-  
-</div>
-</div>
-
-<div id="footer"></div>
 
 <script src="js/cart.js"></script>
 
 <script>
-// --- 1. HEADER & FOOTER FETCHING ---
-
-fetch("header.html")
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("header").innerHTML = data;
-
-    // Ensure search is visible on services page
-    const searchBar = document.querySelector('.header-right input');
-    if (searchBar) {
-      searchBar.style.display = "block";  // ALWAYS show search here
-      searchBar.addEventListener("input", applyFilters);
+    // --- 1. HEADER LOGIC ---
+    function toggleMenu(isOpen) {
+        const modal = document.getElementById('mobile-menu-modal');
+        modal.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     }
 
-    // Header menu functions
-    window.toggleMenu = function(isOpen) {
-      const modal = document.getElementById("mobile-menu-modal");
-      if (modal) {
-        modal.classList.toggle("active", isOpen);
-        document.body.style.overflow = isOpen ? "hidden" : "";
-        if (!isOpen) window.closeSub();
-      }
-    };
+    function openSub(menuId) {
+        document.getElementById('lvl-0').classList.add('shifted');
+        document.getElementById(menuId).classList.add('active');
+    }
 
-    window.openSub = function(menuId) {
-      const lvl0 = document.getElementById("lvl-0");
-      const subMenu = document.getElementById(menuId);
-      if (lvl0 && subMenu) {
-        lvl0.classList.add("shifted");
-        subMenu.classList.add("active");
-      }
-    };
+    function closeSub() {
+        document.getElementById('lvl-0').classList.remove('shifted');
+        document.querySelectorAll('.menu-level-1').forEach(s => s.classList.remove('active'));
+    }
 
-    window.closeSub = function() {
-      const lvl0 = document.getElementById("lvl-0");
-      if (lvl0) {
-        lvl0.classList.remove("shifted");
-        document.querySelectorAll(".menu-level-1").forEach(s => {
-          s.classList.remove("active");
+    // --- 2. FILTERING LOGIC ---
+    const catSelect = document.getElementById("categoryFilter");
+    const priceSelect = document.getElementById("priceSort");
+    const rateSelect = document.getElementById("ratingFilter");
+    const searchBar = document.getElementById("headerSearch");
+    const allProductCards = [...document.querySelectorAll(".card")];
+    const productGrid = document.getElementById("productList");
+    const mainTitle = document.getElementById("pageHeader");
+
+    function applyFilters() {
+        const selectedCat = catSelect.value;
+        const selectedRate = rateSelect.value;
+        const searchText = searchBar.value.toLowerCase();
+
+        let filtered = allProductCards.filter(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const catMatch = selectedCat === "all" || card.dataset.category === selectedCat;
+            const rateMatch = selectedRate === "all" || parseInt(card.dataset.rating) >= parseInt(selectedRate);
+            const searchMatch = title.includes(searchText);
+            return catMatch && rateMatch && searchMatch;
         });
-      }
-    };
 
-    // Update bag count if available
-    if (window.updateBagCount) updateBagCount();
-  })
-  .catch(console.error);
+        if (priceSelect.value === "low") {
+            filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+        } else if (priceSelect.value === "high") {
+            filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+        }
 
+        productGrid.innerHTML = "";
+        if (filtered.length > 0) {
+            filtered.forEach(c => productGrid.appendChild(c));
+        } else {
+            productGrid.innerHTML = `<div style="text-align:center; width:100%; padding:50px;"><h3>No services found</h3></div>`;
+        }
 
-fetch("footer.html")
-  .then(res => res.text())
-  .then(data => document.getElementById("footer").innerHTML = data)
-  .catch(err => console.error("Footer Error:", err));
-
-
-// --- 2. FILTERING LOGIC ---
-// 1. Grab all elements
-// 1. Grab local elements
-const catSelect = document.getElementById("categoryFilter");
-const priceSelect = document.getElementById("priceSort");
-const rateSelect = document.getElementById("ratingFilter");
-const allProductCards = [...document.querySelectorAll(".card")];
-const productGrid = document.getElementById("productList");
-const mainTitle = document.getElementById("pageHeader");
-
-// 2. The Core Filter & Search Logic
-function applyFilters() {
-  // Check the URL for Hash
-  const hash = window.location.hash.replace("#", "");
-  if (hash) {
-    const decodedHash = decodeURIComponent(hash);
-    const optionExists = Array.from(catSelect.options).some(opt => opt.value === decodedHash);
-    if (optionExists) catSelect.value = decodedHash;
-  }
-
-  const selectedCat = catSelect.value;
-  const selectedRate = rateSelect.value;
-  
-  // Get search text (Look for the input in the fetched header)
-  const searchInput = document.querySelector('.header-right input');
-  const searchText = searchInput ? searchInput.value.toLowerCase() : "";
-
-  // Filter the cards
-  let filtered = allProductCards.filter(card => {
-    const title = card.querySelector('h3').innerText.toLowerCase();
-    const catMatch = selectedCat === "all" || card.dataset.category === selectedCat;
-    const rateMatch = selectedRate === "all" || parseInt(card.dataset.rating) >= parseInt(selectedRate);
-    const searchMatch = title.includes(searchText); // Search check
-    
-    return catMatch && rateMatch && searchMatch;
-  });
-
-  // Sorting
-  if (priceSelect.value === "low") {
-    filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
-  } else if (priceSelect.value === "high") {
-    filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
-  }
-
-  // Render
-  productGrid.innerHTML = "";
-  if (filtered.length > 0) {
-    filtered.forEach(c => productGrid.appendChild(c));
-  } else {
-    productGrid.innerHTML = `<div style="text-align:center; width:100%; padding:50px;">
-                                <h3>No services found</h3>
-                                <p>Try adjusting your search or filters</p>
-                             </div>`;
-  }
-
-  // Update Title
-  mainTitle.innerText = selectedCat === "all" ? "All Services" : catSelect.options[catSelect.selectedIndex].text;
-}
-
-// 3. Fetch Header & Set up Search Event
-fetch("header.html")
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("header").innerHTML = data;
-    
-    // NOW the search bar exists, we can add the event listener
-    const searchBar = document.querySelector('.header-right input');
-    if(searchBar) {
-      searchBar.addEventListener('input', applyFilters);
+        mainTitle.innerText = selectedCat === "all" ? "All Services" : catSelect.options[catSelect.selectedIndex].text;
     }
 
-    // Standard header functions (menu etc)
-    window.toggleMenu = (isOpen) => { /* ... your existing code ... */ };
-    if (window.updateBagCount) window.updateBagCount();
-  });
+    // --- 3. EVENT LISTENERS ---
+    catSelect.onchange = priceSelect.onchange = rateSelect.onchange = applyFilters;
+    searchBar.oninput = applyFilters;
 
-// 4. Standard Event Listeners
-catSelect.onchange = priceSelect.onchange = rateSelect.onchange = applyFilters;
-window.addEventListener("hashchange", applyFilters);
-window.addEventListener("DOMContentLoaded", applyFilters);
+    // Handle Hash URL (e.g., services.html#deep)
+    window.addEventListener("load", () => {
+        const hash = window.location.hash.replace("#", "");
+        if (hash) {
+            catSelect.value = hash;
+            applyFilters();
+        }
+    });
 </script>
 
 </body>
