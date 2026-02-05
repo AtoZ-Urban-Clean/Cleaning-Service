@@ -171,20 +171,27 @@
 }
 
 .hero-text {
-    padding: 0 15px;
+    width: 90%;
+    left: 50%;
     top: 55%;
     transform: translate(-50%, -50%);
+    text-align: center;
   }
 
   .hero-text h2 {
-    font-size: 2.2rem;   /* slightly bigger but not too large */
-    line-height: 1.2;    /* tighter spacing */
-    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 1.1;
+    font-weight: 800;
+    white-space: normal;   /* allow proper wrapping */
+  }
+
+  .hero-text h2 span {
+    display: inline;       /* prevent forced line breaks */
   }
 
   .hero-text p {
     font-size: 1.1rem;
-    margin-top: 8px;
+    margin-top: 10px;
     line-height: 1.4;
   }
 </style>
