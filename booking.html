@@ -180,17 +180,42 @@ function saveAndReload() {
 }
 
 function getLocation() {
-    const locInput = document.getElementById("location");
-    if (navigator.geolocation) {
-        locInput.value = "Fetching location...";
-        navigator.geolocation.getCurrentPosition((position) => {
-            locInput.value = `Lat: ${position.coords.latitude}, Long: ${position.coords.longitude}`;
-        }, () => {
-            alert("Unable to retrieve location. Please type manually.");
-            locInput.value = "";
-        });
+  const locInput = document.getElementById("location");
+
+  if (!navigator.geolocation) {
+    alert("GPS not supported on this device");
+    return;
+  }
+
+  locInput.value = "Detecting location...";
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+        );
+        const data = await res.json();
+
+        if (data && data.display_name) {
+          locInput.value = data.display_name; // ✅ FULL ADDRESS
+        } else {
+          locInput.value = "Location detected, please edit manually";
+        }
+      } catch (e) {
+        locInput.value = "Unable to fetch address";
+      }
+    },
+    () => {
+      alert("Location permission denied");
+      locInput.value = "";
     }
+  );
 }
+
 function confirmBooking(){
   const name = document.getElementById("name").value.trim();
   const mobile = document.getElementById("mobile").value.trim();
