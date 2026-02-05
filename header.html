@@ -69,16 +69,29 @@
         .header-right { display: flex; align-items: center; gap: 15px; }
         .header-right input { padding: 8px 15px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 14px; width: 180px; }
 
-        .bag-btn {
-            background: #ff007f;
-            color: #fff;
-            padding: 9px 18px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 12px;
-            transition: opacity 0.2s;
-        }
+.bag-btn{
+  background:#ff007f;
+  color:#fff;
+  padding:9px 16px;
+  border-radius:4px;
+  font-weight:700;
+  font-size:12px;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.bag-count{
+  background:#fff;
+  color:#ff007f;
+  border-radius:10px;
+  padding:2px 6px;
+  font-size:11px;
+  min-width:16px;
+  text-align:center;
+}
+
         .bag-btn:hover { opacity: 0.9; }
 
         /* === MOBILE UI === */
@@ -218,7 +231,10 @@
 
     <div class="mobile-actions">
       <button class="menu-btn" onclick="toggleMenu(true)"><i class="fas fa-bars"></i></button>
-      <a href="booking.html" class="bag-btn">BAG</a>
+      <a href="booking.html" class="bag-btn">
+  BAG <span class="bag-count">0</span>
+</a>
+
     </div>
   </div>
 </header>
