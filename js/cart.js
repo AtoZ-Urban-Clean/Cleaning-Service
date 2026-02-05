@@ -1,52 +1,31 @@
-/* =========================
-   GLOBAL CART (AtoZ Urban Clean)
-========================= */
+/* GLOBAL CART */
+// Initialize cart from localStorage immediately
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Load cart safely
-let cart = JSON.parse(localStorage.getItem("cart"));
-if (!Array.isArray(cart)) cart = [];
-
-/* =========================
-   ADD TO CART
-========================= */
 function addToCart(name, price) {
-  cart.push({ name, price });
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateBagCount();
-  alert("Service added to Bag");
+    cart.push({ name, price });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateBagCount();
+    alert(name + " added to Bag");
 }
 
-/* =========================
-   UPDATE BAG COUNT (ALL PAGES)
-========================= */
 function updateBagCount() {
-  const count = cart.length;
+    // Find all bag buttons (Desktop and Mobile)
+    const bags = document.querySelectorAll(".bag-btn");
+    
+    if (bags.length === 0) {
+        console.warn("Bag buttons not found in DOM yet.");
+        return;
+    }
 
-  // Update ALL bag buttons (desktop + mobile)
-  document.querySelectorAll(".bag-count").forEach(el => {
-    el.textContent = count;
-  });
+    bags.forEach(bag => {
+        bag.textContent = `BAG (${cart.length})`;
+    });
 }
 
-/* =========================
-   CART TOTAL
-========================= */
-function getCartTotal() {
-  return cart.reduce((total, item) => total + Number(item.price), 0);
-}
+// Make functions global so they can be called from fetched HTML
+window.addToCart = addToCart;
+window.updateBagCount = updateBagCount;
 
-/* =========================
-   CLEAR CART (OPTIONAL)
-========================= */
-function clearCart() {
-  cart = [];
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateBagCount();
-}
-
-/* =========================
-   INIT ON PAGE LOAD
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  updateBagCount();
-});
+// Run once in case the header is already there
+document.addEventListener("DOMContentLoaded", updateBagCount);
