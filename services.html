@@ -105,8 +105,7 @@ header{
     <option value="basic">Basic Cleaning</option>
     <option value="deep">Deep Cleaning</option>
     <option value="Commercial">Commercial </option>
-    <option value="bathroom">Bathroom</option>
-    <option value="Standard">Standard Cleaning</option>
+    <option value="premium">Premium Cleaning</option>
     <option value="House Shifting">House Shifting</option>
   </select>
 
@@ -191,7 +190,7 @@ header{
 </div>
 
 <!-- CARD 6-->
-<div class="card" data-category="bathroom" data-price="799" data-rating="4">
+<div class="card" data-category="basic" data-price="799" data-rating="4">
 <img src="Bathroom Cleaning (Floor & wall tiles).jpg">
 <h3>Bathroom Cleaning</h3>
 <h5>Floor & Wall Tiles</h5>
@@ -203,7 +202,7 @@ header{
 </div>
 
 <!-- CARD 7-->
-<div class="card" data-category="bathroom" data-price="999" data-rating="4">
+<div class="card" data-category="premium" data-price="999" data-rating="4">
 <img src="Premium Toilet Cleaning (Seat,Floor & Wall tiles).jpg">
 <h3>Premium Toilet Cleaning</h3>
 <h5>Seat,Floor & Wall tiles</h5>
@@ -215,7 +214,7 @@ header{
 </div>
 
 <!-- CARD 8-->
-<div class="card" data-category="Standard" data-price="1299" data-rating="4">
+<div class="card" data-category="premium" data-price="1299" data-rating="4">
 <img src="Standard Kitchen Cleaning.jpg">
 <h3>Standard Kitchen Cleaning </h3>
 <h5>StandardCleaning</h5>
@@ -227,7 +226,7 @@ header{
 </div>
 
 <!-- CARD 9-->
-<div class="card" data-category="Standard" data-price="1999" data-rating="4">
+<div class="card" data-category="premium" data-price="1999" data-rating="4">
 <img src="Floor Cleaning (dusting, sweeping, mopping all areas).jpg">
 <h3>Standard Floor Cleaning</h3>
 <h5>Dusting, Sweeping, Mopping all areas</h5>
@@ -239,7 +238,7 @@ header{
 </div>
 
 <!-- CARD 10-->
-<div class="card" data-category="Standard" data-price="5999" data-rating="4">
+<div class="card" data-category="premium" data-price="5999" data-rating="4">
 <img src="Complete Home Cleaning indoor.jpg">
 <h3>Complete Home Cleaning indoor</h3>
 <h5>Indoor cleaning</h5>
@@ -251,7 +250,7 @@ header{
 </div>
 
 <!-- CARD 11-->
-<div class="card" data-category="deep" data-price="999" data-rating="5">
+<div class="card" data-category="premium" data-price="999" data-rating="5">
 <img src="Premium Bedroom Deep Cleaning.jpg">
 <h3>Premium Bedroom Deep Cleaning</h3>
 <h5>Single Bedroom</h5>
@@ -263,7 +262,7 @@ header{
 </div>
 
 <!-- CARD 12-->
-<div class="card" data-category="deep" data-price="1799" data-rating="4">
+<div class="card" data-category="premium" data-price="1799" data-rating="4">
 <img src="Premium Kitchen cleaning.jpg">
 <h3>Premium Kitchen Cleaning</h3>
 <h5>Scrubbing tiles, Deep degreasing, Cabinets inside & out, Sink & Faucet Cleaning, etc</h5>
@@ -436,16 +435,50 @@ header{
 <div id="footer"></div>
 
 <script>
-const categoryFilter = document.getElementById("categoryFilter");
+const category = document.getElementById("categoryFilter");
+const priceSort = document.getElementById("priceSort");
+const rating = document.getElementById("ratingFilter");
+const products = [...document.querySelectorAll(".card")];
+const list = document.getElementById("productList");
 const pageHeader = document.getElementById("pageHeader");
 
-categoryFilter.addEventListener("change", function () {
-  if (this.value === "all") {
-    pageHeader.innerText = "All Services";
-  } else {
-    pageHeader.innerText = this.options[this.selectedIndex].text;
+function applyFilters() {
+  const selectedCat = category.value;
+  const selectedRate = rating.value;
+
+  let filtered = products.filter(card => {
+    // Exact match for category and minimum rating check
+    const catMatch = selectedCat === "all" || card.dataset.category === selectedCat;
+    const rateMatch = selectedRate === "all" || parseInt(card.dataset.rating) >= parseInt(selectedRate);
+    return catMatch && rateMatch;
+  });
+
+  // Sort by price if requested
+  if (priceSort.value === "low") {
+    filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+  } else if (priceSort.value === "high") {
+    filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
   }
+
+  // Clear and Re-render
+  list.innerHTML = "";
+  filtered.forEach(c => list.appendChild(c));
+
+  // Update Page Title
+  pageHeader.innerText = selectedCat === "all" ? "All Services" : category.options[category.selectedIndex].text;
+}
+
+// AUTO-FILTER ON PAGE LOAD (Handles links like services.html#deep)
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash.replace("#", ""); 
+  if (hash && ["basic", "deep", "Commercial", "premium", "House Shifting"].includes(hash)) {
+    category.value = hash;
+  }
+  applyFilters();
 });
+
+// Listen for changes
+category.onchange = priceSort.onchange = rating.onchange = applyFilters;
 </script>
 
   
