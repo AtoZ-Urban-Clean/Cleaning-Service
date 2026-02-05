@@ -1,27 +1,25 @@
 /* GLOBAL CART */
-let cart = JSON.parse(localStorage.getItem("cart"));
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-if (!Array.isArray(cart)) {
-  cart = [];
-}
-
-function addToCart(name, price){
+// Function to add item
+function addToCart(name, price) {
   cart.push({ name, price });
   localStorage.setItem("cart", JSON.stringify(cart));
-  updateBagCount();
-  alert("Service added to Bag");
+  updateBagCount(); // Update UI immediately
+  alert(name + " added to Bag!");
 }
 
-function updateBagCount(){
-  const bag = document.querySelector(".bag-btn");
-  if (!bag) return;
-
-  bag.textContent = `BAG (${cart.length})`;
+// Function to update ALL bag buttons on the page
+function updateBagCount() {
+  // Use querySelectorAll because there is a Desktop and a Mobile button
+  const bagButtons = document.querySelectorAll(".bag-btn");
+  
+  bagButtons.forEach(btn => {
+    // Check if it's the mobile one (usually just says BAG) or desktop (BAG (0))
+    // We force the same format for consistency
+    btn.textContent = `BAG (${cart.length})`;
+  });
 }
 
-function getCartTotal(){
-  return cart.reduce((t,i)=>t + Number(i.price), 0);
-}
-
-/* RUN ONLY AFTER PAGE LOAD */
-document.addEventListener("DOMContentLoaded", updateBagCount);
+// Initial update on script load
+updateBagCount();
