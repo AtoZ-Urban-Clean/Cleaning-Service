@@ -83,6 +83,23 @@ header{
   text-decoration:none;
   border-radius:6px;
 }
+.nav-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #0066ff;
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nav-btn.prev{ left: 5px; }
+.nav-btn.next{ right: 5px; }
 
 /* MOBILE */
 @media(max-width:900px){
@@ -91,6 +108,16 @@ header{
   .filters {
     display: none;
   }
+    .services-track{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+    transform: none !important;
+  }
+  .service-card{
+    min-width: auto;
+  }
+  .nav-btn{ display: none; }
 }
 </style>
 </head>
