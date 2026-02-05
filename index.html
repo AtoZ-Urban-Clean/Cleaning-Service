@@ -234,43 +234,6 @@ fetch("header.html")
   .then(res => res.text())
   .then(data => {
     document.getElementById("header").innerHTML = data;
-
-    const modal = document.getElementById("mobile-menu-modal");
-    const menuBtn = document.querySelector(".menu-btn");
-    const closeBtn = modal.querySelector(".close-button");
-    const scrim = modal.querySelector(".c-modal__scrim");
-
-    /* OPEN MENU */
-    menuBtn.addEventListener("click", () => {
-      modal.classList.add("active");
-      document.body.style.overflow = "hidden";
-    });
-
-    /* CLOSE MENU */
-    function closeMenu(){
-      modal.classList.remove("active");
-      document.body.style.overflow = "";
-    }
-
-    closeBtn.addEventListener("click", closeMenu);
-    scrim.addEventListener("click", closeMenu);
-
-    /* SUB MENU OPEN */
-    document.querySelectorAll("[data-submenu]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelector(".menu-level-0").classList.add("shifted");
-        document.getElementById(btn.dataset.submenu).classList.add("active");
-      });
-    });
-
-    /* BACK BUTTON */
-    document.querySelectorAll(".back-button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelector(".menu-level-0").classList.remove("shifted");
-        document.querySelectorAll(".menu-level-1").forEach(m => m.classList.remove("active"));
-      });
-    });
-
   });
 
 fetch("footer.html")
