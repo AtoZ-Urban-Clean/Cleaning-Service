@@ -152,11 +152,21 @@
   .nav-btn{ display: none; }
 }
 .hero {
-height: 75vh;              /* taller for mobile */
-    background-size: contain;  /* show full image */
-    background-position: top center;
+    height: auto;                /* remove fixed 60vh */
+    min-height: 65vh;            /* enough space for image */
+    background-size: contain;    /* show full image */
     background-repeat: no-repeat;
-    }
+    background-position: center top;
+    padding-top: 40px;           /* give space for heading */
+    padding-bottom: 40px;
+  }
+
+  .hero h2 {
+    font-size: 2rem;             /* smaller on mobile */
+  }
+  .hero p {
+    font-size: 1rem;
+  }
 </style>
 <body>
 
