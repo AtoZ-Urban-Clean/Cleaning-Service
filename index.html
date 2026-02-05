@@ -7,21 +7,39 @@
 </head>
 <style>
 /* ===== HERO ===== */
-.hero{
-  height:60vh;
-  background:
-    linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),
-    url('images/index.jpg') center/cover no-repeat;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  color:#fff;
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
-.hero h2{font-size:3rem;}
-.hero p{font-size:1.3rem;font-style:italic;}
+.hero-img-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  max-height: 100vh; /* image fills full screen height */
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  text-shadow: 0px 2px 10px rgba(0,0,0,0.7);
+  padding: 0 20px;
+}
+
+.hero-text h2 {
+  font-size: 3rem;
+}
+
+.hero-text p {
+  font-size: 1.3rem;
+  margin-top: 10px;
+}
 
   .home-services{
   padding:60px 20px;
@@ -151,15 +169,6 @@
   }
   .nav-btn{ display: none; }
 }
-.hero {
-    height: auto;                /* remove fixed 60vh */
-    min-height: 65vh;            /* enough space for image */
-    background-size: contain;    /* show full image */
-    background-repeat: no-repeat;
-    background-position: center top;
-    padding-top: 40px;           /* give space for heading */
-    padding-bottom: 40px;
-  }
 
   .hero h2 {
     font-size: 2rem;             /* smaller on mobile */
@@ -176,9 +185,15 @@
 <!-- PAGE CONTENT -->
   
 <section class="hero">
-<h2>We Clean. You Relax.</h2>
-<p>Luxury Cleaning for Everyday Living</p>
+  <div class="hero-img-container">
+    <img src="images/index.jpg" alt="Cleaning Services">
+    <div class="hero-text">
+      <h2>We Clean. You Relax.</h2>
+      <p>Luxury Cleaning for Everyday Living</p>
+    </div>
+  </div>
 </section>
+
 
   <section class="home-services">
   <h2>Our Core Services</h2>
