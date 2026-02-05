@@ -105,9 +105,7 @@ header{
 @media(max-width:900px){
   .container{flex-direction:column;}
   .filters{width:100%;}
-  .filters {
-    display: none;
-  }
+
     .services-track{
     display: grid;
     grid-template-columns: repeat(4,1fr);
@@ -478,7 +476,7 @@ fetch("header.html")
 
     // --- HIDE SEARCH IF NOT ON SERVICES PAGE ---
     // This checks if the current URL contains 'services.html'
-    const isServicesPage = window.location.pathname.includes("services.html");
+
     const searchBar = document.querySelector('.header-right input');
     
     if (searchBar && !isServicesPage) {
