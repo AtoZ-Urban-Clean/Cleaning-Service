@@ -234,7 +234,25 @@ fetch("header.html")
   .then(res => res.text())
   .then(data => {
     document.getElementById("header").innerHTML = data;
-  });
+    
+    // Initialize mobile menu functionality AFTER the HTML is injected
+    initMobileMenu();
+  })
+  .catch(err => console.error("Error loading header:", err));
+
+function initMobileMenu() {
+    // These elements now exist in the DOM
+    const modal = document.getElementById('mobile-menu-modal');
+    
+    // We use the functions already defined in your header.html script tag,
+    // but we can also add event listeners here for extra stability.
+    window.toggleMenu = function(isOpen) {
+        if (!modal) return;
+        modal.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (!isOpen) closeSub();
+    };
+};
 
 fetch("footer.html")
   .then(res => res.text())
