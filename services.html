@@ -475,45 +475,43 @@ fetch("header.html")
   .then(data => {
     document.getElementById("header").innerHTML = data;
 
-    // --- HIDE SEARCH IF NOT ON SERVICES PAGE ---
-    // This checks if the current URL contains 'services.html'
-
+    // Ensure search is visible on services page
     const searchBar = document.querySelector('.header-right input');
-    
-    if (searchBar && !isServicesPage) {
-      // Hide the search bar on Home, Contact, etc.
-      searchBar.style.display = 'none'; 
+    if (searchBar) {
+      searchBar.style.display = "block";  // ALWAYS show search here
+      searchBar.addEventListener("input", applyFilters);
     }
 
-    // 1. Define functions globally so 'onclick' works
+    // Header menu functions
     window.toggleMenu = function(isOpen) {
-      const modal = document.getElementById('mobile-menu-modal');
+      const modal = document.getElementById("mobile-menu-modal");
       if (modal) {
-        modal.classList.toggle('active', isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : '';
+        modal.classList.toggle("active", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
         if (!isOpen) window.closeSub();
       }
     };
 
     window.openSub = function(menuId) {
-      const lvl0 = document.getElementById('lvl-0');
+      const lvl0 = document.getElementById("lvl-0");
       const subMenu = document.getElementById(menuId);
       if (lvl0 && subMenu) {
-        lvl0.classList.add('shifted');
-        subMenu.classList.add('active');
+        lvl0.classList.add("shifted");
+        subMenu.classList.add("active");
       }
     };
 
     window.closeSub = function() {
-      const lvl0 = document.getElementById('lvl-0');
+      const lvl0 = document.getElementById("lvl-0");
       if (lvl0) {
-        lvl0.classList.remove('shifted');
-        document.querySelectorAll('.menu-level-1').forEach(s => {
-          s.classList.remove('active');
+        lvl0.classList.remove("shifted");
+        document.querySelectorAll(".menu-level-1").forEach(s => {
+          s.classList.remove("active");
         });
       }
     };
 
+    // Update bag count if available
     if (window.updateBagCount) updateBagCount();
   })
   .catch(err => console.error("Failed to load header:", err));
