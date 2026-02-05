@@ -152,10 +152,10 @@
   .nav-btn{ display: none; }
 }
 .hero {
-        /* On mobile, we often want the image taller to see more of it */
-        height: 60vh; 
-        /* 'center/cover' ensures the image fills the area without stretching */
-        background-attachment: scroll; /* Fixed backgrounds often glitch on mobile */
+height: 75vh;              /* taller for mobile */
+    background-size: contain;  /* show full image */
+    background-position: top center;
+    background-repeat: no-repeat;
     }
 </style>
 <body>
@@ -276,9 +276,6 @@ fetch("footer.html")
   .then(res => res.text())
   .then(data => document.getElementById("footer").innerHTML = data);
 
-fetch("footer.html")
-  .then(res => res.text())
-  .then(data => document.getElementById("footer").innerHTML = data);
 </script>
 <script>
 let index = 0;
