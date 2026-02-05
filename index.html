@@ -311,9 +311,7 @@ fetch("header.html")
         });
       }
     };
-if (typeof window.updateBagCount === "function") {
-        window.updateBagCount();
-    }
+updateBagCount();
   })
   .catch(err => console.error("Failed to load header:", err));
 
