@@ -234,25 +234,43 @@ fetch("header.html")
   .then(res => res.text())
   .then(data => {
     document.getElementById("header").innerHTML = data;
-    
-    // Initialize mobile menu functionality AFTER the HTML is injected
-    initMobileMenu();
-  })
-  .catch(err => console.error("Error loading header:", err));
 
-function initMobileMenu() {
-    // These elements now exist in the DOM
-    const modal = document.getElementById('mobile-menu-modal');
+    // We must define these functions globally so the 
+    // "onclick" attributes in header.html can see them.
     
-    // We use the functions already defined in your header.html script tag,
-    // but we can also add event listeners here for extra stability.
     window.toggleMenu = function(isOpen) {
-        if (!modal) return;
+      const modal = document.getElementById('mobile-menu-modal');
+      if (modal) {
         modal.classList.toggle('active', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
         if (!isOpen) closeSub();
+      }
     };
-};
+
+    window.openSub = function(menuId) {
+      const lvl0 = document.getElementById('lvl-0');
+      const subMenu = document.getElementById(menuId);
+      
+      if (lvl0 && subMenu) {
+        lvl0.classList.add('shifted');
+        subMenu.classList.add('active');
+      }
+    };
+
+    window.closeSub = function() {
+      const lvl0 = document.getElementById('lvl-0');
+      if (lvl0) {
+        lvl0.classList.remove('shifted');
+        document.querySelectorAll('.menu-level-1').forEach(s => s.classList.remove('active'));
+      }
+    };
+  })
+  .catch(err => console.error("Header load failed:", err));
+
+// Load Footer
+fetch("footer.html")
+  .then(res => res.text())
+  .then(data => document.getElementById("footer").innerHTML = data);
 
 fetch("footer.html")
   .then(res => res.text())
