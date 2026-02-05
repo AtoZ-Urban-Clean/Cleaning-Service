@@ -449,8 +449,18 @@ fetch("header.html")
   .then(data => {
     document.getElementById("header").innerHTML = data;
 
-    // Define mobile menu functions globally
-    window.toggleMenu = (isOpen) => {
+    // --- HIDE SEARCH IF NOT ON SERVICES PAGE ---
+    // This checks if the current URL contains 'services.html'
+    const isServicesPage = window.location.pathname.includes("services.html");
+    const searchBar = document.querySelector('.header-right input');
+    
+    if (searchBar && !isServicesPage) {
+      // Hide the search bar on Home, Contact, etc.
+      searchBar.style.display = 'none'; 
+    }
+
+    // 1. Define functions globally so 'onclick' works
+    window.toggleMenu = function(isOpen) {
       const modal = document.getElementById('mobile-menu-modal');
       if (modal) {
         modal.classList.toggle('active', isOpen);
@@ -459,7 +469,7 @@ fetch("header.html")
       }
     };
 
-    window.openSub = (menuId) => {
+    window.openSub = function(menuId) {
       const lvl0 = document.getElementById('lvl-0');
       const subMenu = document.getElementById(menuId);
       if (lvl0 && subMenu) {
@@ -468,18 +478,20 @@ fetch("header.html")
       }
     };
 
-    window.closeSub = () => {
+    window.closeSub = function() {
       const lvl0 = document.getElementById('lvl-0');
       if (lvl0) {
         lvl0.classList.remove('shifted');
-        document.querySelectorAll('.menu-level-1').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.menu-level-1').forEach(s => {
+          s.classList.remove('active');
+        });
       }
     };
 
-    // Update cart count once header is loaded
-    if (window.updateBagCount) window.updateBagCount();
+    if (window.updateBagCount) updateBagCount();
   })
-  .catch(err => console.error("Header Error:", err));
+  .catch(err => console.error("Failed to load header:", err));
+
 
 fetch("footer.html")
   .then(res => res.text())
