@@ -183,11 +183,11 @@ function getLocation() {
   const locInput = document.getElementById("location");
 
   if (!navigator.geolocation) {
-    alert("GPS not supported on this device");
+    alert("GPS not supported");
     return;
   }
 
-  locInput.value = "Detecting location...";
+  locInput.value = "Detecting exact address...";
 
   navigator.geolocation.getCurrentPosition(
     async (position) => {
@@ -196,23 +196,34 @@ function getLocation() {
 
       try {
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&addressdetails=1`
         );
         const data = await res.json();
+        const a = data.address || {};
 
-        if (data && data.display_name) {
-          locInput.value = data.display_name; // ✅ FULL ADDRESS
-        } else {
-          locInput.value = "Location detected, please edit manually";
-        }
-      } catch (e) {
-        locInput.value = "Unable to fetch address";
+        /* Build detailed address manually */
+        const detailedAddress = [
+          a.house_number,
+          a.road,
+          a.neighbourhood,
+          a.suburb,
+          a.village,
+          a.city || a.town,
+          a.county,
+          a.state,
+          a.postcode
+        ].filter(Boolean).join(", ");
+
+        locInput.value = detailedAddress || data.display_name;
+      } catch (err) {
+        locInput.value = "Unable to fetch address, please type manually";
       }
     },
     () => {
       alert("Location permission denied");
       locInput.value = "";
-    }
+    },
+    { enableHighAccuracy: true }
   );
 }
 
