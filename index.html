@@ -311,7 +311,7 @@ fetch("header.html")
         });
       }
     };
-if (window.updateBagCount) {
+if (typeof window.updateBagCount === "function") {
         window.updateBagCount();
     }
   })
