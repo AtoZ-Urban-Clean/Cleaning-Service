@@ -1,5 +1,4 @@
 /* GLOBAL CART */
-// Initialize cart from localStorage immediately
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function addToCart(name, price) {
@@ -10,22 +9,23 @@ function addToCart(name, price) {
 }
 
 function updateBagCount() {
-    // Find all bag buttons (Desktop and Mobile)
     const bags = document.querySelectorAll(".bag-btn");
     
-    if (bags.length === 0) {
-        console.warn("Bag buttons not found in DOM yet.");
-        return;
-    }
+    if (bags.length === 0) return;
 
     bags.forEach(bag => {
-        bag.textContent = `BAG (${cart.length})`;
+        // Check if there is a specific span for the count (Mobile version)
+        const countSpan = bag.querySelector(".bag-count");
+        if (countSpan) {
+            countSpan.textContent = cart.length;
+        } else {
+            // Otherwise update the whole text (Desktop version)
+            bag.textContent = `BAG (${cart.length})`;
+        }
     });
 }
 
-// Make functions global so they can be called from fetched HTML
 window.addToCart = addToCart;
 window.updateBagCount = updateBagCount;
 
-// Run once in case the header is already there
 document.addEventListener("DOMContentLoaded", updateBagCount);
