@@ -157,6 +157,65 @@
 
 .nav-btn.prev{ left: 5px; }
 .nav-btn.next{ right: 5px; }
+/* ===============================
+   MOBILE HEADER – MATCH ALL PAGES
+================================ */
+
+@media (max-width: 900px) {
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  /* LOGO */
+  .logo {
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* SEARCH */
+  .header-right input {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+
+  /* BAG */
+  .bag-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+
+  /* MOBILE ACTIONS (MENU) */
+  .mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .menu-btn {
+    font-size: 18px;
+    background: none;
+    border: none;
+  }
+}
 
 /* Desktop view */
 @media (min-width: 768px){
