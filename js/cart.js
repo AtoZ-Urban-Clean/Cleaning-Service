@@ -12,6 +12,7 @@ function addToCart(name, price) {
   alert("Service added to Bag");
 }
 
+
 /* Update bag count */
 function updateBagCount() {
   const count = cart.length;
