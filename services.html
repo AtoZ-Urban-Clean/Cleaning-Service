@@ -106,7 +106,7 @@ header{
     <option value="deep">Deep Cleaning</option>
     <option value="Commercial">Commercial </option>
     <option value="premium">Premium Cleaning</option>
-    <option value="House Shifting">House Shifting</option>
+    <option value="shifting">House Shifting</option>
   </select>
 
   <div class="filter-title">Price</div>
@@ -382,7 +382,7 @@ header{
 </div>
 
 <!-- CARD 22-->
-<div class="card" data-category="House Shifting" data-price="2999" data-rating="4">
+<div class="card" data-category="shifting" data-price="2999" data-rating="4">
 <img src="House Shifting.jpg">
 <h3>House Shifting</h3>
 <h5>Basic Local area Packing, Loading, Unloading </h5>
@@ -394,7 +394,7 @@ header{
 </div>
 
 <!-- CARD 23-->
-<div class="card" data-category="House Shifting" data-price="4999" data-rating="4">
+<div class="card" data-category="shifting" data-price="4999" data-rating="4">
 <img src="House Shifting.jpg">
 <h3>House Shifting</h3>
 <h5>Less than 600 sqft - Packing, Loading, Unloading</h5>
@@ -406,7 +406,7 @@ header{
 </div>
 
 <!-- CARD 24-->
-<div class="card" data-category="House Shifting" data-price="6999" data-rating="4">
+<div class="card" data-category="shifting" data-price="6999" data-rating="4">
 <img src="House Shifting-3.jpg">
 <h3>House Shifting</h3>
 <h5>Less than 1200 sqft - Packing, Loading, Unloading</h5>
@@ -418,7 +418,7 @@ header{
 </div>
 
 <!-- CARD 25-->
-<div class="card" data-category="House Shifting" data-price="9999" data-rating="4">
+<div class="card" data-category="shifting" data-price="9999" data-rating="4">
 <img src="House Shifting-3.jpg">
 <h3>House Shifting</h3>
 <h5>1200 sqft to 2000 sqft - Packing, Loading, Unloading</h5>
@@ -482,6 +482,7 @@ fetch("footer.html")
 
 
 // --- 2. FILTERING LOGIC ---
+// 1. Grab all elements
 const catSelect = document.getElementById("categoryFilter");
 const priceSelect = document.getElementById("priceSort");
 const rateSelect = document.getElementById("ratingFilter");
@@ -489,41 +490,65 @@ const allProductCards = [...document.querySelectorAll(".card")];
 const productGrid = document.getElementById("productList");
 const mainTitle = document.getElementById("pageHeader");
 
+// 2. The Core Filter Logic
 function applyFilters() {
+  // Check the URL first. If a hash exists, force the dropdown to match it.
+  const hash = window.location.hash.replace("#", "");
+  if (hash) {
+    // decodeURIComponent handles the "%20" in categories like "House Shifting"
+    const decodedHash = decodeURIComponent(hash);
+    
+    // Check if the hash actually matches one of our dropdown options
+    const optionExists = Array.from(catSelect.options).some(opt => opt.value === decodedHash);
+    if (optionExists) {
+      catSelect.value = decodedHash;
+    }
+  }
+
   const selectedCat = catSelect.value;
   const selectedRate = rateSelect.value;
 
+  // Filter the cards
   let filtered = allProductCards.filter(card => {
     const catMatch = selectedCat === "all" || card.dataset.category === selectedCat;
     const rateMatch = selectedRate === "all" || parseInt(card.dataset.rating) >= parseInt(selectedRate);
     return catMatch && rateMatch;
   });
 
-  // Sorting
+  // Sort the results
   if (priceSelect.value === "low") {
     filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
   } else if (priceSelect.value === "high") {
     filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
   }
 
-  // Render
+  // Clear and Re-render
   productGrid.innerHTML = "";
-  filtered.forEach(c => productGrid.appendChild(c));
+  if (filtered.length > 0) {
+    filtered.forEach(c => productGrid.appendChild(c));
+  } else {
+    productGrid.innerHTML = `<p style="padding:20px; text-align:center; width:100%;">No services found matching these filters.</p>`;
+  }
 
-  // Update Title
+  // Update Page Title
   mainTitle.innerText = selectedCat === "all" ? "All Services" : catSelect.options[catSelect.selectedIndex].text;
 }
 
-// Watch for changes
+// 3. EVENT LISTENERS
+
+// Watch dropdown changes
 catSelect.onchange = priceSelect.onchange = rateSelect.onchange = applyFilters;
 
-// Handle URL Hash (e.g., services.html#deep)
+// FIX: Listen for clicks on header links while already on this page
+window.addEventListener("hashchange", applyFilters);
+
+// Initial run when page loads
 window.addEventListener("DOMContentLoaded", () => {
-  const hash = window.location.hash.replace("#", ""); 
-  if (hash) {
-    catSelect.value = hash;
-  }
   applyFilters();
+  // Ensure the bag count from cart.js is updated
+  if (typeof updateBagCount === "function") {
+    updateBagCount();
+  }
 });
 </script>
 
