@@ -129,6 +129,9 @@ button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; back
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const list = document.getElementById("serviceList");
 const amountDisplay = document.getElementById("amount");
+const ADMIN_PHONE = "919489587626"; // WhatsApp
+const ADMIN_EMAIL = "yuvasivasakthi.2002@gmail.com";
+const GOOGLE_FORM_ID = "1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
 
 function loadCart(){
     if(cart.length === 0){
@@ -220,14 +223,15 @@ function getLocation() {
   );
 }
 
-function confirmBooking(){
+
+async function confirmBooking(){
   const name = document.getElementById("name").value.trim();
   const mobile = document.getElementById("mobile").value.trim();
   const location = document.getElementById("location").value.trim();
   const date = document.getElementById("date").value;
   const time = document.getElementById("time").value;
 
-  if(!name || !mobile || !location){
+  if(!name || !mobile || !location || !date || !time){
     alert("Please fill all required fields");
     return;
   }
@@ -240,11 +244,14 @@ function confirmBooking(){
   const bookingId = "AZC" + Math.floor(100000 + Math.random()*900000);
 
   let total = 0;
-  let services = "";
+  let servicesText = "";
+  let servicesForm = "";
 
   cart.forEach(i=>{
-    total += Number(i.price) * (i.qty || 1);
-    services += `• ${i.name} x${i.qty || 1}\n`;
+    const qty = i.qty || 1;
+    total += Number(i.price) * qty;
+    servicesText += `• ${i.name} x${qty}\n`;
+    servicesForm += `${i.name} x${qty}, `;
   });
 
   const message =
@@ -258,23 +265,33 @@ Date: ${date}
 Time: ${time}
 
 Services:
-${services}
+${servicesText}
 
-Total Amount: ₹${total}
-Status: Waiting for Confirmation`;
+Total Amount: ₹${total}`;
 
-  // Show success UI
+  /* 🔹 Google Form submit */
+  const formURL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
+  const formData = new FormData();
+  formData.append("entry.470681689", name);
+  formData.append("entry.574952680", mobile);
+  formData.append("entry.2032518446", location);
+  formData.append("entry.1025255991", date);
+  formData.append("entry.1650273648", time);
+  formData.append("entry.624600000", servicesForm);
+  formData.append("entry.1504263480", total);
+
+  fetch(formURL, { method:"POST", mode:"no-cors", body: formData });
+
+  /* 🔹 Success UI */
   document.getElementById("bid").innerText = bookingId;
   document.getElementById("formBox").style.display = "none";
   document.getElementById("successBox").style.display = "block";
 
-  // WhatsApp auto-open
-  window.open(
-    "https://wa.me/" + ADMIN_PHONE + "?text=" + encodeURIComponent(message),
-    "_blank"
-  );
+  /* 🔹 WhatsApp manual button */
+  document.getElementById("waLink").href =
+    "https://wa.me/" + ADMIN_PHONE + "?text=" + encodeURIComponent(message);
 
-  // Email auto-open
+  /* 🔹 Email */
   window.open(
     "mailto:" + ADMIN_EMAIL +
     "?subject=New Booking - " + bookingId +
