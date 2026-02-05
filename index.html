@@ -283,6 +283,16 @@ fetch("header.html")
   .then(data => {
     document.getElementById("header").innerHTML = data;
 
+    // --- HIDE SEARCH IF NOT ON SERVICES PAGE ---
+    // This checks if the current URL contains 'services.html'
+    const isServicesPage = window.location.pathname.includes("services.html");
+    const searchBar = document.querySelector('.header-right input');
+    
+    if (searchBar && !isServicesPage) {
+      // Hide the search bar on Home, Contact, etc.
+      searchBar.style.display = 'none'; 
+    }
+
     // 1. Define functions globally so 'onclick' works
     window.toggleMenu = function(isOpen) {
       const modal = document.getElementById('mobile-menu-modal');
@@ -311,7 +321,8 @@ fetch("header.html")
         });
       }
     };
-updateBagCount();
+
+    if (window.updateBagCount) updateBagCount();
   })
   .catch(err => console.error("Failed to load header:", err));
 
