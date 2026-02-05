@@ -98,9 +98,9 @@ button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; back
 
 <label>Location</label>
 <div class="input-group">
-  <input type="text" id="location" placeholder="Pick exact location from Google Maps" readonly>
-  <button class="gps-btn" onclick="openGoogleMaps()" title="Pick from Google Maps">
-    <i class="fas fa-map-marked-alt"></i>
+  <input type="text" id="location" placeholder="Detecting address..." readonly>
+  <button class="gps-btn" onclick="getLocation()" title="Auto detect address">
+    <i class="fas fa-location-crosshairs"></i>
   </button>
 </div>
 
@@ -182,31 +182,42 @@ function saveAndReload() {
     loadCart();
 }
 
-function openGoogleMaps() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(pos => {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
+function getLocation() {
+  const locInput = document.getElementById("location");
+  locInput.value = "Detecting location...";
 
-      // Open Google Maps picker
-      window.open(
-        `https://www.google.com/maps?q=${lat},${lon}`,
-        "_blank"
-      );
-
-      // Auto-fill lat/long (fallback)
-      document.getElementById("location").value =
-        `Lat: ${lat.toFixed(6)}, Long: ${lon.toFixed(6)} (Select exact spot in Maps)`;
-
-    }, () => {
-      // If GPS denied → open Maps directly
-      window.open("https://www.google.com/maps", "_blank");
-    }, {
-      enableHighAccuracy: true
-    });
-  } else {
-    window.open("https://www.google.com/maps", "_blank");
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported");
+    locInput.value = "";
+    return;
   }
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+        );
+        const data = await res.json();
+
+        if (data && data.display_name) {
+          locInput.value = data.display_name;
+        } else {
+          locInput.value = "Address not found, please type manually";
+        }
+      } catch (e) {
+        locInput.value = "Unable to fetch address";
+      }
+    },
+    () => {
+      alert("Location permission denied");
+      locInput.value = "";
+    },
+    { enableHighAccuracy: true }
+  );
 }
 
 function confirmBooking(){
