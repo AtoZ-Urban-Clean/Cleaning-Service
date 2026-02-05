@@ -483,6 +483,7 @@ fetch("footer.html")
 
 // --- 2. FILTERING LOGIC ---
 // 1. Grab all elements
+// 1. Grab local elements
 const catSelect = document.getElementById("categoryFilter");
 const priceSelect = document.getElementById("priceSort");
 const rateSelect = document.getElementById("ratingFilter");
@@ -490,66 +491,76 @@ const allProductCards = [...document.querySelectorAll(".card")];
 const productGrid = document.getElementById("productList");
 const mainTitle = document.getElementById("pageHeader");
 
-// 2. The Core Filter Logic
+// 2. The Core Filter & Search Logic
 function applyFilters() {
-  // Check the URL first. If a hash exists, force the dropdown to match it.
+  // Check the URL for Hash
   const hash = window.location.hash.replace("#", "");
   if (hash) {
-    // decodeURIComponent handles the "%20" in categories like "House Shifting"
     const decodedHash = decodeURIComponent(hash);
-    
-    // Check if the hash actually matches one of our dropdown options
     const optionExists = Array.from(catSelect.options).some(opt => opt.value === decodedHash);
-    if (optionExists) {
-      catSelect.value = decodedHash;
-    }
+    if (optionExists) catSelect.value = decodedHash;
   }
 
   const selectedCat = catSelect.value;
   const selectedRate = rateSelect.value;
+  
+  // Get search text (Look for the input in the fetched header)
+  const searchInput = document.querySelector('.header-right input');
+  const searchText = searchInput ? searchInput.value.toLowerCase() : "";
 
   // Filter the cards
   let filtered = allProductCards.filter(card => {
+    const title = card.querySelector('h3').innerText.toLowerCase();
     const catMatch = selectedCat === "all" || card.dataset.category === selectedCat;
     const rateMatch = selectedRate === "all" || parseInt(card.dataset.rating) >= parseInt(selectedRate);
-    return catMatch && rateMatch;
+    const searchMatch = title.includes(searchText); // Search check
+    
+    return catMatch && rateMatch && searchMatch;
   });
 
-  // Sort the results
+  // Sorting
   if (priceSelect.value === "low") {
     filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
   } else if (priceSelect.value === "high") {
     filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
   }
 
-  // Clear and Re-render
+  // Render
   productGrid.innerHTML = "";
   if (filtered.length > 0) {
     filtered.forEach(c => productGrid.appendChild(c));
   } else {
-    productGrid.innerHTML = `<p style="padding:20px; text-align:center; width:100%;">No services found matching these filters.</p>`;
+    productGrid.innerHTML = `<div style="text-align:center; width:100%; padding:50px;">
+                                <h3>No services found</h3>
+                                <p>Try adjusting your search or filters</p>
+                             </div>`;
   }
 
-  // Update Page Title
+  // Update Title
   mainTitle.innerText = selectedCat === "all" ? "All Services" : catSelect.options[catSelect.selectedIndex].text;
 }
 
-// 3. EVENT LISTENERS
+// 3. Fetch Header & Set up Search Event
+fetch("header.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("header").innerHTML = data;
+    
+    // NOW the search bar exists, we can add the event listener
+    const searchBar = document.querySelector('.header-right input');
+    if(searchBar) {
+      searchBar.addEventListener('input', applyFilters);
+    }
 
-// Watch dropdown changes
+    // Standard header functions (menu etc)
+    window.toggleMenu = (isOpen) => { /* ... your existing code ... */ };
+    if (window.updateBagCount) window.updateBagCount();
+  });
+
+// 4. Standard Event Listeners
 catSelect.onchange = priceSelect.onchange = rateSelect.onchange = applyFilters;
-
-// FIX: Listen for clicks on header links while already on this page
 window.addEventListener("hashchange", applyFilters);
-
-// Initial run when page loads
-window.addEventListener("DOMContentLoaded", () => {
-  applyFilters();
-  // Ensure the bag count from cart.js is updated
-  if (typeof updateBagCount === "function") {
-    updateBagCount();
-  }
-});
+window.addEventListener("DOMContentLoaded", applyFilters);
 </script>
 
 </body>
