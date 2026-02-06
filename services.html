@@ -77,6 +77,20 @@
     }
         .filters { width: 100%; position: static; }
         .filters {     display: none;   }
+		.mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #mobileSearch {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 13px;
+    outline: none;
+  }
     }
 </style>
 </head>
@@ -170,10 +184,20 @@
       <a href="booking.html" class="bag-btn">BAG <span class="bag-count">0</span></a>
     </div>
 
-    <div class="mobile-actions">
-      <button class="menu-btn" onclick="toggleMenu(true)"><i class="fas fa-bars"></i></button>
-      <a href="booking.html" class="bag-btn">BAG <span class="bag-count">0</span></a>
-    </div>
+<div class="mobile-actions">
+  <input 
+    type="text" 
+    id="mobileSearch" 
+    placeholder="Search services..."
+  >
+  <button class="menu-btn" onclick="toggleMenu(true)">
+    <i class="fas fa-bars"></i>
+  </button>
+  <a href="booking.html" class="bag-btn">
+    BAG <span class="bag-count">0</span>
+  </a>
+</div>
+
   </div>
 </header>
 
@@ -605,6 +629,7 @@
     const priceSelect = document.getElementById("priceSort");
     const rateSelect = document.getElementById("ratingFilter");
     const searchBar = document.getElementById("headerSearch");
+	const mobileSearch = document.getElementById("mobileSearch");
     const allProductCards = [...document.querySelectorAll(".card")];
     const productGrid = document.getElementById("productList");
     const mainTitle = document.getElementById("pageHeader");
@@ -612,7 +637,10 @@
     function applyFilters() {
         const selectedCat = catSelect.value;
         const selectedRate = rateSelect.value;
-        const searchText = searchBar.value.toLowerCase();
+        const searchText = (
+  (searchBar?.value || "") + (mobileSearch?.value || "")
+).toLowerCase();
+
 
         let filtered = allProductCards.filter(card => {
             const title = card.querySelector('h3').innerText.toLowerCase();
@@ -641,6 +669,7 @@
     // --- 3. EVENT LISTENERS ---
     catSelect.onchange = priceSelect.onchange = rateSelect.onchange = applyFilters;
     searchBar.oninput = applyFilters;
+	if (mobileSearch) mobileSearch.oninput = applyFilters;
 
     // Handle Hash URL (e.g., services.html#deep)
 function handleHashFilter() {
