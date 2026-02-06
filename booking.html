@@ -27,8 +27,12 @@ header .company-name {
   text-align: left;
 }
 header .company-name a {
-  text-decoration: none; color: #0066ff; font-size: 20px; font-weight: 800;
-}
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 800;
+            color: #0066ff;
+            letter-spacing: -0.5px;
+        }
 header .page-title {
   flex: 2; /* Centers the title */
   text-align: center;
@@ -65,7 +69,7 @@ button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; back
 
 @media (max-width: 600px) {
     header .page-title { font-size: 14px; }
-    header .company-name a { font-size: 16px; }
+  
 }
 </style>
 </head>
@@ -129,7 +133,7 @@ button.main-btn{ width:100%; margin-top:25px; padding:15px; font-size:16px; back
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const list = document.getElementById("serviceList");
 const amountDisplay = document.getElementById("amount");
-const ADMIN_PHONE = "919489587626"; // WhatsApp
+const ADMIN_PHONE = "9173392 60590"; // WhatsApp
 const ADMIN_EMAIL = "yuvasivasakthi.2002@gmail.com";
 const GOOGLE_FORM_ID = "1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
 
