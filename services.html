@@ -69,6 +69,12 @@
         .desktop-nav, .header-right { display: none; }
         .mobile-actions { display: flex; }
         .main-container { flex-direction: column; }
+		.filters { 
+        display: block; 
+        width: 100%; 
+        position: static; 
+        margin-bottom: 20px;
+    }
         .filters { width: 100%; position: static; }
         .filters {     display: none;   }
     }
@@ -637,13 +643,21 @@
     searchBar.oninput = applyFilters;
 
     // Handle Hash URL (e.g., services.html#deep)
-    window.addEventListener("load", () => {
-        const hash = window.location.hash.replace("#", "");
-        if (hash) {
+window.addEventListener("load", () => {
+    // 1. Get the hash from URL (e.g., #basic)
+    const hash = window.location.hash.replace("#", "");
+    
+    if (hash) {
+        // 2. Find if this hash matches any of our dropdown options
+        const exists = Array.from(catSelect.options).some(opt => opt.value === hash);
+        
+        if (exists) {
             catSelect.value = hash;
+            // 3. Manually trigger the filter logic
             applyFilters();
         }
-    });
+    }
+});
     
 fetch("footer.html")
   .then(res => res.text())
