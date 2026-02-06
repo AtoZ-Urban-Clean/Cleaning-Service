@@ -643,21 +643,34 @@
     searchBar.oninput = applyFilters;
 
     // Handle Hash URL (e.g., services.html#deep)
-window.addEventListener("load", () => {
-    // 1. Get the hash from URL (e.g., #basic)
-    const hash = window.location.hash.replace("#", "");
-    
-    if (hash) {
-        // 2. Find if this hash matches any of our dropdown options
-        const exists = Array.from(catSelect.options).some(opt => opt.value === hash);
-        
-        if (exists) {
-            catSelect.value = hash;
-            // 3. Manually trigger the filter logic
-            applyFilters();
-        }
-    }
-});
+function handleHashFilter() {
+  const hash = window.location.hash.replace("#", "").toLowerCase();
+  if (!hash) return;
+
+  const exists = Array.from(catSelect.options).some(
+    opt => opt.value.toLowerCase() === hash
+  );
+
+  if (exists) {
+    catSelect.value = hash;
+    applyFilters();
+
+    // Optional: auto-scroll to products
+    setTimeout(() => {
+      document.querySelector(".products")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 150);
+  }
+}
+
+// Run on first load
+window.addEventListener("load", handleHashFilter);
+
+// Run when hash changes (important!)
+window.addEventListener("hashchange", handleHashFilter);
+
     
 fetch("footer.html")
   .then(res => res.text())
