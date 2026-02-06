@@ -63,7 +63,6 @@
         .success { text-align: center; display: none; animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .booking-id { font-size: 24px; color: #2ecc71; margin: 15px 0; font-weight: bold; background: #f0fff4; padding: 10px; border-radius: 8px; }
         .whatsapp { display: block; margin-top: 15px; padding: 15px; background: var(--whatsapp); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
 
         @media (max-width: 600px) {
@@ -84,20 +83,20 @@
 
 <div class="container" id="formBox">
     <div class="service-header">
-        <h3 style="margin:0">Selected Services</h3>
+        <h3 style="margin:0">🧺Selected Services</h3>
         <button class="clear-btn" onclick="clearAll()">Clear Bag</button>
     </div>
     
     <div id="serviceList"></div>
     <div class="total">Total: ₹<span id="amount">0</span></div>
 
-    <label>Full Name</label>
-    <input type="text" id="name" placeholder="John Doe">
+    <label>👤Full Name</label>
+    <input type="text" id="name" placeholder="Name">
 
-    <label>Mobile Number</label>
-    <input type="tel" id="mobile" placeholder="Enter 10 digit mobile number">
+    <label>📞Mobile Number</label>
+    <input type="tel" id="mobile" placeholder="Mobile number">
 
-    <label>Address / Location</label>
+    <label>📍Address / Location</label>
     <div class="input-group">
         <input type="text" id="location" placeholder="Enter address or detect location">
         <button class="gps-btn" onclick="getLocation()" title="Detect My Location">
@@ -105,7 +104,7 @@
         </button>
     </div>
 
-    <label>Preferred Date & Time</label>
+    <label>📅Preferred Date & Time</label>
     <div style="display: flex; gap: 10px;">
         <input type="date" id="date">
         <input type="time" id="time">
@@ -118,7 +117,6 @@
     <i class="fas fa-check-circle" style="font-size: 60px; color: var(--whatsapp);"></i>
     <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
     <p style="color: #666;">We have received your request.</p>
-    <div class="booking-id">ID: <span id="bid"></span></div>
     
     <a id="waLink" class="whatsapp" target="_blank">
         <i class="fab fa-whatsapp"></i> Send Details via WhatsApp
@@ -223,7 +221,6 @@
         if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
         if (cart.length === 0) return alert("Your bag is empty");
 
-        const bookingId = "AZC" + Math.floor(100000 + Math.random() * 900000);
         const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
         const total = amountDisplay.innerText;
 
@@ -242,12 +239,11 @@
         });
 
         // 2. Prepare WhatsApp Message
-        const summary = `Booking ID: ${bookingId}\nName: ${fields.name}\nMobile: ${fields.mobile}\nDate: ${fields.date}\nTime: ${fields.time}\nServices: ${servicesString}\nTotal: ₹${total}`;
+        const summary = `Name: ${fields.name}\nMobile: ${fields.mobile}\nDate: ${fields.date}\nTime: ${fields.time}\nServices: ${servicesString}\nTotal: ₹${total}`;
 
         document.getElementById("waLink").href = `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent("New Booking Confirmation:\n" + summary)}`;
 
         // 3. UI Update
-        document.getElementById("bid").innerText = bookingId;
         document.getElementById("formBox").style.display = "none";
         document.getElementById("successBox").style.display = "block";
         localStorage.removeItem("cart");
