@@ -65,19 +65,45 @@
     .menu-level-1.active { transform: translateX(0); visibility: visible; }
     .menu-level-0.shifted { transform: translateX(-100%); transition: 0.3s; }
 
-    @media(max-width:1024px){
-        .desktop-nav, .header-right { display: none; }
-        .mobile-actions { display: flex; }
-        .main-container { flex-direction: column; }
-		.filters { 
-        display: block; 
-        width: 100%; 
-        position: static; 
-        margin-bottom: 20px;
-    }
-        .filters { width: 100%; position: static; }
-        .filters {     display: none;   }
-    }
+@media (max-width:1024px) {
+
+  .desktop-nav { display: none; }
+
+  /* keep search in mobile */
+  .header-right {
+    display: flex;
+    flex: 1;
+  }
+
+  .header-right input {
+    width: 100%;
+    max-width: 180px;
+  }
+
+  .mobile-actions {
+    display: flex;
+  }
+
+  .main-container {
+    flex-direction: column;
+  }
+	filters {
+    display: none;
+    width: 100%;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    background: #fff;
+    z-index: 999;
+    border-radius: 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,.15);
+  }
+
+  .filters.active {
+    display: block;
+  }
+}
+
 </style>
 </head>
 
@@ -644,25 +670,38 @@
 
     // Handle Hash URL (e.g., services.html#deep)
 window.addEventListener("load", () => {
-    // 1. Get the hash from URL (e.g., #basic)
-    const hash = window.location.hash.replace("#", "");
-    
-    if (hash) {
-        // 2. Find if this hash matches any of our dropdown options
-        const exists = Array.from(catSelect.options).some(opt => opt.value === hash);
-        
-        if (exists) {
-            catSelect.value = hash;
-            // 3. Manually trigger the filter logic
-            applyFilters();
-        }
+  const hash = window.location.hash.replace("#", "");
+
+  if (hash) {
+    const exists = Array.from(catSelect.options).some(opt => opt.value === hash);
+
+    if (exists) {
+      catSelect.value = hash;
+      applyFilters();
+
+      // auto-open filter panel on mobile
+      if (window.innerWidth < 1024) {
+        document.querySelector(".filters").classList.add("active");
+      }
     }
+  }
 });
+
     
 fetch("footer.html")
   .then(res => res.text())
   .then(data => document.getElementById("footer").innerHTML = data)
   .catch(err => console.error("Footer Error:", err));
+</script>
+<script>
+  const filterBtn = document.getElementById("filterBtn");
+  const filters = document.querySelector(".filters");
+
+  if (filterBtn) {
+    filterBtn.onclick = () => {
+      filters.classList.toggle("active");
+    };
+  }
 </script>
 
 </body>
