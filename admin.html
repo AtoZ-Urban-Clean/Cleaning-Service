@@ -25,7 +25,7 @@ button{padding:6px 10px;border:none;border-radius:4px}
 </table>
 
 <script>
-const API = "YOUR_APPS_SCRIPT_WEBAPP_URL";
+const API = "https://script.google.com/macros/s/AKfycbyP67F22J7gySI-4thuuK5U8hPSH1QHKCyV6etkvPM9-g7LQyO4ChI6p_O900v47v33NA/exec";
 
 fetch(API+"?action=getBookings")
 .then(r=>r.json())
@@ -50,6 +50,21 @@ function assign(id){
   fetch(API+"?action=assign&id="+id+"&labor="+labor);
   alert("Labor Assigned");
 }
+  function sendLaborWhatsApp(bookingId, laborMobile, details) {
+  const msg =
+`You are assigned a new service 🚿
+
+Booking ID: ${bookingId}
+Service: ${details}
+
+Please confirm availability.`;
+
+  const url =
+`https://wa.me/91${laborMobile}?text=${encodeURIComponent(msg)}`;
+
+  return url;
+}
+
 </script>
 </body>
 </html>
