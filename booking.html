@@ -125,129 +125,57 @@
 
 <script>
     const GOOGLE_FORM_ID = "1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
-    
-    // !!! IMPORTANT: Replace 'entry.000000' with the actual ID for your BookingID field
-    const ENTRY_BOOKING_ID = "entry.244795213"; 
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const list = document.getElementById("serviceList");
-    const amountDisplay = document.getElementById("amount");
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Set min date to today
-    document.getElementById('date').min = new Date().toISOString().split("T")[0];
+function confirmBooking() {
+  const name = document.getElementById("name").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
 
-    function loadCart() {
-        if (cart.length === 0) {
-            list.innerHTML = `<div style='text-align:center; padding: 20px;'><p style='color:#999;'>Your bag is empty.</p></div>`;
-            amountDisplay.innerText = "0";
-            return;
-        }
-        let total = 0;
-        list.innerHTML = "";
-        cart.forEach((item, index) => {
-            const itemQty = item.qty || 1;
-            const itemTotal = Number(item.price) * itemQty;
-            total += itemTotal;
-            const div = document.createElement("div");
-            div.className = "service-item";
-            div.innerHTML = `
-                <div class="item-info">
-                    <div style="font-weight:600">${item.name}</div>
-                    <div style="font-size:12px; color:#666">₹${item.price} per unit</div>
-                </div>
-                <div class="qty-controls">
-                    <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
-                    <span style="font-weight:bold; min-width:15px; text-align:center">${itemQty}</span>
-                    <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
-                </div>
-                <b style="min-width:70px; text-align:right">₹${itemTotal}</b>
-                <button class="remove-btn" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>`;
-            list.appendChild(div);
-        });
-        amountDisplay.innerText = total;
-    }
+  if (!name || !mobile || !location || !date || !time) {
+    alert("Fill all details");
+    return;
+  }
 
-    function updateQty(index, change) {
-        cart[index].qty = (cart[index].qty || 1) + change;
-        if (cart[index].qty < 1) cart[index].qty = 1;
-        saveAndReload();
-    }
+  if (cart.length === 0) {
+    alert("No services selected");
+    return;
+  }
 
-    function removeItem(index) {
-        cart.splice(index, 1);
-        saveAndReload();
-    }
+  const bookingID =
+    "AZUC-" +
+    new Date().toISOString().slice(0,10).replace(/-/g,"") +
+    "-" +
+    Math.floor(1000 + Math.random() * 9000);
 
-    function clearAll() {
-        if(confirm("Empty your service bag?")) { cart = []; saveAndReload(); }
-    }
+  const services = cart.map(i => `${i.name} x${i.qty||1}`).join(", ");
+  const total = document.getElementById("amount").innerText;
 
-    function saveAndReload() {
-        localStorage.setItem("cart", JSON.stringify(cart));
-        loadCart();
-    }
+  const fd = new FormData();
+  fd.append("entry.470681689", name);
+  fd.append("entry.574952680", mobile);
+  fd.append("entry.2032518446", location);
+  fd.append("entry.1025255991", date);
+  fd.append("entry.1650273648", time);
+  fd.append("entry.624600000", services);
+  fd.append("entry.1504263480", total);
+  fd.append("entry.123456789", bookingID);
 
-    async function getLocation() {
-        const locInput = document.getElementById("location");
-        locInput.placeholder = "Detecting location...";
-        if (!navigator.geolocation) return alert("Geolocation not supported");
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-            try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
-                const data = await res.json();
-                locInput.value = data.display_name || "Location detected";
-            } catch (e) { locInput.placeholder = "Enter manually"; }
-        }, () => alert("Permission Denied"));
-    }
+  fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
+    method: "POST",
+    mode: "no-cors",
+    body: fd
+  });
 
-    async function confirmBooking() {
-        const fields = {
-            name: document.getElementById("name").value.trim(),
-            mobile: document.getElementById("mobile").value.trim(),
-            location: document.getElementById("location").value.trim(),
-            date: document.getElementById("date").value,
-            time: document.getElementById("time").value
-        };
-
-        if (Object.values(fields).some(v => !v)) return alert("Please fill all details");
-        if (cart.length === 0) return alert("Bag is empty");
-
-        // 1. Generate Booking ID
-        const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '');
-        const randomStr = Math.floor(1000 + Math.random() * 9000);
-        const bookingID = `AZUC-${dateStr}-${randomStr}`;
-
-        const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
-        const total = amountDisplay.innerText;
-
-        // UI Loading
-        const btn = document.getElementById("submitBtn");
-        btn.innerText = "Processing...";
-        btn.disabled = true;
-
-        // 2. Submit to Google Sheets
-        const formData = new FormData();
-        formData.append("entry.470681689", fields.name);
-        formData.append("entry.574952680", fields.mobile);
-        formData.append("entry.2032518446", fields.location);
-        formData.append("entry.1025255991", fields.date);
-        formData.append("entry.1650273648", fields.time);
-        formData.append("entry.624600000", servicesString);
-        formData.append("entry.1504263480", total);
-        formData.append(ENTRY_BOOKING_ID, bookingID); // Saves to Column J
-
-        fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
-            method: "POST", mode: "no-cors", body: formData
-        });
-
-        // 3. Complete Process
-        localStorage.removeItem("cart");
-        document.getElementById("displayID").innerText = bookingID;
-        document.getElementById("formBox").style.display = "none";
-        document.getElementById("successBox").style.display = "block";
-    }
-
-    loadCart();
+  document.getElementById("displayID").innerText = bookingID;
+  document.getElementById("formBox").style.display = "none";
+  document.getElementById("successBox").style.display = "block";
+  localStorage.removeItem("cart");
+}
 </script>
+
 </body>
 </html>
