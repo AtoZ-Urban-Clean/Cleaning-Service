@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Track Booking</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+
+<h2>Track Your Booking</h2>
+<input id="bid" placeholder="Booking ID">
+<button onclick="track()">Track</button>
+
+<pre id="out"></pre>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycbyP67F22J7gySI-4thuuK5U8hPSH1QHKCyV6etkvPM9-g7LQyO4ChI6p_O900v47v33NA/exec";
+
+function track(){
+  fetch(API+"?action=track&id="+bid.value)
+  .then(r=>r.json())
+  .then(d=>{
+    out.innerText = `
+Status : ${d.status}
+Labor  : ${d.labor}
+Mobile : ${d.mobile}
+`;
+  });
+}
+</script>
+</body>
+</html>
