@@ -1,57 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Admin – Update Booking</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Admin Action | AtoZ Urban Clean</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{font-family:Arial;padding:20px}
-input,select,button{width:100%;padding:10px;margin:8px 0}
-button{background:#0a6cff;color:#fff;border:none}
+body{
+  font-family:Segoe UI, Arial;
+  background:#f4f6f8;
+  padding:20px;
+}
+.card{
+  max-width:420px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+h2{text-align:center;margin-bottom:15px}
+label{font-weight:600}
+input,select,button{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  font-size:15px;
+}
+button{
+  background:#0a6cff;
+  color:#fff;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+}
+.success{
+  color:green;
+  text-align:center;
+  margin-top:10px;
+}
 </style>
 </head>
 
 <body>
 
-<h2>Admin Booking Update</h2>
+<div class="card">
+  <h2>Admin Booking Action</h2>
 
-<label>Booking ID</label>
-<input type="text" id="bookingId" readonly>
+  <label>Booking ID</label>
+  <input id="bookingId" readonly>
 
-<label>Status</label>
-<select id="status">
-  <option>Confirmed</option>
-  <option>Completed</option>
-</select>
+  <label>Status</label>
+  <select id="status">
+    <option value="Confirmed">Confirmed</option>
+    <option value="Completed">Completed</option>
+  </select>
 
-<label>Assign Labor</label>
-<input type="text" id="labor" placeholder="Labor name">
+  <label>Customer Phone</label>
+  <input id="custPhone" placeholder="Customer phone">
 
-<button onclick="updateBooking()">Update Booking</button>
+  <label>Labor Name</label>
+  <input id="labor" placeholder="Labor name">
+
+  <label>Admin Name</label>
+  <input id="adminName" value="YUVA">
+
+  <button onclick="submitAdminAction()">Update Sheet</button>
+
+  <div class="success" id="msg"></div>
+</div>
 
 <script>
-const bookingId = window.location.hash.substring(1);
+/* Auto-fill Booking ID from URL hash */
+const bookingId = location.hash.substring(1);
 document.getElementById("bookingId").value = bookingId;
 
-function updateBooking() {
-  fetch("https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec", {
-    method: "POST",
-    body: JSON.stringify({
-      bookingId: bookingId,
-      status: document.getElementById("status").value,
-      labor: document.getElementById("labor").value
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if(data.success){
-      alert("Booking updated successfully");
-    } else {
-      alert("Booking not found");
-    }
+function submitAdminAction() {
+
+  const formURL =
+    "https://docs.google.com/forms/d/e/1oQGuG3OIDOHZti_78nsHa33eAqfoGdbN7Wn-A-V6DJk/formResponse";
+
+  const data = new URLSearchParams({
+    "entry.106701433": bookingId,                                // Booking ID
+    "entry.1432715854": document.getElementById("status").value, // Status
+    "entry.1835648191": document.getElementById("custPhone").value,
+    "entry.717790276": document.getElementById("labor").value,
+    "entry.470681689": document.getElementById("adminName").value,
+    "entry.1025255991": new Date().toISOString().slice(0,10)
   });
+
+  fetch(formURL, {
+    method: "POST",
+    mode: "no-cors",
+    body: data
+  });
+
+  document.getElementById("msg").innerHTML =
+    "✅ Booking updated & sheet saved successfully";
 }
 </script>
 
 </body>
 </html>
-
