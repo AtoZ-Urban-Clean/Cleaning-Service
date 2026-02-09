@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Track Booking</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-</head>
-
+<head><title>Track Booking</title></head>
 <body>
-<h2>Track Booking</h2>
 
-<input id="bid" placeholder="Booking ID">
+<h2>Track Your Booking</h2>
+
+<input id="bid" placeholder="Enter Booking ID">
 <button onclick="track()">Track</button>
-<div id="out"></div>
+
+<div id="result"></div>
 
 <script>
-async function track(){
-  const id = document.getElementById("bid").value;
-  const r = await fetch("YOUR_SCRIPT_URL?bid="+id);
-  const d = await r.json();
-
-  document.getElementById("out").innerHTML =
-    "Status: " + d.status + "<br>" +
-    "Worker: " + d.worker + "<br>" +
-    "Mobile: " + d.mobile;
+function track(){
+  fetch("https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec?bid="+bid.value)
+  .then(r=>r.json())
+  .then(d=>{
+    result.innerHTML = `
+      Status: <b>${d.status}</b><br>
+      Labour: ${d.labour || "-"}<br>
+      Mobile: ${d.mobile || "-"}
+    `;
+  });
 }
 </script>
 
