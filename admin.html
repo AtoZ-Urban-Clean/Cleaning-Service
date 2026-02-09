@@ -7,36 +7,30 @@
 
 <h2>Admin – Booking Update</h2>
 
-<input id="bookingId" placeholder="Booking ID"><br><br>
-<input id="labourName" placeholder="Labour Name"><br><br>
-<input id="labourMobile" placeholder="Labour Mobile"><br><br>
-
-<select id="status">
-  <option>Confirmed</option>
-  <option>Assigned</option>
-  <option>Completed</option>
-</select><br><br>
-
-<button onclick="update()">Update & Notify</button>
+<div class="container">
+    <h2>Admin Management</h2>
+    <table style="width:100%; font-size:12px;">
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Labour Name</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>AZUC-3842</td>
+            <td>Yuva</td>
+            <td><input type="text" id="L1" placeholder="Labour Name"></td>
+            <td><button onclick="updateAdmin('9489587626', 'AZUC-3842', 'L1')">Notify</button></td>
+        </tr>
+    </table>
+</div>
 
 <script>
-function update(){
-  const bid = bookingId.value;
-  const lname = labourName.value;
-  const lmob = labourMobile.value;
-  const status = document.getElementById("status").value;
-
-  const msgCustomer =
-`Your booking ${bid} is now ${status}
-Labour: ${lname}
-Mobile: ${lmob}`;
-
-  const msgLabour =
-`You are assigned a service
-Booking ID: ${bid}`;
-
-  window.open(`https://wa.me/91CUSTOMERNO?text=${encodeURIComponent(msgCustomer)}`);
-  window.open(`https://wa.me/91${lmob}?text=${encodeURIComponent(msgLabour)}`);
+function updateAdmin(custMobile, bid, inputId) {
+    const labour = document.getElementById(inputId).value;
+    const msg = `Update from AtoZ Clean: Your booking ${bid} is now ASSIGNED to ${labour}. They will contact you shortly.`;
+    const url = `https://wa.me/91${custMobile}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
 }
 </script>
 
