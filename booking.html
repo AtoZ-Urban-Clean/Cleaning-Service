@@ -47,14 +47,15 @@
         .total { font-size: 22px; margin: 20px 0; font-weight: 800; text-align: right; color: var(--primary); }
 
         label { display: block; margin-top: 18px; font-weight: 600; font-size: 13px; color: #666; }
-        .input-group { position: relative; }
         input { width: 100%; padding: 12px; margin-top: 6px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
         input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 2px rgba(0,102,255,0.1); }
 
+        .input-group { position: relative; }
         .gps-btn { position: absolute; right: 10px; top: 12px; background: #fff; border: none; color: var(--primary); cursor: pointer; font-size: 18px; padding: 5px; }
 
         .main-btn { width: 100%; margin-top: 30px; padding: 16px; font-size: 16px; background: var(--secondary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .main-btn:hover { background: #e60072; }
+        .main-btn:disabled { background: #ccc; cursor: not-allowed; }
 
         .success { text-align: center; display: none; animation: fadeIn 0.5s ease-in; padding: 40px 20px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -68,7 +69,6 @@
         }
     </style>
 </head>
-
 <body>
 
 <header>
@@ -79,20 +79,20 @@
 
 <div class="container" id="formBox">
     <div class="service-header">
-        <h3 style="margin:0">🧺Selected Services</h3>
+        <h3 style="margin:0">🧺 Selected Services</h3>
         <button class="clear-btn" onclick="clearAll()">Clear Bag</button>
     </div>
     
     <div id="serviceList"></div>
     <div class="total">Total: ₹<span id="amount">0</span></div>
 
-    <label>👤Full Name</label>
-    <input type="text" id="name" placeholder="Name">
+    <label>👤 Full Name</label>
+    <input type="text" id="name" placeholder="Enter your name">
 
-    <label>📞Mobile Number</label>
-    <input type="tel" id="mobile" placeholder="Mobile number">
+    <label>📞 Mobile Number</label>
+    <input type="tel" id="mobile" placeholder="Enter mobile number">
 
-    <label>📍Address / Location</label>
+    <label>📍 Address / Location</label>
     <div class="input-group">
         <input type="text" id="location" placeholder="Enter address or detect location">
         <button class="gps-btn" onclick="getLocation()" title="Detect My Location">
@@ -100,7 +100,7 @@
         </button>
     </div>
 
-    <label>📅Preferred Date & Time</label>
+    <label>📅 Preferred Date & Time</label>
     <div style="display: flex; gap: 10px;">
         <input type="date" id="date">
         <input type="time" id="time">
@@ -112,11 +112,11 @@
 <div class="container success" id="successBox">
     <i class="fas fa-check-circle" style="font-size: 70px; color: #25D366;"></i>
     <h2 style="margin: 20px 0 5px;">Booking Confirmed!</h2>
-    <p style="color: #666; margin-bottom: 5px;">Thank you for choosing AtoZ Urban Clean.</p>
+    <p style="color: #666; margin-bottom: 5px;">We have received your request.</p>
     
-    <div class="booking-badge" id="displayID">AZUC-000000-0000</div>
+    <div class="booking-badge" id="displayID">Generating ID...</div>
     
-    <p style="color: #888; font-size: 14px;">Please save your Booking ID for future reference.<br>Our team will call you shortly.</p>
+    <p style="color: #888; font-size: 14px;">Please save your Booking ID.<br>Our team will contact you shortly.</p>
     
     <a href="index.html" style="display:block; margin-top:30px; color: var(--primary); text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 14px;">
         <i class="fas fa-arrow-left"></i> Back to Home
@@ -125,21 +125,20 @@
 
 <script>
     const GOOGLE_FORM_ID = "1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
-    // Replace with the entry ID for your Booking ID column in Google Forms
-    const ENTRY_BOOKING_ID = "entry.123456789"; 
+    
+    // !!! IMPORTANT: Replace 'entry.000000' with the actual ID for your BookingID field
+    const ENTRY_BOOKING_ID = "entry.244795213"; 
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const list = document.getElementById("serviceList");
     const amountDisplay = document.getElementById("amount");
 
+    // Set min date to today
     document.getElementById('date').min = new Date().toISOString().split("T")[0];
 
     function loadCart() {
         if (cart.length === 0) {
-            list.innerHTML = `<div style='text-align:center; padding: 20px;'>
-                <p style='color:#999;'>Your bag is empty.</p>
-                <a href='services.html' style='color:var(--primary); text-decoration:none; font-weight:600;'>Browse Services</a>
-            </div>`;
+            list.innerHTML = `<div style='text-align:center; padding: 20px;'><p style='color:#999;'>Your bag is empty.</p></div>`;
             amountDisplay.innerText = "0";
             return;
         }
@@ -162,8 +161,7 @@
                     <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
                 </div>
                 <b style="min-width:70px; text-align:right">₹${itemTotal}</b>
-                <button class="remove-btn" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>
-            `;
+                <button class="remove-btn" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>`;
             list.appendChild(div);
         });
         amountDisplay.innerText = total;
@@ -191,17 +189,14 @@
 
     async function getLocation() {
         const locInput = document.getElementById("location");
-        locInput.placeholder = "Detecting your address...";
+        locInput.placeholder = "Detecting location...";
         if (!navigator.geolocation) return alert("Geolocation not supported");
-
         navigator.geolocation.getCurrentPosition(async (pos) => {
             try {
                 const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
                 const data = await res.json();
                 locInput.value = data.display_name || "Location detected";
-            } catch (e) {
-                locInput.placeholder = "Please type manually";
-            }
+            } catch (e) { locInput.placeholder = "Enter manually"; }
         }, () => alert("Permission Denied"));
     }
 
@@ -214,10 +209,10 @@
             time: document.getElementById("time").value
         };
 
-        if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
-        if (cart.length === 0) return alert("Your bag is empty");
+        if (Object.values(fields).some(v => !v)) return alert("Please fill all details");
+        if (cart.length === 0) return alert("Bag is empty");
 
-        // 1. Generate Booking ID (AZUC-YYYYMMDD-RAND)
+        // 1. Generate Booking ID
         const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '');
         const randomStr = Math.floor(1000 + Math.random() * 9000);
         const bookingID = `AZUC-${dateStr}-${randomStr}`;
@@ -225,11 +220,12 @@
         const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
         const total = amountDisplay.innerText;
 
-        // UI Feedback
-        document.getElementById("submitBtn").innerText = "Booking...";
-        document.getElementById("submitBtn").disabled = true;
+        // UI Loading
+        const btn = document.getElementById("submitBtn");
+        btn.innerText = "Processing...";
+        btn.disabled = true;
 
-        // 2. Submit to Google Form (Sheet)
+        // 2. Submit to Google Sheets
         const formData = new FormData();
         formData.append("entry.470681689", fields.name);
         formData.append("entry.574952680", fields.mobile);
@@ -238,13 +234,13 @@
         formData.append("entry.1650273648", fields.time);
         formData.append("entry.624600000", servicesString);
         formData.append("entry.1504263480", total);
-        formData.append(ENTRY_BOOKING_ID, bookingID);
+        formData.append(ENTRY_BOOKING_ID, bookingID); // Saves to Column J
 
         fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
             method: "POST", mode: "no-cors", body: formData
         });
 
-        // 3. Show Success Screen (NO REDIRECT)
+        // 3. Complete Process
         localStorage.removeItem("cart");
         document.getElementById("displayID").innerText = bookingID;
         document.getElementById("formBox").style.display = "none";
