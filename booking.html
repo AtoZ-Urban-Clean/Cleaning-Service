@@ -118,6 +118,9 @@
     <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
     <p style="color: #666;">We have received your request.</p>
     
+    <a id="waLink" class="whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i> Send Details via WhatsApp
+    </a>
     
     <a href="index.html" style="display:block; margin-top:20px; color: var(--primary); text-decoration: none; font-weight: 600;">Back to Home</a>
 </div>
@@ -206,45 +209,48 @@
         }, () => alert("Permission Denied"));
     }
 
-    async function confirmBooking() {
-        const fields = {
-            name: document.getElementById("name").value.trim(),
-            mobile: document.getElementById("mobile").value.trim(),
-            location: document.getElementById("location").value.trim(),
-            date: document.getElementById("date").value,
-            time: document.getElementById("time").value
-        };
+async function confirmBooking() {
+    const fields = {
+        name: document.getElementById("name").value.trim(),
+        mobile: document.getElementById("mobile").value.trim(),
+        location: document.getElementById("location").value.trim(),
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value
+    };
 
-        if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
-        if (cart.length === 0) return alert("Your bag is empty");
+    if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
+    if (cart.length === 0) return alert("Your bag is empty");
 
-        const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
-        const total = amountDisplay.innerText;
+    const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
+    const total = amountDisplay.innerText;
 
-        // 1. Submit to Google Sheets (This triggers your email via Apps Script)
-        const formData = new FormData();
-        formData.append("entry.470681689", fields.name);
-        formData.append("entry.574952680", fields.mobile);
-        formData.append("entry.2032518446", fields.location);
-        formData.append("entry.1025255991", fields.date);
-        formData.append("entry.1650273648", fields.time);
-        formData.append("entry.624600000", servicesString);
-        formData.append("entry.1504263480", total);
+    // 1. Submit to Google Sheets (Hidden background task)
+    const formData = new FormData();
+    formData.append("entry.470681689", fields.name);
+    formData.append("entry.574952680", fields.mobile);
+    formData.append("entry.2032518446", fields.location);
+    formData.append("entry.1025255991", fields.date);
+    formData.append("entry.1650273648", fields.time);
+    formData.append("entry.624600000", servicesString);
+    formData.append("entry.1504263480", total);
 
-        fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
-            method: "POST", mode: "no-cors", body: formData
-        });
+    fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
+        method: "POST", mode: "no-cors", body: formData
+    });
 
-        // 2. Prepare WhatsApp Message
-        const summary = `Name: ${fields.name}\nMobile: ${fields.mobile}\nDate: ${fields.date}\nTime: ${fields.time}\nServices: ${servicesString}\nTotal: ₹${total}`;
+    // 2. Prepare WhatsApp Message
+    const summary = `*New Booking Confirmation*:\n\n👤 *Name*: ${fields.name}\n📞 *Mobile*: ${fields.mobile}\n📍 *Location*: ${fields.location}\n📅 *Date*: ${fields.date}\n⏰ *Time*: ${fields.time}\n🧺 *Services*: ${servicesString}\n💰 *Total*: ₹${total}`;
+    
+    const waUrl = `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(summary)}`;
 
-        document.getElementById("waLink").href = `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent("New Booking Confirmation:\n" + summary)}`;
-
-        // 3. UI Update
-        document.getElementById("formBox").style.display = "none";
-        document.getElementById("successBox").style.display = "block";
-        localStorage.removeItem("cart");
-    }
+    // 3. Clear Cart and Redirect
+    localStorage.removeItem("cart");
+    
+    // Slight delay (500ms) to ensure the Google Form fetch starts before redirecting
+    setTimeout(() => {
+        window.location.href = waUrl;
+    }, 500);
+}
 
     loadCart();
 </script>
