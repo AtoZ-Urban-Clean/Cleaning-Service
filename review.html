@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head><title>Review</title></head>
+<body>
+
+<h2>Rate Our Service</h2>
+<input id="bid" placeholder="Booking ID"><br>
+<input id="name" placeholder="Name"><br>
+<select id="rate">
+<option>5</option><option>4</option>
+<option>3</option><option>2</option>
+</select><br>
+<textarea id="rev" placeholder="Review"></textarea><br>
+<button onclick="send()">Submit</button>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycbyP67F22J7gySI-4thuuK5U8hPSH1QHKCyV6etkvPM9-g7LQyO4ChI6p_O900v47v33NA/exec";
+
+function send(){
+fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"review",
+bid:bid.value,
+name:name.value,
+rate:rate.value,
+rev:rev.value
+})
+});
+alert("Thank you!");
+}
+</script>
+</body>
+</html>
