@@ -224,8 +224,6 @@ async function confirmBooking() {
     const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
     const total = amountDisplay.innerText;
 
-    // 1. Submit to Google Sheets 
-    // This sends the data to your script which then emails you the details
     const formData = new FormData();
     formData.append("entry.470681689", fields.name);
     formData.append("entry.574952680", fields.mobile);
@@ -235,15 +233,14 @@ async function confirmBooking() {
     formData.append("entry.624600000", servicesString);
     formData.append("entry.1504263480", total);
 
+    // Sends data to Google Sheets
     fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
         method: "POST", mode: "no-cors", body: formData
     });
 
-    // 2. UI Update (Stay on page, show success)
+    // Show success message and clear cart
     document.getElementById("formBox").style.display = "none";
     document.getElementById("successBox").style.display = "block";
-    
-    // Clear the cart so they don't double book
     localStorage.removeItem("cart");
 }
 
