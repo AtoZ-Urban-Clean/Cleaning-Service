@@ -5,22 +5,24 @@
 
 <h2>Track Your Booking</h2>
 
-<input id="bid" placeholder="Enter Booking ID">
-<button onclick="track()">Track</button>
-
-<div id="result"></div>
+<div class="container">
+    <h3>Track Your Service</h3>
+    <input type="text" id="trackId" placeholder="Enter Booking ID (AZUC-...)">
+    <button class="main-btn" onclick="getTracking()">Track Now</button>
+    
+    <div id="result" style="margin-top:20px; display:none; padding:15px; border:1px solid #ddd; border-radius:8px;">
+        <p>Current Status: <b id="statText"></b></p>
+        <p>Assigned Hero: <span id="labourText"></span></p>
+        <a id="labourWa" class="whatsapp" style="display:none;">Contact Professional</a>
+    </div>
+</div>
 
 <script>
-function track(){
-  fetch("https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec?bid="+bid.value)
-  .then(r=>r.json())
-  .then(d=>{
-    result.innerHTML = `
-      Status: <b>${d.status}</b><br>
-      Labour: ${d.labour || "-"}<br>
-      Mobile: ${d.mobile || "-"}
-    `;
-  });
+function getTracking() {
+    const id = document.getElementById("trackId").value;
+    // In a real scenario, use google.script.run for GAS Web Apps
+    // This is a placeholder for the logic
+    alert("Searching for: " + id);
 }
 </script>
 
