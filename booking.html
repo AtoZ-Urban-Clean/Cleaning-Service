@@ -221,9 +221,15 @@ async function confirmBooking() {
     if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
     if (cart.length === 0) return alert("Your bag is empty");
 
+    // --- GENERATE BOOKING ID ---
+    const datePart = new Date().toISOString().split('T')[0].replace(/-/g, ''); // e.g., 20260209
+    const randomPart = Math.floor(1000 + Math.random() * 9000); // 4 random digits
+    const bookingID = `AZUC-${datePart}-${randomPart}`;
+
     const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
     const total = amountDisplay.innerText;
 
+    // 1. Submit to Google Sheets
     const formData = new FormData();
     formData.append("entry.470681689", fields.name);
     formData.append("entry.574952680", fields.mobile);
@@ -232,18 +238,28 @@ async function confirmBooking() {
     formData.append("entry.1650273648", fields.time);
     formData.append("entry.624600000", servicesString);
     formData.append("entry.1504263480", total);
+    
+    // IMPORTANT: You must find the entry ID for your "BookingID" column in Google Forms
+    // Replace 'entry.0000000' with your actual Booking ID entry ID
+    formData.append("entry.0000000", bookingID); 
 
-    // Sends data to Google Sheets
     fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
         method: "POST", mode: "no-cors", body: formData
     });
 
-    // Show success message and clear cart
+    // 2. UI Update
     document.getElementById("formBox").style.display = "none";
+    document.getElementById("successBox").innerHTML = `
+        <i class="fas fa-check-circle" style="font-size: 60px; color: #25D366;"></i>
+        <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
+        <p style="color: #333; font-weight: bold;">ID: ${bookingID}</p>
+        <p style="color: #666;">We have received your request and will contact you shortly.</p>
+        <a href="index.html" style="display:block; margin-top:20px; color: #0066ff; text-decoration: none; font-weight: 600;">Back to Home</a>
+    `;
     document.getElementById("successBox").style.display = "block";
+    
     localStorage.removeItem("cart");
 }
-
     loadCart();
 </script>
 </body>
