@@ -18,6 +18,7 @@
 
         body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 40px; }
 
+        /* Clean Header */
         header {
             background: #fff;
             padding: 12px 20px;
@@ -35,6 +36,7 @@
 
         .container { max-width: 600px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
 
+        /* Service List Styles */
         .service-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg); margin-bottom: 15px; padding-bottom: 10px; }
         .clear-btn { background: #fee; color: #d00; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
         .service-item { display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; gap: 12px; }
@@ -46,21 +48,22 @@
 
         .total { font-size: 22px; margin: 20px 0; font-weight: 800; text-align: right; color: var(--primary); }
 
+        /* Form Elements */
         label { display: block; margin-top: 18px; font-weight: 600; font-size: 13px; color: #666; }
+        .input-group { position: relative; }
         input { width: 100%; padding: 12px; margin-top: 6px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
         input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 2px rgba(0,102,255,0.1); }
 
-        .input-group { position: relative; }
         .gps-btn { position: absolute; right: 10px; top: 12px; background: #fff; border: none; color: var(--primary); cursor: pointer; font-size: 18px; padding: 5px; }
 
         .main-btn { width: 100%; margin-top: 30px; padding: 16px; font-size: 16px; background: var(--secondary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .main-btn:hover { background: #e60072; }
-        .main-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        .success { text-align: center; display: none; animation: fadeIn 0.5s ease-in; padding: 40px 20px; }
+        /* Success Screen */
+        .success { text-align: center; display: none; animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .booking-badge { background: #f0f7ff; color: var(--primary); padding: 10px 20px; border-radius: 50px; display: inline-block; font-weight: 800; margin: 15px 0; border: 1px dashed var(--primary); }
+        
+        .whatsapp { display: block; margin-top: 15px; padding: 15px; background: var(--whatsapp); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
 
         @media (max-width: 600px) {
             .container { margin: 10px; padding: 15px; }
@@ -69,6 +72,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <header>
@@ -79,20 +83,20 @@
 
 <div class="container" id="formBox">
     <div class="service-header">
-        <h3 style="margin:0">🧺 Selected Services</h3>
+        <h3 style="margin:0">🧺Selected Services</h3>
         <button class="clear-btn" onclick="clearAll()">Clear Bag</button>
     </div>
     
     <div id="serviceList"></div>
     <div class="total">Total: ₹<span id="amount">0</span></div>
 
-    <label>👤 Full Name</label>
-    <input type="text" id="name" placeholder="Enter your name">
+    <label>👤Full Name</label>
+    <input type="text" id="name" placeholder="Name">
 
-    <label>📞 Mobile Number</label>
-    <input type="tel" id="mobile" placeholder="Enter mobile number">
+    <label>📞Mobile Number</label>
+    <input type="tel" id="mobile" placeholder="Mobile number">
 
-    <label>📍 Address / Location</label>
+    <label>📍Address / Location</label>
     <div class="input-group">
         <input type="text" id="location" placeholder="Enter address or detect location">
         <button class="gps-btn" onclick="getLocation()" title="Detect My Location">
@@ -100,82 +104,168 @@
         </button>
     </div>
 
-    <label>📅 Preferred Date & Time</label>
+    <label>📅Preferred Date & Time</label>
     <div style="display: flex; gap: 10px;">
         <input type="date" id="date">
         <input type="time" id="time">
     </div>
 
-    <button class="main-btn" id="submitBtn" onclick="confirmBooking()">Confirm & Book Now</button>
+    <button class="main-btn" onclick="confirmBooking()">Confirm & Book Now</button>
 </div>
 
 <div class="container success" id="successBox">
-    <i class="fas fa-check-circle" style="font-size: 70px; color: #25D366;"></i>
-    <h2 style="margin: 20px 0 5px;">Booking Confirmed!</h2>
-    <p style="color: #666; margin-bottom: 5px;">We have received your request.</p>
+    <i class="fas fa-check-circle" style="font-size: 60px; color: var(--whatsapp);"></i>
+    <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
+    <p style="color: #666;">We have received your request.</p>
     
-    <div class="booking-badge" id="displayID">Generating ID...</div>
-    
-    <p style="color: #888; font-size: 14px;">Please save your Booking ID.<br>Our team will contact you shortly.</p>
-    
-    <a href="index.html" style="display:block; margin-top:30px; color: var(--primary); text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 14px;">
-        <i class="fas fa-arrow-left"></i> Back to Home
+    <a id="waLink" class="whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i> Send Details via WhatsApp
     </a>
+    
+    <a href="index.html" style="display:block; margin-top:20px; color: var(--primary); text-decoration: none; font-weight: 600;">Back to Home</a>
 </div>
 
 <script>
+    // Configuration
+    const ADMIN_PHONE = "919489587626";
     const GOOGLE_FORM_ID = "1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const list = document.getElementById("serviceList");
+    const amountDisplay = document.getElementById("amount");
 
-function confirmBooking() {
+    // Set minimum date to today
+    document.getElementById('date').min = new Date().toISOString().split("T")[0];
+
+    function loadCart() {
+        if (cart.length === 0) {
+            list.innerHTML = `<div style='text-align:center; padding: 20px;'>
+                <p style='color:#999;'>Your bag is empty.</p>
+                <a href='services.html' style='color:var(--primary); text-decoration:none; font-weight:600;'>Browse Services</a>
+            </div>`;
+            amountDisplay.innerText = "0";
+            return;
+        }
+        let total = 0;
+        list.innerHTML = "";
+        cart.forEach((item, index) => {
+            const itemQty = item.qty || 1;
+            const itemTotal = Number(item.price) * itemQty;
+            total += itemTotal;
+            const div = document.createElement("div");
+            div.className = "service-item";
+            div.innerHTML = `
+                <div class="item-info">
+                    <div style="font-weight:600">${item.name}</div>
+                    <div style="font-size:12px; color:#666">₹${item.price} per unit</div>
+                </div>
+                <div class="qty-controls">
+                    <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                    <span style="font-weight:bold; min-width:15px; text-align:center">${itemQty}</span>
+                    <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                </div>
+                <b style="min-width:70px; text-align:right">₹${itemTotal}</b>
+                <button class="remove-btn" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>
+            `;
+            list.appendChild(div);
+        });
+        amountDisplay.innerText = total;
+    }
+
+    function updateQty(index, change) {
+        cart[index].qty = (cart[index].qty || 1) + change;
+        if (cart[index].qty < 1) cart[index].qty = 1;
+        saveAndReload();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        saveAndReload();
+    }
+
+    function clearAll() {
+        if(confirm("Empty your service bag?")) { cart = []; saveAndReload(); }
+    }
+
+    function saveAndReload() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+    }
+
+    async function getLocation() {
+        const locInput = document.getElementById("location");
+        locInput.placeholder = "Detecting your address...";
+        
+        if (!navigator.geolocation) return alert("Geolocation not supported");
+
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
+                const data = await res.json();
+                locInput.value = data.display_name || "Location detected";
+            } catch (e) {
+                locInput.placeholder = "Please type manually";
+            }
+        }, () => alert("Permission Denied"));
+    }
+
+   async function confirmBooking() {
+  // get form field values
   const name = document.getElementById("name").value.trim();
   const mobile = document.getElementById("mobile").value.trim();
   const location = document.getElementById("location").value.trim();
   const date = document.getElementById("date").value;
   const time = document.getElementById("time").value;
 
+  // validate
   if (!name || !mobile || !location || !date || !time) {
-    alert("Fill all details");
-    return;
+    return alert("Please fill all booking details");
   }
-
   if (cart.length === 0) {
-    alert("No services selected");
-    return;
+    return alert("Please select at least one service");
   }
 
-  const bookingID =
-    "AZUC-" +
-    new Date().toISOString().slice(0,10).replace(/-/g,"") +
-    "-" +
-    Math.floor(1000 + Math.random() * 9000);
+  // generate Booking ID
+  const d = new Date();
+  const dateStr =
+    d.getFullYear().toString() +
+    String(d.getMonth()+1).padStart(2,"0") +
+    String(d.getDate()).padStart(2,"0");
+  const random = Math.floor(1000 + Math.random() * 9000);
 
-  const services = cart.map(i => `${i.name} x${i.qty||1}`).join(", ");
-  const total = document.getElementById("amount").innerText;
+  const bookingID = `AZUC-${dateStr}-${random}`;
 
-  const fd = new FormData();
-  fd.append("entry.470681689", name);
-  fd.append("entry.574952680", mobile);
-  fd.append("entry.2032518446", location);
-  fd.append("entry.1025255991", date);
-  fd.append("entry.1650273648", time);
-  fd.append("entry.624600000", services);
-  fd.append("entry.1504263480", total);
-  fd.append("entry.123456789", bookingID);
+  // compose services string
+  const servicesString = cart.map(item => `${item.name} x${item.qty || 1}`).join(", ");
+  const totalAmount = document.getElementById("amount").innerText;
 
-  fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
+  // send to Google Form
+  const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w/formResponse";
+  const formData = new FormData();
+
+  formData.append("entry.106701433", bookingID);
+  formData.append("entry.470681689", name);
+  formData.append("entry.574952680", mobile);
+  formData.append("entry.2032518446", location);
+  formData.append("entry.1025255991", date);
+  formData.append("entry.1650273648", time);
+  formData.append("entry.624600000", servicesString);
+  formData.append("entry.1504263480", totalAmount);
+
+  await fetch(formURL, {
     method: "POST",
     mode: "no-cors",
-    body: fd
+    body: formData
   });
 
+  // show success screen
   document.getElementById("displayID").innerText = bookingID;
   document.getElementById("formBox").style.display = "none";
   document.getElementById("successBox").style.display = "block";
   localStorage.removeItem("cart");
 }
-</script>
 
+    loadCart();
+</script>
 </body>
 </html>
