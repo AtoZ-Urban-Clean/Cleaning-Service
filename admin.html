@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin – Update Booking</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;padding:20px}
+input,select,button{width:100%;padding:10px;margin:8px 0}
+button{background:#0a6cff;color:#fff;border:none}
+</style>
+</head>
+
+<body>
+
+<h2>Admin Booking Update</h2>
+
+<label>Booking ID</label>
+<input type="text" id="bookingId" readonly>
+
+<label>Status</label>
+<select id="status">
+  <option>Confirmed</option>
+  <option>Completed</option>
+</select>
+
+<label>Assign Labor</label>
+<input type="text" id="labor" placeholder="Labor name">
+
+<button onclick="updateBooking()">Update Booking</button>
+
+<script>
+const bookingId = window.location.hash.substring(1);
+document.getElementById("bookingId").value = bookingId;
+
+function updateBooking() {
+  fetch("https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      bookingId: bookingId,
+      status: document.getElementById("status").value,
+      labor: document.getElementById("labor").value
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      alert("Booking updated successfully");
+    } else {
+      alert("Booking not found");
+    }
+  });
+}
+</script>
+
+</body>
+</html>
 
