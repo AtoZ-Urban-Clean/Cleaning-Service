@@ -1,1 +1,70 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Track Booking | AtoZ Urban Clean</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family:Segoe UI, Arial;
+  background:#f6f6f6;
+  margin:0;
+  padding:20px;
+}
+.box{
+  max-width:400px;
+  margin:auto;
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  text-align:center;
+}
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+button{
+  margin-top:15px;
+  width:100%;
+  padding:12px;
+  background:#0066ff;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Track Your Booking</h2>
+  <p>Enter your Booking ID</p>
+
+  <input type="text" id="trackID" placeholder="AZUC-YYYYMMDD-XXXX">
+  <button onclick="track()">Track</button>
+
+  <p id="result" style="margin-top:15px;"></p>
+</div>
+
+<script>
+document.getElementById("trackID").value =
+  localStorage.getItem("lastBookingID") || "";
+
+function track(){
+  const id = document.getElementById("trackID").value.trim();
+  if(!id) return alert("Enter Booking ID");
+
+  document.getElementById("result").innerHTML =
+    "✅ Booking received.<br>Status: <b>Pending Confirmation</b>";
+}
+</script>
+
+</body>
+</html>
