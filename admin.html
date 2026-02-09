@@ -1,82 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
-  <style>
-    body { font-family: Arial; max-width: 500px; margin: auto; }
-    input, select, button { width: 100%; padding: 10px; margin: 6px 0; }
-    .box { border: 1px solid #ccc; padding: 15px; margin-top: 15px; }
-  </style>
+<title>Admin Panel</title>
 </head>
 <body>
 
-<h2>Admin Booking Panel</h2>
+<h2>Admin – Booking Update</h2>
 
-<input id="bookingId" placeholder="Enter Booking ID">
-<button onclick="getBooking()">Get Booking</button>
+<input id="bookingId" placeholder="Booking ID"><br><br>
+<input id="labourName" placeholder="Labour Name"><br><br>
+<input id="labourMobile" placeholder="Labour Mobile"><br><br>
 
-<div id="details" class="box" style="display:none;">
-  <h3>Booking Details</h3>
-  <p><b>Name:</b> <span id="d_name"></span></p>
-  <p><b>Mobile:</b> <span id="d_mobile"></span></p>
-  <p><b>Services:</b> <span id="d_services"></span></p>
-  <p><b>Total:</b> ₹<span id="d_total"></span></p>
+<select id="status">
+  <option>Confirmed</option>
+  <option>Assigned</option>
+  <option>Completed</option>
+</select><br><br>
 
-  <hr>
-
-  <label>Status</label>
-  <select id="status">
-    <option value="Confirmed">Confirmed</option>
-    <option value="Assigned">Assigned</option>
-    <option value="Completed">Completed</option>
-  </select>
-
-  <label>Labour Name</label>
-  <input id="labourName">
-
-  <label>Labour Mobile</label>
-  <input id="labourMobile">
-
-  <button onclick="updateBooking()">Save Update</button>
-</div>
+<button onclick="update()">Update & Notify</button>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
+function update(){
+  const bid = bookingId.value;
+  const lname = labourName.value;
+  const lmob = labourMobile.value;
+  const status = document.getElementById("status").value;
 
-async function getBooking() {
-  const id = document.getElementById("bookingId").value.trim();
-  if (!id) return alert("Enter Booking ID");
+  const msgCustomer =
+`Your booking ${bid} is now ${status}
+Labour: ${lname}
+Mobile: ${lmob}`;
 
-  const res = await fetch(SCRIPT_URL + "?action=get&bookingId=" + id);
-  const data = await res.json();
+  const msgLabour =
+`You are assigned a service
+Booking ID: ${bid}`;
 
-  if (!data.found) {
-    alert("Booking ID not found");
-    return;
-  }
-
-  document.getElementById("details").style.display = "block";
-  document.getElementById("d_name").innerText = data.name;
-  document.getElementById("d_mobile").innerText = data.mobile;
-  document.getElementById("d_services").innerText = data.services;
-  document.getElementById("d_total").innerText = data.total;
-}
-
-async function updateBooking() {
-  const payload = {
-    action: "update",
-    bookingId: document.getElementById("bookingId").value,
-    status: document.getElementById("status").value,
-    labourName: document.getElementById("labourName").value,
-    labourMobile: document.getElementById("labourMobile").value
-  };
-
-  await fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(payload)
-  });
-
-  alert("Booking updated successfully");
+  window.open(`https://wa.me/91CUSTOMERNO?text=${encodeURIComponent(msgCustomer)}`);
+  window.open(`https://wa.me/91${lmob}?text=${encodeURIComponent(msgLabour)}`);
 }
 </script>
 
