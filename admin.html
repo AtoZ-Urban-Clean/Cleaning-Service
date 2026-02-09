@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel | AtoZ</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;background:#f4f4f4;margin:0}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:10px;border-bottom:1px solid #ddd;font-size:13px}
+th{background:#0066ff;color:#fff}
+button{padding:6px 10px;border:none;border-radius:4px}
+.assign{background:#25D366;color:#fff}
+</style>
+</head>
+<body>
+
+<h2 style="padding:10px">Admin – Assign Labor</h2>
+
+<table id="tbl">
+<tr>
+<th>BookingID</th><th>Name</th><th>Service</th>
+<th>Status</th><th>Assign</th>
+</tr>
+</table>
+
+<script>
+const API = "YOUR_APPS_SCRIPT_WEBAPP_URL";
+
+fetch(API+"?action=getBookings")
+.then(r=>r.json())
+.then(d=>{
+  d.forEach(b=>{
+    tbl.innerHTML+=`
+    <tr>
+      <td>${b.id}</td>
+      <td>${b.name}</td>
+      <td>${b.services}</td>
+      <td>${b.status}</td>
+      <td>
+        <button class="assign"
+        onclick="assign('${b.id}')">Assign</button>
+      </td>
+    </tr>`;
+  })
+});
+
+function assign(id){
+  const labor = prompt("Enter Labor Mobile Number");
+  fetch(API+"?action=assign&id="+id+"&labor="+labor);
+  alert("Labor Assigned");
+}
+</script>
+</body>
+</html>
