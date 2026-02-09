@@ -18,7 +18,6 @@
 
         body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 40px; }
 
-        /* Clean Header */
         header {
             background: #fff;
             padding: 12px 20px;
@@ -36,7 +35,6 @@
 
         .container { max-width: 600px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
 
-        /* Service List Styles */
         .service-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg); margin-bottom: 15px; padding-bottom: 10px; }
         .clear-btn { background: #fee; color: #d00; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
         .service-item { display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; gap: 12px; }
@@ -48,7 +46,6 @@
 
         .total { font-size: 22px; margin: 20px 0; font-weight: 800; text-align: right; color: var(--primary); }
 
-        /* Form Elements */
         label { display: block; margin-top: 18px; font-weight: 600; font-size: 13px; color: #666; }
         .input-group { position: relative; }
         input { width: 100%; padding: 12px; margin-top: 6px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
@@ -59,11 +56,10 @@
         .main-btn { width: 100%; margin-top: 30px; padding: 16px; font-size: 16px; background: var(--secondary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .main-btn:hover { background: #e60072; }
 
-        /* Success Screen */
-        .success { text-align: center; display: none; animation: fadeIn 0.5s ease-in; }
+        .success { text-align: center; display: none; animation: fadeIn 0.5s ease-in; padding: 40px 20px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .whatsapp { display: block; margin-top: 15px; padding: 15px; background: var(--whatsapp); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
+
+        .booking-badge { background: #f0f7ff; color: var(--primary); padding: 10px 20px; border-radius: 50px; display: inline-block; font-weight: 800; margin: 15px 0; border: 1px dashed var(--primary); }
 
         @media (max-width: 600px) {
             .container { margin: 10px; padding: 15px; }
@@ -110,31 +106,32 @@
         <input type="time" id="time">
     </div>
 
-    <button class="main-btn" onclick="confirmBooking()">Confirm & Book Now</button>
+    <button class="main-btn" id="submitBtn" onclick="confirmBooking()">Confirm & Book Now</button>
 </div>
 
 <div class="container success" id="successBox">
-    <i class="fas fa-check-circle" style="font-size: 60px; color: var(--whatsapp);"></i>
-    <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
-    <p style="color: #666;">We have received your request.</p>
+    <i class="fas fa-check-circle" style="font-size: 70px; color: #25D366;"></i>
+    <h2 style="margin: 20px 0 5px;">Booking Confirmed!</h2>
+    <p style="color: #666; margin-bottom: 5px;">Thank you for choosing AtoZ Urban Clean.</p>
     
-    <a id="waLink" class="whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i> Send Details via WhatsApp
+    <div class="booking-badge" id="displayID">AZUC-000000-0000</div>
+    
+    <p style="color: #888; font-size: 14px;">Please save your Booking ID for future reference.<br>Our team will call you shortly.</p>
+    
+    <a href="index.html" style="display:block; margin-top:30px; color: var(--primary); text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 14px;">
+        <i class="fas fa-arrow-left"></i> Back to Home
     </a>
-    
-    <a href="index.html" style="display:block; margin-top:20px; color: var(--primary); text-decoration: none; font-weight: 600;">Back to Home</a>
 </div>
 
 <script>
-    // Configuration
-    const ADMIN_PHONE = "919489587626";
     const GOOGLE_FORM_ID = "1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
+    // Replace with the entry ID for your Booking ID column in Google Forms
+    const ENTRY_BOOKING_ID = "entry.123456789"; 
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const list = document.getElementById("serviceList");
     const amountDisplay = document.getElementById("amount");
 
-    // Set minimum date to today
     document.getElementById('date').min = new Date().toISOString().split("T")[0];
 
     function loadCart() {
@@ -195,7 +192,6 @@
     async function getLocation() {
         const locInput = document.getElementById("location");
         locInput.placeholder = "Detecting your address...";
-        
         if (!navigator.geolocation) return alert("Geolocation not supported");
 
         navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -209,57 +205,52 @@
         }, () => alert("Permission Denied"));
     }
 
-async function confirmBooking() {
-    const fields = {
-        name: document.getElementById("name").value.trim(),
-        mobile: document.getElementById("mobile").value.trim(),
-        location: document.getElementById("location").value.trim(),
-        date: document.getElementById("date").value,
-        time: document.getElementById("time").value
-    };
+    async function confirmBooking() {
+        const fields = {
+            name: document.getElementById("name").value.trim(),
+            mobile: document.getElementById("mobile").value.trim(),
+            location: document.getElementById("location").value.trim(),
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value
+        };
 
-    if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
-    if (cart.length === 0) return alert("Your bag is empty");
+        if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
+        if (cart.length === 0) return alert("Your bag is empty");
 
-    // --- GENERATE BOOKING ID ---
-    const datePart = new Date().toISOString().split('T')[0].replace(/-/g, ''); // e.g., 20260209
-    const randomPart = Math.floor(1000 + Math.random() * 9000); // 4 random digits
-    const bookingID = `AZUC-${datePart}-${randomPart}`;
+        // 1. Generate Booking ID (AZUC-YYYYMMDD-RAND)
+        const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '');
+        const randomStr = Math.floor(1000 + Math.random() * 9000);
+        const bookingID = `AZUC-${dateStr}-${randomStr}`;
 
-    const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
-    const total = amountDisplay.innerText;
+        const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
+        const total = amountDisplay.innerText;
 
-    // 1. Submit to Google Sheets
-    const formData = new FormData();
-    formData.append("entry.470681689", fields.name);
-    formData.append("entry.574952680", fields.mobile);
-    formData.append("entry.2032518446", fields.location);
-    formData.append("entry.1025255991", fields.date);
-    formData.append("entry.1650273648", fields.time);
-    formData.append("entry.624600000", servicesString);
-    formData.append("entry.1504263480", total);
-    
-    // IMPORTANT: You must find the entry ID for your "BookingID" column in Google Forms
-    // Replace 'entry.0000000' with your actual Booking ID entry ID
-    formData.append("entry.0000000", bookingID); 
+        // UI Feedback
+        document.getElementById("submitBtn").innerText = "Booking...";
+        document.getElementById("submitBtn").disabled = true;
 
-    fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
-        method: "POST", mode: "no-cors", body: formData
-    });
+        // 2. Submit to Google Form (Sheet)
+        const formData = new FormData();
+        formData.append("entry.470681689", fields.name);
+        formData.append("entry.574952680", fields.mobile);
+        formData.append("entry.2032518446", fields.location);
+        formData.append("entry.1025255991", fields.date);
+        formData.append("entry.1650273648", fields.time);
+        formData.append("entry.624600000", servicesString);
+        formData.append("entry.1504263480", total);
+        formData.append(ENTRY_BOOKING_ID, bookingID);
 
-    // 2. UI Update
-    document.getElementById("formBox").style.display = "none";
-    document.getElementById("successBox").innerHTML = `
-        <i class="fas fa-check-circle" style="font-size: 60px; color: #25D366;"></i>
-        <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
-        <p style="color: #333; font-weight: bold;">ID: ${bookingID}</p>
-        <p style="color: #666;">We have received your request and will contact you shortly.</p>
-        <a href="index.html" style="display:block; margin-top:20px; color: #0066ff; text-decoration: none; font-weight: 600;">Back to Home</a>
-    `;
-    document.getElementById("successBox").style.display = "block";
-    
-    localStorage.removeItem("cart");
-}
+        fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
+            method: "POST", mode: "no-cors", body: formData
+        });
+
+        // 3. Show Success Screen (NO REDIRECT)
+        localStorage.removeItem("cart");
+        document.getElementById("displayID").innerText = bookingID;
+        document.getElementById("formBox").style.display = "none";
+        document.getElementById("successBox").style.display = "block";
+    }
+
     loadCart();
 </script>
 </body>
