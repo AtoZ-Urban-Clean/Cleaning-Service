@@ -113,17 +113,33 @@
     <button class="main-btn" onclick="confirmBooking()">Confirm & Book Now</button>
 </div>
 
-<div class="container success" id="successBox">
-    <i class="fas fa-check-circle" style="font-size: 60px; color: var(--whatsapp);"></i>
-    <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
-    <p style="color: #666;">We have received your request.</p>
-    
-    <a id="waLink" class="whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i> Send Details via WhatsApp
-    </a>
-    
-    <a href="index.html" style="display:block; margin-top:20px; color: var(--primary); text-decoration: none; font-weight: 600;">Back to Home</a>
-</div>
+// show success screen
+document.getElementById("displayID").innerText = bookingID;
+
+// WhatsApp message
+const waMsg = encodeURIComponent(
+  `🧼 *AtoZ Urban Clean Booking Confirmed*\n\n` +
+  `📌 Booking ID: ${bookingID}\n` +
+  `👤 Name: ${name}\n` +
+  `📞 Mobile: ${mobile}\n` +
+  `📍 Address: ${location}\n` +
+  `🧺 Services: ${servicesString}\n` +
+  `💰 Total: ₹${totalAmount}\n` +
+  `📅 Date: ${date} ${time}`
+);
+
+document.getElementById("waLink").href =
+  `https://wa.me/${ADMIN_PHONE}?text=${waMsg}`;
+
+document.getElementById("formBox").style.display = "none";
+document.getElementById("successBox").style.display = "block";
+
+// clear cart
+localStorage.removeItem("cart");
+
+// save bookingID for tracking page
+localStorage.setItem("lastBookingID", bookingID);
+
 
 <script>
     // Configuration
