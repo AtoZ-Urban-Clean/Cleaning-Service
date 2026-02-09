@@ -11,32 +11,20 @@
 
 <input id="bid" placeholder="Booking ID">
 <button onclick="track()">Track</button>
-
-<pre id="out"></pre>
+<div id="out"></div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbyeDfddVwM7_d2HyzD9Ftsw99B_VpSPdMS-P2QNeQUyV3sbEji2nMaCaj2CusFuSGyD5Q/exec";
+async function track(){
+  const id = document.getElementById("bid").value;
+  const r = await fetch("YOUR_SCRIPT_URL?bid="+id);
+  const d = await r.json();
 
-function track(){
-  fetch(API_URL,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"track",
-      bookingId:bid.value
-    })
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.error){
-      out.innerText="Booking not found";
-    }else{
-      out.innerText =
-`Status: ${d.status}
-Labor: ${d.laborName}
-Labor Mobile: ${d.laborMobile}`;
-    }
-  });
+  document.getElementById("out").innerHTML =
+    "Status: " + d.status + "<br>" +
+    "Worker: " + d.worker + "<br>" +
+    "Mobile: " + d.mobile;
 }
 </script>
+
 </body>
 </html>
