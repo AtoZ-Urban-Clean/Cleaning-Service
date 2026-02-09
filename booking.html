@@ -63,7 +63,6 @@
         .success { text-align: center; display: none; animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .whatsapp { display: block; margin-top: 15px; padding: 15px; background: var(--whatsapp); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
 
         @media (max-width: 600px) {
             .container { margin: 10px; padding: 15px; }
@@ -113,33 +112,14 @@
     <button class="main-btn" onclick="confirmBooking()">Confirm & Book Now</button>
 </div>
 
-// show success screen
-document.getElementById("displayID").innerText = bookingID;
+<div class="container success" id="successBox">
 
-// WhatsApp message
-const waMsg = encodeURIComponent(
-  `🧼 *AtoZ Urban Clean Booking Confirmed*\n\n` +
-  `📌 Booking ID: ${bookingID}\n` +
-  `👤 Name: ${name}\n` +
-  `📞 Mobile: ${mobile}\n` +
-  `📍 Address: ${location}\n` +
-  `🧺 Services: ${servicesString}\n` +
-  `💰 Total: ₹${totalAmount}\n` +
-  `📅 Date: ${date} ${time}`
-);
+    <h2 style="margin: 15px 0 5px;">Booking Confirmed!</h2>
+    <p style="color: #666;">We have received your request.</p>
 
-document.getElementById("waLink").href =
-  `https://wa.me/${ADMIN_PHONE}?text=${waMsg}`;
-
-document.getElementById("formBox").style.display = "none";
-document.getElementById("successBox").style.display = "block";
-
-// clear cart
-localStorage.removeItem("cart");
-
-// save bookingID for tracking page
-localStorage.setItem("lastBookingID", bookingID);
-
+    
+    <a href="index.html" style="display:block; margin-top:20px; color: var(--primary); text-decoration: none; font-weight: 600;">Back to Home</a>
+</div>
 
 <script>
     // Configuration
@@ -225,61 +205,42 @@ localStorage.setItem("lastBookingID", bookingID);
         }, () => alert("Permission Denied"));
     }
 
-   async function confirmBooking() {
-  // get form field values
-  const name = document.getElementById("name").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-  const location = document.getElementById("location").value.trim();
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
+    async function confirmBooking() {
+        const fields = {
+            name: document.getElementById("name").value.trim(),
+            mobile: document.getElementById("mobile").value.trim(),
+            location: document.getElementById("location").value.trim(),
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value
+        };
 
-  // validate
-  if (!name || !mobile || !location || !date || !time) {
-    return alert("Please fill all booking details");
-  }
-  if (cart.length === 0) {
-    return alert("Please select at least one service");
-  }
+        if (Object.values(fields).some(v => !v)) return alert("Please fill all booking details");
+        if (cart.length === 0) return alert("Your bag is empty");
 
-  // generate Booking ID
-  const d = new Date();
-  const dateStr =
-    d.getFullYear().toString() +
-    String(d.getMonth()+1).padStart(2,"0") +
-    String(d.getDate()).padStart(2,"0");
-  const random = Math.floor(1000 + Math.random() * 9000);
+        const servicesString = cart.map(i => `${i.name} (x${i.qty || 1})`).join(", ");
+        const total = amountDisplay.innerText;
 
-  const bookingID = `AZUC-${dateStr}-${random}`;
+        // 1. Submit to Google Sheets (This triggers your email via Apps Script)
+        const formData = new FormData();
+        formData.append("entry.470681689", fields.name);
+        formData.append("entry.574952680", fields.mobile);
+        formData.append("entry.2032518446", fields.location);
+        formData.append("entry.1025255991", fields.date);
+        formData.append("entry.1650273648", fields.time);
+        formData.append("entry.624600000", servicesString);
+        formData.append("entry.1504263480", total);
 
-  // compose services string
-  const servicesString = cart.map(item => `${item.name} x${item.qty || 1}`).join(", ");
-  const totalAmount = document.getElementById("amount").innerText;
+        fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
+            method: "POST", mode: "no-cors", body: formData
+        });
 
-  // send to Google Form
-  const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w/formResponse";
-  const formData = new FormData();
+        document.getElementById("waLink").href = `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent("New Booking Confirmation:\n" + summary)}`;
 
-  formData.append("entry.106701433", bookingID);
-  formData.append("entry.470681689", name);
-  formData.append("entry.574952680", mobile);
-  formData.append("entry.2032518446", location);
-  formData.append("entry.1025255991", date);
-  formData.append("entry.1650273648", time);
-  formData.append("entry.624600000", servicesString);
-  formData.append("entry.1504263480", totalAmount);
-
-  await fetch(formURL, {
-    method: "POST",
-    mode: "no-cors",
-    body: formData
-  });
-
-  // show success screen
-  document.getElementById("displayID").innerText = bookingID;
-  document.getElementById("formBox").style.display = "none";
-  document.getElementById("successBox").style.display = "block";
-  localStorage.removeItem("cart");
-}
+        // 3. UI Update
+        document.getElementById("formBox").style.display = "none";
+        document.getElementById("successBox").style.display = "block";
+        localStorage.removeItem("cart");
+    }
 
     loadCart();
 </script>
