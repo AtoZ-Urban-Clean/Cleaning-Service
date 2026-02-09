@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
-        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px #ccc; }
-        .btn { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; color: white; }
-        .btn-confirm { background: #25D366; }
-    </style>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
-<body>
-    <h2>Admin Booking Management</h2>
-    <div id="bookingList">Loading bookings...</div>
 
-    <script>
-        // On load, fetch bookings (Simplified logic)
-        function assign(bid) {
-            const lName = prompt("Enter Labor Name:");
-            const lPhone = prompt("Enter Labor Phone:");
-            
-            google.script.run.withSuccessHandler((res) => {
-                alert("Labor Assigned!");
-                // Open WhatsApp Web automatically to send messages
-                window.open(`https://wa.me/${res.userMobile}?text=${encodeURIComponent(res.msgToUser)}`, '_blank');
-                setTimeout(() => {
-                   window.open(`https://wa.me/${res.laborPhone}?text=${encodeURIComponent(res.msgToLabor)}`, '_blank');
-                }, 2000);
-            }).assignLabor(bid, lName, lPhone);
-        }
-    </script>
+<body>
+<h2>Admin Panel</h2>
+
+<input id="bid" placeholder="Booking ID"><br><br>
+<input id="lname" placeholder="Labor Name"><br><br>
+<input id="lmobile" placeholder="Labor Mobile"><br><br>
+
+<button onclick="assign()">Assign Labor</button>
+<button onclick="complete()">Mark Completed</button>
+
+<p id="msg"></p>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbyeDfddVwM7_d2HyzD9Ftsw99B_VpSPdMS-P2QNeQUyV3sbEji2nMaCaj2CusFuSGyD5Q/exec";
+
+function assign(){
+  fetch(API_URL,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"assign",
+      bookingId:bid.value,
+      laborName:lname.value,
+      laborMobile:lmobile.value
+    })
+  }).then(r=>r.json()).then(d=>{
+    msg.innerText=d.message;
+  });
+}
+
+function complete(){
+  fetch(API_URL,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"complete",
+      bookingId:bid.value
+    })
+  }).then(r=>r.json()).then(d=>{
+    msg.innerText=d.message;
+  });
+}
+</script>
 </body>
 </html>
