@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Track Booking | AtoZ Urban Clean</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family:Segoe UI, Arial;
+  background:#f6f6f6;
+  margin:0;
+  padding:20px;
+}
+.box{
+  max-width:400px;
+  margin:auto;
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  text-align:center;
+}
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+button{
+  margin-top:15px;
+  width:100%;
+  padding:12px;
+  background:#0066ff;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Track Your Booking</h2>
+  <p>Enter your Booking ID</p>
+
+  <input type="text" id="trackID" placeholder="AZUC-YYYYMMDD-XXXX">
+  <button onclick="track()">Track</button>
+
+  <p id="result" style="margin-top:15px;"></p>
+</div>
+<script>
+  // Auto-fill from local storage
+  document.getElementById("trackID").value = localStorage.getItem("lastBookingID") || "";
+
+  async function track() {
+    const id = document.getElementById("trackID").value.trim();
+    const resultDiv = document.getElementById("result");
+    
+    // REPLACE THIS with your actual Web App URL from Google
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
+
+    if (!id) return alert("Enter Booking ID");
+
+    resultDiv.innerHTML = "🔍 Searching...";
+
+    try {
+      // We add ?action=track&id=... to the URL to tell the script what to do
+      const response = await fetch(`${webAppUrl}?action=track&id=${id}`);
+      const data = await response.json();
+
+      if (data.found) {
+        resultDiv.innerHTML = `
+          <div style="text-align:left; border-top:1px solid #eee; padding-top:10px;">
+            <b>Status:</b> ${data.status || 'Pending'}<br>
+            <b>Customer:</b> ${data.name}
+          </div>`;
+      } else {
+        resultDiv.innerHTML = "❌ ID not found.";
+      }
+    } catch (error) {
+      resultDiv.innerHTML = "⚠️ Error: Make sure your Web App is deployed as 'Anyone'.";
+    }
+  }
+</script>
+
+</body>
+</html>
