@@ -11,6 +11,8 @@
     --secondary: #ff007f;
     --bg: #f6f6f6;
     --text: #333;
+    --completed: #28a745;
+    --pending: #ccc;
 }
 
 body {
@@ -26,7 +28,7 @@ body {
 }
 
 .container {
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
     background: #fff;
     padding: 30px 25px;
@@ -36,21 +38,14 @@ body {
 }
 
 .container h2 {
-    margin-bottom: 10px;
-    font-size: 22px;
     color: var(--primary);
+    margin-bottom: 10px;
 }
 
-.container p {
-    margin-bottom: 20px;
-    color: #666;
-    font-size: 14px;
-}
-
-input {
+input, button {
     width: 100%;
-    padding: 14px 12px;
-    margin-top: 8px;
+    padding: 14px;
+    margin-top: 12px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 14px;
@@ -64,52 +59,71 @@ input:focus {
 }
 
 button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 14px;
     background: var(--secondary);
     color: #fff;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
-button:hover {
-    background: #e60072;
+button:hover { background: #e60072; }
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    position: relative;
 }
 
-#result {
+.progress-container::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 10%;
+    width: 80%;
+    height: 4px;
+    background: var(--pending);
+    z-index: 0;
+    border-radius: 2px;
+}
+
+.progress-step {
+    z-index: 1;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: var(--pending);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.progress-step.completed {
+    background: var(--completed);
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #666;
+}
+
+.progress-labels div {
+    width: 60px;
+    text-align: center;
+}
+
+#resultBox {
     margin-top: 20px;
-    text-align: left;
     font-size: 14px;
-}
-
-#result div {
-    border-top: 1px solid #eee;
-    padding-top: 12px;
-}
-
-.status-pending {
-    color: #ff9900;
-    font-weight: bold;
-}
-
-.status-completed {
-    color: #28a745;
-    font-weight: bold;
-}
-
-.status-cancelled {
-    color: #dc3545;
-    font-weight: bold;
-}
-
-@media (max-width: 450px) {
-    .container { padding: 25px 15px; }
-    button, input { font-size: 14px; padding: 12px; }
+    text-align: left;
 }
 </style>
 </head>
@@ -117,48 +131,68 @@ button:hover {
 
 <div class="container">
     <h2><i class="fas fa-shipping-fast"></i> Track Your Booking</h2>
-    <p>Enter your Booking ID to check status</p>
-
     <input type="text" id="trackID" placeholder="AZUC-YYYYMMDD-XXXX">
     <button onclick="track()">Track Booking</button>
 
-    <div id="result"></div>
+    <div class="progress-container" style="margin-top:25px;">
+        <div class="progress-step" id="step1"><i class="fas fa-clock"></i></div>
+        <div class="progress-step" id="step2"><i class="fas fa-check"></i></div>
+        <div class="progress-step" id="step3"><i class="fas fa-user-check"></i></div>
+        <div class="progress-step" id="step4"><i class="fas fa-box"></i></div>
+        <div class="progress-step" id="step5"><i class="fas fa-star"></i></div>
+    </div>
+    <div class="progress-labels">
+        <div>Pending</div>
+        <div>Confirmed</div>
+        <div>Assigned</div>
+        <div>Completed</div>
+        <div>Review</div>
+    </div>
+
+    <div id="resultBox"></div>
 </div>
 
 <script>
 document.getElementById("trackID").value = localStorage.getItem("lastBookingID") || "";
 
-async function track() {
+async function track(){
     const id = document.getElementById("trackID").value.trim();
-    const resultDiv = document.getElementById("result");
-
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
-
+    const resultDiv = document.getElementById("resultBox");
     if(!id) return alert("Enter Booking ID");
 
+    // Reset steps
+    const steps = [1,2,3,4,5];
+    steps.forEach(n => document.getElementById('step'+n).classList.remove('completed'));
+
     resultDiv.innerHTML = "🔍 Searching...";
+
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
 
     try {
         const response = await fetch(`${webAppUrl}?action=track&id=${id}`);
         const data = await response.json();
 
         if(data.found){
-            let statusClass = "status-pending";
-            if(data.status?.toLowerCase() === "completed") statusClass = "status-completed";
-            if(data.status?.toLowerCase() === "cancelled") statusClass = "status-cancelled";
+            resultDiv.innerHTML = `<b>Customer:</b> ${data.name}<br><b>Booking ID:</b> ${id}<br><b>Status:</b> ${data.status}`;
 
-            resultDiv.innerHTML = `
-                <div>
-                    <b>Status:</b> <span class="${statusClass}">${data.status || 'Pending'}</span><br>
-                    <b>Customer:</b> ${data.name}<br>
-                    <b>Booking ID:</b> ${id}
-                </div>
-            `;
+            // Update progress steps
+            const statusMap = {
+                "pending": 1,
+                "confirmed": 2,
+                "assigned": 3,
+                "completed": 4,
+                "review": 5
+            };
+            const stepNum = statusMap[data.status.toLowerCase()] || 1;
+            for(let i=1;i<=stepNum;i++){
+                document.getElementById('step'+i).classList.add('completed');
+            }
         } else {
             resultDiv.innerHTML = "❌ Booking ID not found.";
         }
     } catch(error){
-        resultDiv.innerHTML = "⚠️ Error fetching data. Make sure Web App is deployed as 'Anyone'.";
+        resultDiv.innerHTML = "⚠️ Error fetching data.";
+        console.log(error);
     }
 }
 </script>
