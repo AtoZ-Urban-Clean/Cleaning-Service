@@ -121,21 +121,31 @@ function updateBooking() {
   const laborName = document.getElementById("laborName").value;
   const laborMobile = document.getElementById("laborMobile").value;
 
+  document.getElementById("msg").innerText = "Updating...";
+
   fetch(WEBAPP_URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
     body: new URLSearchParams({
-      bookingId,
-      status,
-      laborName,
-      laborMobile
+      bookingId: bookingId,
+      status: status,
+      laborName: laborName,
+      laborMobile: laborMobile
     })
   })
   .then(res => res.text())
-  .then(msg => {
-    document.getElementById("msg").innerText = "✅ Booking Updated Successfully";
+  .then(txt => {
+    if (txt.includes("UPDATED")) {
+      document.getElementById("msg").innerText = "✅ Booking Updated Successfully";
+    } else {
+      document.getElementById("msg").innerText = "❌ " + txt;
+    }
   })
   .catch(err => {
-    document.getElementById("msg").innerText = "❌ Error updating booking";
+    document.getElementById("msg").innerText = "❌ Network Error";
+    console.error(err);
   });
 }
 </script>
