@@ -1,90 +1,166 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Track Booking | AtoZ Urban Clean</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
-body{
-  font-family:Segoe UI, Arial;
-  background:#f6f6f6;
-  margin:0;
-  padding:20px;
+:root {
+    --primary: #0066ff;
+    --secondary: #ff007f;
+    --bg: #f6f6f6;
+    --text: #333;
 }
-.box{
-  max-width:400px;
-  margin:auto;
-  background:#fff;
-  padding:25px;
-  border-radius:10px;
-  box-shadow:0 4px 15px rgba(0,0,0,0.1);
-  text-align:center;
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
 }
-input{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:6px;
-  border:1px solid #ccc;
+
+.container {
+    max-width: 400px;
+    width: 100%;
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    text-align: center;
 }
-button{
-  margin-top:15px;
-  width:100%;
-  padding:12px;
-  background:#0066ff;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  font-size:16px;
-  cursor:pointer;
+
+.container h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: var(--primary);
+}
+
+.container p {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 14px 12px;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    background: var(--secondary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #e60072;
+}
+
+#result {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 14px;
+}
+
+#result div {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+}
+
+.status-pending {
+    color: #ff9900;
+    font-weight: bold;
+}
+
+.status-completed {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+@media (max-width: 450px) {
+    .container { padding: 25px 15px; }
+    button, input { font-size: 14px; padding: 12px; }
 }
 </style>
 </head>
 <body>
 
-<div class="box">
-  <h2>Track Your Booking</h2>
-  <p>Enter your Booking ID</p>
+<div class="container">
+    <h2><i class="fas fa-shipping-fast"></i> Track Your Booking</h2>
+    <p>Enter your Booking ID to check status</p>
 
-  <input type="text" id="trackID" placeholder="AZUC-YYYYMMDD-XXXX">
-  <button onclick="track()">Track</button>
+    <input type="text" id="trackID" placeholder="AZUC-YYYYMMDD-XXXX">
+    <button onclick="track()">Track Booking</button>
 
-  <p id="result" style="margin-top:15px;"></p>
+    <div id="result"></div>
 </div>
-<script>
-  // Auto-fill from local storage
-  document.getElementById("trackID").value = localStorage.getItem("lastBookingID") || "";
 
-  async function track() {
+<script>
+document.getElementById("trackID").value = localStorage.getItem("lastBookingID") || "";
+
+async function track() {
     const id = document.getElementById("trackID").value.trim();
     const resultDiv = document.getElementById("result");
-    
-    // REPLACE THIS with your actual Web App URL from Google
+
     const webAppUrl = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
 
-    if (!id) return alert("Enter Booking ID");
+    if(!id) return alert("Enter Booking ID");
 
     resultDiv.innerHTML = "🔍 Searching...";
 
     try {
-      // We add ?action=track&id=... to the URL to tell the script what to do
-      const response = await fetch(`${webAppUrl}?action=track&id=${id}`);
-      const data = await response.json();
+        const response = await fetch(`${webAppUrl}?action=track&id=${id}`);
+        const data = await response.json();
 
-      if (data.found) {
-        resultDiv.innerHTML = `
-          <div style="text-align:left; border-top:1px solid #eee; padding-top:10px;">
-            <b>Status:</b> ${data.status || 'Pending'}<br>
-            <b>Customer:</b> ${data.name}
-          </div>`;
-      } else {
-        resultDiv.innerHTML = "❌ ID not found.";
-      }
-    } catch (error) {
-      resultDiv.innerHTML = "⚠️ Error: Make sure your Web App is deployed as 'Anyone'.";
+        if(data.found){
+            let statusClass = "status-pending";
+            if(data.status?.toLowerCase() === "completed") statusClass = "status-completed";
+            if(data.status?.toLowerCase() === "cancelled") statusClass = "status-cancelled";
+
+            resultDiv.innerHTML = `
+                <div>
+                    <b>Status:</b> <span class="${statusClass}">${data.status || 'Pending'}</span><br>
+                    <b>Customer:</b> ${data.name}<br>
+                    <b>Booking ID:</b> ${id}
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = "❌ Booking ID not found.";
+        }
+    } catch(error){
+        resultDiv.innerHTML = "⚠️ Error fetching data. Make sure Web App is deployed as 'Anyone'.";
     }
-  }
+}
 </script>
 
 </body>
