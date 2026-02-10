@@ -7,69 +7,154 @@
 <link rel="icon" href="atoz.png">
 
 <style>
-body{font-family:Segoe UI,Arial;background:#f6f6f6;margin:0}
-.container{max-width:520px;margin:20px auto;background:#fff;padding:20px;border-radius:10px}
-h2{text-align:center;color:#0066ff}
-input,button{width:100%;padding:12px;margin-top:10px;border-radius:6px;border:1px solid #ccc}
-button{background:#ff007f;color:#fff;border:none;font-weight:700;cursor:pointer}
-.success{display:none;text-align:center}
-a{display:inline-block;margin-top:15px;color:#0066ff}
+body{
+  font-family: Segoe UI, Arial;
+  background:#f6f6f6;
+  margin:0;
+}
+.container{
+  max-width:520px;
+  margin:20px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+h2{
+  text-align:center;
+  color:#0066ff;
+  margin-bottom:10px;
+}
+label{
+  font-size:13px;
+  font-weight:600;
+  margin-top:12px;
+  display:block;
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+button{
+  background:#ff007f;
+  color:#fff;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:20px;
+}
+button:hover{
+  opacity:.9;
+}
+.success{
+  display:none;
+  text-align:center;
+}
+.booking-id{
+  font-size:18px;
+  font-weight:800;
+  color:#222;
+  margin-top:10px;
+}
+a{
+  display:inline-block;
+  margin-top:18px;
+  color:#0066ff;
+  font-weight:600;
+  text-decoration:none;
+}
 </style>
 </head>
 
 <body>
 
+<!-- BOOKING FORM -->
 <div class="container" id="formBox">
 <h2>Book Service</h2>
 
-<input id="name" placeholder="Full Name">
-<input id="mobile" placeholder="Mobile Number">
-<input id="location" placeholder="Address">
+<label>Full Name</label>
+<input id="name" placeholder="Your name">
+
+<label>Mobile Number</label>
+<input id="mobile" placeholder="10-digit mobile">
+
+<label>Address</label>
+<input id="location" placeholder="Service location">
+
+<label>Date</label>
 <input type="date" id="date">
+
+<label>Time</label>
 <input type="time" id="time">
 
 <button onclick="submitBooking()">Confirm Booking</button>
 </div>
 
+<!-- SUCCESS SCREEN -->
 <div class="container success" id="successBox">
 <h2>Booking Confirmed 🎉</h2>
-<p><b>Booking ID</b></p>
-<h3 id="bookingIdText"></h3>
+<p>Your Booking ID</p>
+<div class="booking-id" id="bookingIdText"></div>
 
 <a id="adminLink" target="_blank">Open Admin Page</a>
 </div>
 
 <script>
-const GOOGLE_FORM_ID = "1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
+/* ================= CONFIG ================= */
+const GOOGLE_FORM_ID =
+"1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
 
+/* ================= ELEMENTS ================= */
+const nameEl = document.getElementById("name");
+const mobileEl = document.getElementById("mobile");
+const locationEl = document.getElementById("location");
+const dateEl = document.getElementById("date");
+const timeEl = document.getElementById("time");
+
+/* ================= BOOKING ID ================= */
 function generateBookingId(){
   const d = new Date();
   const date =
     d.getFullYear() +
     String(d.getMonth()+1).padStart(2,"0") +
     String(d.getDate()).padStart(2,"0");
-  const rand = Math.floor(1000 + Math.random()*9000);
+  const rand = Math.floor(1000 + Math.random() * 9000);
   return `AZUC-${date}-${rand}`;
 }
 
+/* ================= SUBMIT ================= */
 function submitBooking(){
+
+  if(
+    !nameEl.value ||
+    !mobileEl.value ||
+    !locationEl.value ||
+    !dateEl.value ||
+    !timeEl.value
+  ){
+    alert("Please fill all details");
+    return;
+  }
 
   const bookingId = generateBookingId();
 
   const fd = new FormData();
-  fd.append("entry.470681689", nameEl.value);      // Name
-  fd.append("entry.574952680", mobileEl.value);   // Mobile
-  fd.append("entry.2032518446", locationEl.value);// Address
-  fd.append("entry.1025255991", dateEl.value);    // Date
-  fd.append("entry.1650273648", timeEl.value);    // Time
-  fd.append("entry.1432715854", "Pending");       // Status
-  fd.append("entry.106701433", bookingId);        // ✅ Booking ID (COLUMN I)
+  fd.append("entry.470681689", nameEl.value);       // Name
+  fd.append("entry.574952680", mobileEl.value);    // Mobile
+  fd.append("entry.2032518446", locationEl.value); // Address
+  fd.append("entry.1025255991", dateEl.value);     // Date
+  fd.append("entry.1650273648", timeEl.value);     // Time
+  fd.append("entry.1432715854", "Pending");        // Status
+  fd.append("entry.106701433", bookingId);         // ✅ Booking ID (COLUMN I)
 
-  fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`,{
-    method:"POST",
-    mode:"no-cors",
-    body:fd
-  });
+  fetch(
+    `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`,
+    { method:"POST", mode:"no-cors", body:fd }
+  );
 
   document.getElementById("bookingIdText").innerText = bookingId;
   document.getElementById("adminLink").href =
@@ -78,12 +163,6 @@ function submitBooking(){
   document.getElementById("formBox").style.display="none";
   document.getElementById("successBox").style.display="block";
 }
-
-const nameEl = document.getElementById("name");
-const mobileEl = document.getElementById("mobile");
-const locationEl = document.getElementById("location");
-const dateEl = document.getElementById("date");
-const timeEl = document.getElementById("time");
 </script>
 
 </body>
