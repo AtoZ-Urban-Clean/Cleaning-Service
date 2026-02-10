@@ -1,101 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Admin Action | AtoZ Urban Clean</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Admin – Booking Update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  font-family:Segoe UI, Arial;
-  background:#f4f6f8;
-  padding:20px;
-}
-.card{
-  max-width:420px;
-  margin:auto;
-  background:#fff;
-  padding:20px;
-  border-radius:8px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.1);
-}
-h2{text-align:center;margin-bottom:15px}
-label{font-weight:600}
-input,select,button{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  font-size:15px;
-}
-button{
-  background:#0a6cff;
-  color:#fff;
-  border:none;
-  border-radius:4px;
-  cursor:pointer;
-}
-.success{
-  color:green;
-  text-align:center;
-  margin-top:10px;
-}
-</style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+
+    .card {
+      max-width: 450px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      background: #28a745;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    .msg {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="card">
-  <h2>Admin Booking Action</h2>
+  <h2>Admin Booking Update</h2>
 
   <label>Booking ID</label>
   <input id="bookingId" readonly>
 
+  <label>User Mobile</label>
+  <input id="userMobile" readonly>
+
   <label>Status</label>
   <select id="status">
+    <option value="Pending">Pending</option>
     <option value="Confirmed">Confirmed</option>
+    <option value="Assigned">Assigned</option>
     <option value="Completed">Completed</option>
+    <option value="Cancelled">Cancelled</option>
   </select>
 
-  <label>Customer Phone</label>
-  <input id="custPhone" placeholder="Customer phone">
-
   <label>Labor Name</label>
-  <input id="labor" placeholder="Labor name">
+  <input id="laborName" placeholder="Enter labor name">
 
-  <label>Admin Name</label>
-  <input id="adminName" value="YUVA">
+  <label>Labor Mobile</label>
+  <input id="laborMobile" placeholder="Enter labor mobile">
 
-  <button onclick="submitAdminAction()">Update Sheet</button>
+  <button onclick="updateBooking()">Update Booking</button>
 
-  <div class="success" id="msg"></div>
+  <div class="msg" id="msg"></div>
 </div>
 
 <script>
-/* Auto-fill Booking ID from URL hash */
-const bookingId = location.hash.substring(1);
+/* 🔗 YOUR GOOGLE APPS SCRIPT WEB APP URL */
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
+
+/* 📌 Get Booking ID from URL */
+const params = new URLSearchParams(window.location.search);
+const bookingId = params.get("bookingId");
+
+if (!bookingId) {
+  alert("Booking ID missing in URL");
+}
+
+/* Show Booking ID */
 document.getElementById("bookingId").value = bookingId;
 
-function submitAdminAction() {
-
-  const formURL =
-    "https://docs.google.com/forms/d/e/1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w/formResponse";
-  const data = new URLSearchParams({
-    "entry.106701433": bookingId,                                // Booking ID
-    "entry.1432715854": document.getElementById("status").value, // Status
-    "entry.1835648191": document.getElementById("custPhone").value,
-    "entry.717790276": document.getElementById("labor").value,
-    "entry.470681689": document.getElementById("adminName").value,
-    "entry.1025255991": new Date().toISOString().slice(0,10)
+/* 🔄 Load existing data from Sheet */
+fetch(`${WEBAPP_URL}?bookingId=${bookingId}`)
+  .then(res => res.json())
+  .then(data => {
+    if (!data) return;
+    document.getElementById("status").value = data.status || "Pending";
+    document.getElementById("userMobile").value = data.userMobile || "";
   });
 
-  fetch(formURL, {
+/* 💾 Update Booking */
+function updateBooking() {
+  const status = document.getElementById("status").value;
+  const laborName = document.getElementById("laborName").value;
+  const laborMobile = document.getElementById("laborMobile").value;
+
+  fetch(WEBAPP_URL, {
     method: "POST",
-    mode: "no-cors",
-    body: data
+    body: new URLSearchParams({
+      bookingId,
+      status,
+      laborName,
+      laborMobile
+    })
+  })
+  .then(res => res.text())
+  .then(msg => {
+    document.getElementById("msg").innerText = "✅ Booking Updated Successfully";
+  })
+  .catch(err => {
+    document.getElementById("msg").innerText = "❌ Error updating booking";
   });
-
-  document.getElementById("msg").innerHTML =
-    "✅ Booking updated & sheet saved successfully";
 }
 </script>
 
