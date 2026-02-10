@@ -204,8 +204,17 @@
             }
         }, () => alert("Permission Denied"));
     }
-
+    
+function generateBookingId() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, "0");
+    const d = String(now.getDate()).padStart(2, "0");
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    return `AZUC-${y}${m}${d}-${rand}`;
+}
     async function confirmBooking() {
+        const bookingId = generateBookingId();
         const fields = {
             name: document.getElementById("name").value.trim(),
             mobile: document.getElementById("mobile").value.trim(),
@@ -229,6 +238,7 @@
         formData.append("entry.1650273648", fields.time);
         formData.append("entry.624600000", servicesString);
         formData.append("entry.1504263480", total);
+        formData.append("entry.106701433", bookingId);
 
         fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
             method: "POST", mode: "no-cors", body: formData
