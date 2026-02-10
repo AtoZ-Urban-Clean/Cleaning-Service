@@ -1,151 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Admin – Booking Update</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
-    }
-
-    .card {
-      max-width: 450px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 12px;
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-
-    button {
-      background: #28a745;
-      color: white;
-      border: none;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #218838;
-    }
-
-    .msg {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-  </style>
+  <title>Admin Booking Update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-<div class="card">
-  <h2>Admin Booking Update</h2>
+<h2>Admin Booking Update</h2>
 
-  <label>Booking ID</label>
-  <input id="bookingId" readonly>
+Booking ID:
+<input id="bookingId" readonly><br><br>
 
-  <label>User Mobile</label>
-  <input id="userMobile" readonly>
+User Mobile:
+<input id="userMobile" readonly><br><br>
 
-  <label>Status</label>
-  <select id="status">
-    <option value="Pending">Pending</option>
-    <option value="Confirmed">Confirmed</option>
-    <option value="Assigned">Assigned</option>
-    <option value="Completed">Completed</option>
-    <option value="Cancelled">Cancelled</option>
-  </select>
+Status:
+<select id="status">
+  <option>Pending</option>
+  <option>Confirmed</option>
+  <option>Assigned</option>
+  <option>Completed</option>
+  <option>Cancelled</option>
+</select><br><br>
 
-  <label>Labor Name</label>
-  <input id="laborName" placeholder="Enter labor name">
+Labour Name:
+<input id="laborName"><br><br>
 
-  <label>Labor Mobile</label>
-  <input id="laborMobile" placeholder="Enter labor mobile">
+Labour Mobile:
+<input id="laborMobile"><br><br>
 
-  <button onclick="updateBooking()">Update Booking</button>
+<button onclick="updateBooking()">Update</button>
 
-  <div class="msg" id="msg"></div>
-</div>
+<p id="msg"></p>
 
 <script>
-/* 🔗 YOUR GOOGLE APPS SCRIPT WEB APP URL */
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
 
-/* 📌 Get Booking ID from URL */
+// Get bookingId from URL
 const params = new URLSearchParams(window.location.search);
 const bookingId = params.get("bookingId");
 
-if (!bookingId) {
-  alert("Booking ID missing in URL");
-}
-
-/* Show Booking ID */
 document.getElementById("bookingId").value = bookingId;
 
-/* 🔄 Load existing data from Sheet */
+// Load existing data
 fetch(`${WEBAPP_URL}?bookingId=${bookingId}`)
-  .then(res => res.json())
-  .then(data => {
-    if (!data) return;
-    document.getElementById("status").value = data.status || "Pending";
-    document.getElementById("userMobile").value = data.userMobile || "";
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById("status").value = d.status || "Pending";
+    document.getElementById("userMobile").value = d.userMobile || "";
   });
 
-/* 💾 Update Booking */
 function updateBooking() {
-  const status = document.getElementById("status").value;
-  const laborName = document.getElementById("laborName").value;
-  const laborMobile = document.getElementById("laborMobile").value;
-
-  document.getElementById("msg").innerText = "Updating...";
-
   fetch(WEBAPP_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      bookingId: bookingId,
-      status: status,
-      laborName: laborName,
-      laborMobile: laborMobile
+      bookingId,
+      status: document.getElementById("status").value,
+      laborName: document.getElementById("laborName").value,
+      laborMobile: document.getElementById("laborMobile").value
     })
   })
-  .then(res => res.text())
-  .then(txt => {
-    if (txt.includes("UPDATED")) {
-      document.getElementById("msg").innerText = "✅ Booking Updated Successfully";
-    } else {
-      document.getElementById("msg").innerText = "❌ " + txt;
-    }
-  })
-  .catch(err => {
-    document.getElementById("msg").innerText = "❌ Network Error";
-    console.error(err);
+  .then(r => r.text())
+  .then(t => {
+    document.getElementById("msg").innerText =
+      t === "UPDATED" ? "✅ Booking Updated" : "❌ " + t;
   });
 }
 </script>
