@@ -1,73 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Booking Update</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; display: flex; justify-content: center; }
+    .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; }
+    h2 { color: #2c3e50; text-align: center; margin-bottom: 25px; }
+    label { font-weight: bold; font-size: 0.9em; color: #555; }
+    input, select { width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+    button { width: 100%; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .btn-search { background: #34495e; color: white; }
+    .btn-save { background: #27ae60; color: white; display: none; }
+    .info-box { background: #e8f4f8; padding: 10px; border-radius: 4px; margin-bottom: 20px; display: none; font-size: 0.85em; }
+  </style>
 </head>
 <body>
 
-<h2>Admin Booking Update</h2>
+<div class="card">
+  <h2>Admin Panel</h2>
+  
+  <label>Search Booking ID</label>
+  <input type="text" id="bookingId" placeholder="AZUC-20260209-5017">
+  <button class="btn-search" onclick="search()">Find Booking</button>
 
-Booking ID:
-<input id="bookingId" readonly><br><br>
+  <div id="bookingInfo" class="info-box"></div>
 
-User Mobile:
-<input id="userMobile" readonly><br><br>
+  <div id="editForm" style="display:none;">
+    <label>Status</label>
+    <select id="status">
+      <option value="Pending">Pending</option>
+      <option value="Confirmed">Confirmed</option>
+      <option value="Assigned">Assigned</option>
+      <option value="Completed">Completed</option>
+    </select>
 
-Status:
-<select id="status">
-  <option>Pending</option>
-  <option>Confirmed</option>
-  <option>Assigned</option>
-  <option>Completed</option>
-  <option>Cancelled</option>
-</select><br><br>
+    <label>Labour Name</label>
+    <input type="text" id="labourName">
 
-Labour Name:
-<input id="laborName"><br><br>
+    <label>Labour Mobile</label>
+    <input type="text" id="labourMobile">
 
-Labour Mobile:
-<input id="laborMobile"><br><br>
-
-<button onclick="updateBooking()">Update</button>
-
-<p id="msg"></p>
+    <button class="btn-save" id="saveBtn" onclick="save()">Update Records</button>
+  </div>
+  
+  <p id="msg" style="text-align:center; font-weight:bold; color: #27ae60;"></p>
+</div>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
+  function search() {
+    const id = document.getElementById('bookingId').value;
+    google.script.run.withSuccessHandler(showData).getBookingDetails(id);
+  }
 
-// Get bookingId from URL
-const params = new URLSearchParams(window.location.search);
-const bookingId = params.get("bookingId");
+  function showData(data) {
+    if(data) {
+      document.getElementById('bookingInfo').style.display = 'block';
+      document.getElementById('bookingInfo').innerHTML = `<strong>Customer:</strong> ${data.name}<br><strong>Service:</strong> ${data.service}`;
+      document.getElementById('editForm').style.display = 'block';
+      document.getElementById('saveBtn').style.display = 'block';
+      
+      document.getElementById('status').value = data.status || 'Pending';
+      document.getElementById('labourName').value = data.labourName || '';
+      document.getElementById('labourMobile').value = data.labourMobile || '';
+    } else {
+      alert("ID not found! Please check the ID in Column I.");
+    }
+  }
 
-document.getElementById("bookingId").value = bookingId;
-
-// Load existing data
-fetch(`${WEBAPP_URL}?bookingId=${bookingId}`)
-  .then(r => r.json())
-  .then(d => {
-    document.getElementById("status").value = d.status || "Pending";
-    document.getElementById("userMobile").value = d.userMobile || "";
-  });
-
-function updateBooking() {
-  fetch(WEBAPP_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      bookingId,
-      status: document.getElementById("status").value,
-      laborName: document.getElementById("laborName").value,
-      laborMobile: document.getElementById("laborMobile").value
-    })
-  })
-  .then(r => r.text())
-  .then(t => {
-    document.getElementById("msg").innerText =
-      t === "UPDATED" ? "✅ Booking Updated" : "❌ " + t;
-  });
-}
+  function save() {
+    const id = document.getElementById('bookingId').value;
+    const st = document.getElementById('status').value;
+    const ln = document.getElementById('labourName').value;
+    const lm = document.getElementById('labourMobile').value;
+    
+    google.script.run.withSuccessHandler(res => {
+      document.getElementById('msg').innerText = res;
+    }).updateBooking(id, st, ln, lm);
+  }
 </script>
 
 </body>
