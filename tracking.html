@@ -177,49 +177,106 @@ button:hover { background: #e60072; }
 </div>
 
 <script>
-document.getElementById("trackID").value = localStorage.getItem("lastBookingID") || "";
+
+const webAppUrl = "https://script.google.com/macros/s/AKfycbzunhYfvCqIR0H7ed5U2dr0YhzmEQ5ohg_AXI_g-xbhrW8Rd6i18WeJKtPWAZQ1-zY79g/exec";
+
+const trackInput = document.getElementById("trackID");
+const resultDiv = document.getElementById("resultBox");
+
+trackInput.value = localStorage.getItem("lastBookingID") || "";
+
+// Ask notification permission
+if ("Notification" in window) {
+    Notification.requestPermission();
+}
 
 async function track(){
-    const id = document.getElementById("trackID").value.trim();
-    const resultDiv = document.getElementById("resultBox");
+    const id = trackInput.value.trim();
     if(!id) return alert("Enter Booking ID");
 
-    // Reset steps
-    const steps = [1,2,3,4,5];
-    steps.forEach(n => document.getElementById('step'+n).classList.remove('completed'));
+    localStorage.setItem("lastBookingID", id);
 
-    resultDiv.innerHTML = "🔍 Searching...";
+    fetchStatus(id, true);
+}
 
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbxnoujy4N2S9hV3FxkuKJSJYve14W-RAlwWTilV1RHoITkfV3foeAiq02e6wwcg42dJRQ/exec";
+async function fetchStatus(id, manual = false){
 
     try {
         const response = await fetch(`${webAppUrl}?action=track&id=${id}`);
         const data = await response.json();
 
         if(data.found){
-            resultDiv.innerHTML = `<b>Customer:</b> ${data.name}<br><b>Booking ID:</b> ${id}<br><b>Status:</b> ${data.status}`;
 
-            // Update progress steps
-            const statusMap = {
-                "pending": 1,
-                "confirmed": 2,
-                "assigned": 3,
-                "completed": 4,
-                "review": 5
-            };
-            const stepNum = statusMap[data.status.toLowerCase()] || 1;
-            for(let i=1;i<=stepNum;i++){
-                document.getElementById('step'+i).classList.add('completed');
+            resultDiv.innerHTML =
+            `<b>Customer:</b> ${data.name}<br>
+             <b>Booking ID:</b> ${id}<br>
+             <b>Status:</b> ${data.status}`;
+
+            updateProgress(data.status);
+
+            // 🔔 NOTIFICATION LOGIC
+            const lastStatus = localStorage.getItem("status_"+id);
+
+            if(lastStatus && lastStatus !== data.status){
+                showNotification(data.status, id);
             }
+
+            localStorage.setItem("status_"+id, data.status);
+
         } else {
             resultDiv.innerHTML = "❌ Booking ID not found.";
         }
+
     } catch(error){
-        resultDiv.innerHTML = "⚠️ Error fetching data.";
         console.log(error);
     }
 }
+
+function showNotification(status, id){
+
+    if(Notification.permission === "granted"){
+
+        const notification = new Notification("AtoZ Urban Clean", {
+            body: "Booking Updated: " + status,
+            icon: "atoz.png"
+        });
+
+        notification.onclick = function(){
+            window.focus();
+        };
+    }
+}
+
+function updateProgress(status){
+
+    const steps = [1,2,3,4,5];
+    steps.forEach(n => document.getElementById('step'+n).classList.remove('completed'));
+
+    const statusMap = {
+        "waiting":1,
+        "confirmed":2,
+        "assigned":3,
+        "completed":4,
+        "review":5
+    };
+
+    const stepNum = statusMap[status.toLowerCase()] || 1;
+
+    for(let i=1;i<=stepNum;i++){
+        document.getElementById('step'+i).classList.add('completed');
+    }
+}
+
+// 🔁 AUTO CHECK EVERY 10 SECONDS
+setInterval(()=>{
+    const id = trackInput.value.trim();
+    if(id){
+        fetchStatus(id);
+    }
+}, 10000);
+
 </script>
+
 
 </body>
 </html>
