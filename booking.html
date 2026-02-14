@@ -98,7 +98,10 @@ input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 2px
 
     <label>📞Mobile Number</label>
     <input type="tel" id="mobile" placeholder="Mobile number">
-
+  
+    <label>📞Email ID</label>
+    <input type="tel" id="email" placeholder="Email ID">
+  
     <label>📍Address / Location</label>
     <div class="input-group">
         <input type="text" id="location" placeholder="Enter address or detect location">
@@ -136,6 +139,7 @@ const amountDisplay = document.getElementById("amount");
 // Elements
 const nameEl = document.getElementById("name");
 const mobileEl = document.getElementById("mobile");
+const emailEl = document.getElementById("email");
 const locationEl = document.getElementById("location");
 const dateEl = document.getElementById("date");
 const timeEl = document.getElementById("time");
@@ -226,6 +230,7 @@ function confirmBooking(){
     const fields = {
         name: nameEl.value.trim(),
         mobile: mobileEl.value.trim(),
+       email: emailEl.value.trim(),
         location: locationEl.value.trim(),
         date: dateEl.value,
         time: timeEl.value
@@ -241,6 +246,7 @@ function confirmBooking(){
     const fd = new FormData();
     fd.append("entry.470681689",fields.name);
     fd.append("entry.574952680",fields.mobile);
+  fd.append("entry.1177524061",fields.email);
     fd.append("entry.2032518446",fields.location);
     fd.append("entry.1025255991",fields.date);
     fd.append("entry.1650273648",fields.time);
