@@ -177,6 +177,26 @@ button:hover { background: #e60072; }
 </div>
 
 <script>
+function getBookingIdFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (id) {
+        trackInput.value = id;
+        localStorage.setItem("lastBookingID", id);
+        fetchStatus(id, true); // Auto track
+    }
+}
+window.onload = function(){
+    getBookingIdFromURL();
+};
+    // 🔁 AUTO CHECK EVERY 10 SECONDS
+setInterval(()=>{
+    const id = trackInput.value.trim();
+    if(id){
+        fetchStatus(id);
+    }
+}, 10000);
 
 const webAppUrl = "https://script.google.com/macros/s/AKfycbzunhYfvCqIR0H7ed5U2dr0YhzmEQ5ohg_AXI_g-xbhrW8Rd6i18WeJKtPWAZQ1-zY79g/exec";
 
