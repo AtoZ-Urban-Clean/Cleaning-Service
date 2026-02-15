@@ -1,130 +1,203 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Cleaning Services Section</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Cleaning Services</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
 
-<style>
-body{
-  margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background:#f5f5f5;
-}
+        .service-card {
+            display: flex;
+            background: #fff;
+            width: 900px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            padding: 40px;
+            gap: 30px;
+        }
 
-.service-section{
-  width:100%;
-  max-width:1200px;
-  margin:40px auto;
-  background:#fff;
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  overflow:hidden;
-}
+        /* Left Content (60%) */
+        .content-left {
+            flex: 1.5;
+        }
 
-.service-container{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:40px;
-  transition:all 0.5s ease;
-}
+        /* Right Image (40%) */
+        .image-right {
+            flex: 1;
+            position: relative;
+        }
 
-.service-content{
-  width:55%;
-}
+        h2 { font-size: 32px; margin: 0 0 10px 0; color: #000; }
+        
+        .promo-text { color: #00a8ff; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
+        
+        .stars { color: #f39c12; font-size: 20px; margin-bottom: 20px; }
+        .stars span { color: #007bff; font-size: 14px; margin-left: 10px; font-weight: bold; }
 
-.service-content h2{
-  font-size:28px;
-  margin-bottom:15px;
-  color:#0066ff;
-}
+        /* List Styling with Purple Checks */
+        #serviceDesc {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
 
-.service-content p{
-  line-height:1.7;
-  color:#555;
-}
+        #serviceDesc li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.5;
+        }
 
-.service-image{
-  width:40%;
-}
+        #serviceDesc li::before {
+            content: "✔";
+            color: #6c5ce7;
+            font-weight: bold;
+            margin-right: 12px;
+        }
 
-.service-image img{
-  width:100%;
-  border-radius:10px;
-}
+        /* Image and Buttons */
+        .service-img-wrapper {
+            width: 100%;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
 
-@media(max-width:768px){
-  .service-container{
-    flex-direction:column;
-    text-align:center;
-  }
-  .service-content, .service-image{
-    width:100%;
-  }
-  .service-image{
-    margin-top:20px;
-  }
-}
-</style>
+        #serviceImg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-now-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #0099ff, #0056b3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Next Button Styling */
+        .next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #eee;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .next-btn:hover { background-color: #ddd; }
+
+    </style>
 </head>
-
 <body>
 
-<section class="service-section">
-  <div class="service-container">
-    
-    <div class="service-content">
-      <h2 id="serviceTitle">Basic House Cleaning</h2>
-      <p id="serviceDesc">
-        General Areas: Dusting all accessible surfaces and furniture, removing cobwebs,
-        vacuuming/mopping all floors, and emptying trash bins.
-        Kitchen: Wiping down countertops, sink, faucet, and exterior of appliances.
-        Bathroom: Scrubbing and disinfecting toilet, sink, shower/tub and mirrors.
-        Bedrooms/Living Areas: Dusting furniture, making beds, and light tidying.
-      </p>
+<div class="service-card">
+    <div class="content-left">
+        <div class="promo-text">25+ Booking Daily - Book it now</div>
+        <div class="stars">★★★★★ <span>4.9 (300+) Rating</span></div>
+        <h2 id="serviceTitle">Basic House Cleaning</h2>
+        
+        <ul id="serviceDesc">
+            </ul>
+
+        <button class="next-btn" onclick="nextService()">Next Service ➔</button>
     </div>
 
-    <div class="service-image">
-      <img id="serviceImg" src="basic.jpg">
+    <div class="image-right">
+        <div class="service-img-wrapper">
+            <img id="serviceImg" src="basic.jpg" alt="Service Image">
+            <a href="#" class="book-now-btn">📅 Book Now</a>
+        </div>
     </div>
-
-  </div>
-</section>
+</div>
 
 <script>
 const services = [
-  {
-    title: "Basic House Cleaning",
-    desc: `General Areas: Dusting all accessible surfaces and furniture, removing cobwebs, vacuuming/mopping all floors, and emptying trash bins.
-Kitchen: Wiping down countertops, sink, faucet, and exterior of appliances.
-Bathroom: Scrubbing and disinfecting toilet, sink, shower/tub and mirrors.
-Bedrooms/Living Areas: Dusting furniture, making beds, and light tidying.`,
-    img: "basic.jpg"
-  },
-  {
-    title: "Deep Cleaning",
-    desc: `Kitchen: Degreasing exhaust fans, scrubbing tiles, cleaning cabinets inside/outside and under sink.
-Bathrooms: Disinfecting and descaling taps, showers, wall tiles.
-Living & Bedrooms: Machine scrubbing floors, vacuuming sofas/carpets, dusting high fans & lights.
-Windows & Balcony: Cleaning glass panes, tracks and grills.`,
-    img: "deep.jpg"
-  },
-  {
-    title: "Commercial & Office Cleaning",
-    desc: `Includes mopping/sweeping floors, dusting desks, cleaning common areas and basic sanitization.
-Premium services include detailed work like degreasing, corners and vents cleaning.`,
-    img: "office.jpg"
-  }
+    {
+        title: "Basic House Cleaning",
+        img: "basic.jpg",
+        desc: [
+            "<strong>General Areas:</strong> Dusting all accessible surfaces, removing cobwebs, vacuuming/mopping floors.",
+            "<strong>Kitchen:</strong> Wiping countertops, sink, faucet, and exterior of appliances.",
+            "<strong>Bathroom:</strong> Scrubbing and disinfecting toilet, sink, shower, and mirrors.",
+            "<strong>Bedrooms:</strong> Dusting furniture and decor, making beds, and light tidying."
+        ]
+    },
+    {
+        title: "Deep Cleaning",
+        img: "deep.jpg",
+        desc: [
+            "<strong>Kitchen:</strong> Degreasing exhaust fans, scrubbing tiles, and cleaning under the sink.",
+            "<strong>Bathrooms:</strong> Disinfecting and descaling taps, showers, and wall tiles.",
+            "<strong>Living Areas:</strong> Machine scrubbing of floors and dry vacuuming of sofas.",
+            "<strong>Windows:</strong> Cleaning of glass panes, window tracks, and balcony grills."
+        ]
+    },
+    {
+        title: "Commercial & Office Cleaning",
+        img: "office.jpg",
+        desc: [
+            "<strong>Workspace:</strong> Mopping/sweeping floors, dusting desks, and basic sanitization.",
+            "<strong>Common Areas:</strong> Deep cleaning of breakrooms, vents, and corners.",
+            "<strong>Professional:</strong> Industrial grade disinfection for high-traffic office areas."
+        ]
+    }
 ];
 
 let index = 0;
 
-setInterval(() => {
-  index = (index + 1) % services.length;
-  document.getElementById("serviceTitle").innerText = services[index].title;
-  document.getElementById("serviceDesc").innerText = services[index].desc;
-  document.getElementById("serviceImg").src = services[index].img;
-}, 10000); // 10 seconds
+function updateService() {
+    const service = services[index];
+    document.getElementById("serviceTitle").innerText = service.title;
+    document.getElementById("serviceImg").src = service.img;
+    
+    // Clear and rebuild the list
+    const list = document.getElementById("serviceDesc");
+    list.innerHTML = "";
+    service.desc.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = item;
+        list.appendChild(li);
+    });
+}
+
+function nextService() {
+    index = (index + 1) % services.length;
+    updateService();
+}
+
+// Initial Load
+updateService();
+
+// Auto Rotation every 10 seconds
+setInterval(nextService, 10000);
 </script>
 
 </body>
