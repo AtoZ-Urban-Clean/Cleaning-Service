@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Services Landing Page</title>
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --dark-blue: #0056b3;
+            --text-gray: #555;
+            --purple-check: #6f42c1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Service Card Layout */
+        .service-card {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            gap: 30px;
+        }
+
+        .content-left {
+            flex: 1.5; /* 60% width */
+        }
+
+        .image-right {
+            flex: 1; /* 40% width */
+            position: relative;
+        }
+
+        /* Text Styles */
+        h2 {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .stats {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            color: #f39c12;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .rating span {
+            color: var(--primary-blue);
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        /* List Styles */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        li::before {
+            content: "✔";
+            color: var(--purple-check);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        li strong {
+            color: #333;
+            margin-right: 5px;
+        }
+
+        /* Image and Button */
+        .service-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .book-btn {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #0099ff, #0056b3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive for Mobile */
+        @media (max-width: 768px) {
+            .service-card {
+                flex-direction: column;
+                text-align: left;
+            }
+            .image-right {
+                order: -1; /* Image on top for mobile */
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="service-card">
+        <div class="content-left">
+            <h2>Basic House Cleaning</h2>
+            <div class="stats">25+ Booking Daily - Book it now</div>
+            <div class="rating">★★★★★ <span>4.9 (300+) Rating</span></div>
+            <div class="price">Starts at just ₹499</div>
+            <ul>
+                <li><strong>General Areas:</strong> Dusting all accessible surfaces and furniture, removing cobwebs, vacuuming/mopping all floors, and emptying trash bins.</li>
+                <li><strong>Kitchen:</strong> Wiping down countertops, the sink, faucet, and the exterior of appliances like the stove top and microwave.</li>
+                <li><strong>Bathroom:</strong> Scrubbing and disinfecting the toilet, sink, shower/tub, and mirrors to remove general dirt and soap scum.</li>
+                <li><strong>Bedrooms/Living Areas:</strong> Dusting furniture and decor, making beds (if linens are provided), and light tidying.</li>
+            </ul>
+        </div>
+        <div class="image-right">
+            <img src="basic.jpg" alt="Basic Cleaning" class="service-img">
+            <a href="#" class="book-btn">📅 Book Now</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="content-left">
+            <h2>Deep Cleaning</h2>
+            <div class="stats">Top Rated Service - Deep Clean</div>
+            <div class="rating">★★★★★ <span>5.0 (500+) Rating</span></div>
+            <div class="price">Starts at just ₹1,299</div>
+            <ul>
+                <li><strong>Kitchen:</strong> Degreasing of exhaust fans, scrubbing tiles and cleaning inside/outside cabinets and under the sink.</li>
+                <li><strong>Bathrooms:</strong> Disinfecting and descaling taps, showers, and wall tiles using specialized agents.</li>
+                <li><strong>Living & Bedrooms:</strong> Machine scrubbing of floors, dry vacuuming of sofas/carpets, and dusting of high-ceiling fans and light fixtures.</li>
+                <li><strong>Windows & Balcony:</strong> Cleaning of glass panes, window tracks, and balcony grills.</li>
+            </ul>
+        </div>
+        <div class="image-right">
+            <img src="deep.jpg" alt="Deep Cleaning" class="service-img">
+            <a href="#" class="book-btn">📅 Book Now</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="content-left">
+            <h2>Commercial & Office Cleaning</h2>
+            <div class="stats">Professional Business Solutions</div>
+            <div class="rating">★★★★★ <span>4.8 (150+) Rating</span></div>
+            <div class="price">Starts at just ₹2,499</div>
+            <ul>
+                <li><strong>Standard Maintenance:</strong> Includes mopping/sweeping floors, dusting desks, cleaning common areas, and basic sanitization.</li>
+                <li><strong>Premium Service:</strong> Detailed work on corners, vents, and heavy-duty degreasing for office pantries.</li>
+                <li><strong>Hygiene First:</strong> Thorough disinfection of high-touch surfaces like door handles, elevators, and shared equipment.</li>
+            </ul>
+        </div>
+        <div class="image-right">
+            <img src="office.jpg" alt="Office Cleaning" class="service-img">
+            <a href="#" class="book-btn">📅 Book Now</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
