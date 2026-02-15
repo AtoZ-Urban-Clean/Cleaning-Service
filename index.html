@@ -471,24 +471,6 @@
       <button class="nav-btn next" onclick="scrollServices(1)">❯</button>
   </div>
 </section>
-  <section>
-<div class="service-card">
-    <div class="content-left">
-        <div class="promo-text">25+ Booking Daily - Book it now</div>
-        <div class="stars">★★★★★ <span>4.9 (300+) Rating</span></div>
-        <h2 id="serviceTitle">Basic House Cleaning</h2>
-        <ul id="serviceDesc"></ul>
-        <button class="next-btn" onclick="nextService()">Next Service ➔</button>
-    </div>
-
-    <div class="image-right">
-        <div class="service-img-wrapper">
-            <img id="serviceImg" src="basic.jpg" alt="Service Image">
-            <a href="#" class="book-now-btn">📅 Book Now</a>
-        </div>
-    </div>
-</div>
-  </section>
   <section class="why-choose">
   <h2>Why Choose AtoZ Urban Clean?</h2>
 
@@ -647,53 +629,7 @@ function scrollServices(direction){
   track.style.transform = `translateX(-${index * 100}%)`;
 }
 </script>
-  <script>
-const services = [
-    {
-        title: "Basic House Cleaning",
-        img: "basic.jpg",
-        desc: [
-            "<strong>General Areas:</strong> Dusting, mopping, and trash removal.",
-            "<strong>Kitchen:</strong> Surface wiping and appliance cleaning.",
-            "<strong>Bathroom:</strong> Scrubbing toilet, sink, and mirrors."
-        ]
-    },
-    {
-        title: "Deep Cleaning",
-        img: "deep.jpg",
-        desc: [
-            "<strong>Kitchen:</strong> Degreasing fans and scrubbing tiles.",
-            "<strong>Living Areas:</strong> Machine floor scrubbing.",
-            "<strong>Balcony:</strong> Window track and grill cleaning."
-        ]
-    },
-    {
-        title: "Commercial Cleaning",
-        img: "office.jpg",
-        desc: [
-            "<strong>Workspace:</strong> Desk dusting and floor sanitization.",
-            "<strong>Hygiene:</strong> Disinfection of high-touch areas.",
-            "<strong>Vents:</strong> Deep cleaning of office air vents."
-        ]
-    }
-];
-
-let index = 0;
-function updateService() {
-    const s = services[index];
-    document.getElementById("serviceTitle").innerText = s.title;
-    document.getElementById("serviceImg").src = s.img;
-    const list = document.getElementById("serviceDesc");
-    list.innerHTML = s.desc.map(item => `<li>${item}</li>`).join('');
-}
-
-function nextService() {
-    index = (index + 1) % services.length;
-    updateService();
-}
-
-updateService();
-setInterval(nextService, 10000);
+ 
 <!-- Floating Contact Buttons -->
 <div class="contact-float">
 
