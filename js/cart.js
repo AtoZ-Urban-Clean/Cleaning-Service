@@ -20,7 +20,6 @@ function addToCart(name, price) {
   cart.push({ name, price });
   saveCart(cart);
   updateBagCount();
-  alert("Service added to Bag");
 }
 
 function updateBagCount() {
