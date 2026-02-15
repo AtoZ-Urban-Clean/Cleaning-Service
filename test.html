@@ -1,131 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="atoz.png">
+    <title>AtoZ Urban Clean</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Responsive Cleaning Service</title>
     <style>
+        /* ===== GLOBAL & RESET ===== */
         * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
-            padding: 15px; /* Padding for mobile edges */
+            padding: 0;
         }
 
-        .service-card {
+        /* ===== HERO ===== */
+        .hero { position: relative; width: 100%; overflow: hidden; }
+        .hero-img-container img {
+            width: 100%; height: auto; display: block;
+            object-fit: cover; max-height: 100vh;
+        }
+        .hero-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); text-align: center;
+            color: #fff; text-shadow: 0px 2px 10px rgba(0,0,0,0.7);
+            padding: 0 20px; width: 90%;
+        }
+        .hero-text h2 { font-size: 3rem; margin: 0; }
+        .hero-text p { font-size: 1.3rem; margin-top: 10px; }
+
+        /* ===== CORE SERVICES GRID ===== */
+        .home-services { padding: 60px 20px; text-align: center; background: #f9f9f9; }
+        .services-wrapper { position: relative; overflow: hidden; max-width: 1200px; margin: auto; }
+        .services-track { display: flex; transition: transform 0.4s ease; }
+        
+        .service-card-item {
+            min-width: 100%; padding: 25px; background: #fff;
+            border-radius: 10px; text-align: center;
+            text-decoration: none; color: #333;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); margin: 0 10px;
+        }
+        .service-card-item img { width: 70px; margin-bottom: 15px; }
+
+        /* ===== DYNAMIC ROTATING SECTION (The New Layout) ===== */
+        .dynamic-section {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-service-container {
             display: flex;
             background: #fff;
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             padding: 30px;
             gap: 25px;
-            transition: all 0.3s ease;
         }
 
-        /* --- Desktop Layout (Default) --- */
-        .content-left { flex: 1.5; order: 1; }
+        .content-left { flex: 1.5; order: 1; text-align: left; }
         .image-right { flex: 1; order: 2; position: relative; }
 
-        /* --- Responsive Mobile Layout (< 768px) --- */
-        @media (max-width: 768px) {
-            .service-card {
-                flex-direction: column; /* Stacks image on top of text */
-                padding: 20px;
-                gap: 15px;
-            }
-            .image-right { order: 1; width: 100%; } /* Image moves to top */
-            .content-left { order: 2; width: 100%; } /* Text moves to bottom */
-            
-            h2 { font-size: 24px; } /* Slightly smaller heading for mobile */
-            .service-img-wrapper { height: 220px !important; } /* Shorter image on mobile */
-        }
-
-        /* Styles from original design */
-        h2 { font-size: 28px; margin: 10px 0; color: #000; font-weight: 800; }
-        .promo-text { color: #00a8ff; font-weight: 600; font-size: 13px; }
-        .stars { color: #f39c12; font-size: 18px; margin-bottom: 10px; }
-        .stars span { color: #007bff; font-size: 13px; margin-left: 8px; font-weight: bold; }
-
-        #serviceDesc { list-style: none; padding: 0; margin-bottom: 20px; }
+        .promo-text { color: #00a8ff; font-weight: 600; font-size: 14px; }
+        .stars-row { color: #f39c12; font-size: 18px; margin-bottom: 10px; }
+        .stars-row span { color: #007bff; font-size: 13px; margin-left: 8px; font-weight: bold; }
+        
+        h2.service-title { font-size: 28px; margin: 10px 0; color: #000; font-weight: 800; }
+        
+        #serviceDesc { list-style: none; padding: 0; margin-bottom: 25px; }
         #serviceDesc li {
-            margin-bottom: 10px;
-            display: flex;
-            font-size: 14px;
-            color: #444;
-            line-height: 1.4;
+            margin-bottom: 12px; display: flex;
+            font-size: 15px; color: #444; line-height: 1.5;
         }
         #serviceDesc li::before {
-            content: "✔";
-            color: #6c5ce7;
-            font-weight: bold;
-            margin-right: 10px;
+            content: "✔"; color: #6c5ce7; font-weight: bold; margin-right: 12px;
         }
 
         .service-img-wrapper {
-            width: 100%;
-            height: 320px;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
+            width: 100%; height: 350px;
+            border-radius: 15px; overflow: hidden; position: relative;
         }
         #serviceImg { width: 100%; height: 100%; object-fit: cover; }
 
         .book-now-btn {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
+            position: absolute; bottom: 15px; left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(to bottom, #0099ff, #0056b3);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            white-space: nowrap;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            color: white; padding: 12px 25px; border-radius: 5px;
+            text-decoration: none; font-weight: bold; white-space: nowrap;
         }
 
-        .next-btn {
-            width: 100%; /* Full width on mobile for easy tapping */
-            padding: 12px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
+        .next-btn-ui {
+            width: 100%; padding: 12px; background: #f0f0f0;
+            border: 1px solid #ddd; border-radius: 8px;
+            cursor: pointer; font-weight: bold; margin-top: 10px;
+        }
+
+        /* ===== WHY CHOOSE & REVIEWS ===== */
+        .why-choose { padding: 60px 20px; background: #fff; text-align: center; }
+        .choose-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; max-width: 900px; margin: auto; 
+        }
+        .choose-item { background: #f0f7ff; padding: 18px; border-radius: 8px; color: #003d99; font-weight: 500; }
+
+        .review-section { background: #f5f5f5; padding: 60px 20px; text-align: center; }
+        .review-slider { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; }
+        .review-card { min-width: 300px; background: white; padding: 20px; border-radius: 12px; text-align: left; }
+
+        /* ===== FLOAT BUTTONS ===== */
+        .contact-float { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .email { background: #ff5722; }
+        .call-btn { background: #008CBA; }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-text h2 { font-size: 1.8rem; }
+            .main-service-container { flex-direction: column; padding: 20px; }
+            .image-right { order: 1; width: 100%; }
+            .content-left { order: 2; width: 100%; }
+            .service-img-wrapper { height: 250px; }
+            .next-btn-ui { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
-<div class="service-card">
-    <div class="content-left">
-        <div class="promo-text">25+ Booking Daily - Book it now</div>
-        <div class="stars">★★★★★ <span>4.9 (300+) Rating</span></div>
-        <h2 id="serviceTitle">Basic House Cleaning</h2>
-        <ul id="serviceDesc"></ul>
-        <button class="next-btn" onclick="nextService()">Next Service ➔</button>
-    </div>
+<div id="header"></div>
 
-    <div class="image-right">
-        <div class="service-img-wrapper">
-            <img id="serviceImg" src="basic.jpg" alt="Service Image">
-            <a href="#" class="book-now-btn">📅 Book Now</a>
+<section class="hero">
+    <div class="hero-img-container">
+        <img src="images/index.jpg" alt="Cleaning Services">
+        <div class="hero-text">
+            <h2>We Clean. You Relax.</h2>
+            <p>Luxury Cleaning for Everyday Living</p>
         </div>
     </div>
+</section>
+
+<section class="dynamic-section">
+    <div class="main-service-container">
+        <div class="content-left">
+            <div class="promo-text">25+ Booking Daily - Book it now</div>
+            <div class="stars-row">★★★★★ <span>4.9 (300+) Rating</span></div>
+            <h2 id="serviceTitle" class="service-title">Basic House Cleaning</h2>
+            <ul id="serviceDesc">
+                </ul>
+            <button class="next-btn-ui" onclick="nextService()">Next Service ➔</button>
+        </div>
+
+        <div class="image-right">
+            <div class="service-img-wrapper">
+                <img id="serviceImg" src="basic.jpg" alt="Service Image">
+                <a href="https://wa.me/919087191900" class="book-now-btn">📅 Book Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="why-choose">
+    <h2>Why Choose AtoZ Urban Clean?</h2>
+    <div class="choose-grid">
+        <div class="choose-item">✔ Trained Professionals</div>
+        <div class="choose-item">✔ On-Time Cleaners</div>
+        <div class="choose-item">✔ Affordable Pricing</div>
+        <div class="choose-item">✔ Satisfaction Guaranteed</div>
+        <div class="choose-item">✔ Safety (Trust)</div>
+        <div class="choose-item">✔ Eco-friendly</div>
+    </div>
+</section>
+
+<section class="review-section">
+    <h2>What our customers are saying</h2>
+    <div class="review-slider">
+        <div class="review-card">
+            <h3>A. Akshay</h3>
+            <div style="color:#ffc107">★★★★★</div>
+            <p>Tough stains on my sofa were removed. Very professional!</p>
+        </div>
+        <div class="review-card">
+            <h3>Ganesan S.</h3>
+            <div style="color:#ffc107">★★★★★</div>
+            <p>Excellent deep cleaning in Tenkasi. On time!</p>
+        </div>
+    </div>
+</section>
+
+<div id="footer"></div>
+
+<div class="contact-float">
+    <a href="mailto:atozurbanclean@gmail.com" class="float-btn email"><i class="fas fa-envelope"></i></a>
+    <a href="tel:+919087191900" class="float-btn call-btn"><i class="fas fa-phone"></i></a>
 </div>
 
 <script>
-const services = [
+// Load Header/Footer
+fetch("header.html").then(res => res.text()).then(data => document.getElementById("header").innerHTML = data);
+fetch("footer.html").then(res => res.text()).then(data => document.getElementById("footer").innerHTML = data);
+
+// Dynamic Service Logic
+const serviceData = [
     {
         title: "Basic House Cleaning",
         img: "basic.jpg",
@@ -155,9 +235,10 @@ const services = [
     }
 ];
 
-let index = 0;
-function updateService() {
-    const s = services[index];
+let serviceIndex = 0;
+
+function updateServiceUI() {
+    const s = serviceData[serviceIndex];
     document.getElementById("serviceTitle").innerText = s.title;
     document.getElementById("serviceImg").src = s.img;
     const list = document.getElementById("serviceDesc");
@@ -165,12 +246,14 @@ function updateService() {
 }
 
 function nextService() {
-    index = (index + 1) % services.length;
-    updateService();
+    serviceIndex = (serviceIndex + 1) % serviceData.length;
+    updateServiceUI();
 }
 
-updateService();
+// Start Auto-Rotate
+updateServiceUI();
 setInterval(nextService, 10000);
 </script>
+
 </body>
 </html>
