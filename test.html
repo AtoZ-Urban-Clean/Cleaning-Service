@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Cleaning Services</title>
+    <title>Mobile Responsive Cleaning Service</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
@@ -13,107 +14,95 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 15px; /* Padding for mobile edges */
         }
 
         .service-card {
             display: flex;
             background: #fff;
-            width: 900px;
+            width: 100%;
+            max-width: 900px;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
-            padding: 40px;
-            gap: 30px;
+            padding: 30px;
+            gap: 25px;
+            transition: all 0.3s ease;
         }
 
-        /* Left Content (60%) */
-        .content-left {
-            flex: 1.5;
+        /* --- Desktop Layout (Default) --- */
+        .content-left { flex: 1.5; order: 1; }
+        .image-right { flex: 1; order: 2; position: relative; }
+
+        /* --- Responsive Mobile Layout (< 768px) --- */
+        @media (max-width: 768px) {
+            .service-card {
+                flex-direction: column; /* Stacks image on top of text */
+                padding: 20px;
+                gap: 15px;
+            }
+            .image-right { order: 1; width: 100%; } /* Image moves to top */
+            .content-left { order: 2; width: 100%; } /* Text moves to bottom */
+            
+            h2 { font-size: 24px; } /* Slightly smaller heading for mobile */
+            .service-img-wrapper { height: 220px !important; } /* Shorter image on mobile */
         }
 
-        /* Right Image (40%) */
-        .image-right {
-            flex: 1;
-            position: relative;
-        }
+        /* Styles from original design */
+        h2 { font-size: 28px; margin: 10px 0; color: #000; font-weight: 800; }
+        .promo-text { color: #00a8ff; font-weight: 600; font-size: 13px; }
+        .stars { color: #f39c12; font-size: 18px; margin-bottom: 10px; }
+        .stars span { color: #007bff; font-size: 13px; margin-left: 8px; font-weight: bold; }
 
-        h2 { font-size: 32px; margin: 0 0 10px 0; color: #000; }
-        
-        .promo-text { color: #00a8ff; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
-        
-        .stars { color: #f39c12; font-size: 20px; margin-bottom: 20px; }
-        .stars span { color: #007bff; font-size: 14px; margin-left: 10px; font-weight: bold; }
-
-        /* List Styling with Purple Checks */
-        #serviceDesc {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 30px;
-        }
-
+        #serviceDesc { list-style: none; padding: 0; margin-bottom: 20px; }
         #serviceDesc li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
-            align-items: flex-start;
             font-size: 14px;
             color: #444;
-            line-height: 1.5;
+            line-height: 1.4;
         }
-
         #serviceDesc li::before {
             content: "✔";
             color: #6c5ce7;
             font-weight: bold;
-            margin-right: 12px;
+            margin-right: 10px;
         }
 
-        /* Image and Buttons */
         .service-img-wrapper {
             width: 100%;
-            height: 350px;
+            height: 320px;
             border-radius: 15px;
             overflow: hidden;
             position: relative;
         }
-
-        #serviceImg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        #serviceImg { width: 100%; height: 100%; object-fit: cover; }
 
         .book-now-btn {
             position: absolute;
-            bottom: 20px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(to bottom, #0099ff, #0056b3);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 14px;
+            white-space: nowrap;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Next Button Styling */
         .next-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #eee;
-            border: none;
-            border-radius: 5px;
+            width: 100%; /* Full width on mobile for easy tapping */
+            padding: 12px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.3s;
         }
-
-        .next-btn:hover { background-color: #ddd; }
-
     </style>
 </head>
 <body>
@@ -123,10 +112,7 @@
         <div class="promo-text">25+ Booking Daily - Book it now</div>
         <div class="stars">★★★★★ <span>4.9 (300+) Rating</span></div>
         <h2 id="serviceTitle">Basic House Cleaning</h2>
-        
-        <ul id="serviceDesc">
-            </ul>
-
+        <ul id="serviceDesc"></ul>
         <button class="next-btn" onclick="nextService()">Next Service ➔</button>
     </div>
 
@@ -144,48 +130,38 @@ const services = [
         title: "Basic House Cleaning",
         img: "basic.jpg",
         desc: [
-            "<strong>General Areas:</strong> Dusting all accessible surfaces, removing cobwebs, vacuuming/mopping floors.",
-            "<strong>Kitchen:</strong> Wiping countertops, sink, faucet, and exterior of appliances.",
-            "<strong>Bathroom:</strong> Scrubbing and disinfecting toilet, sink, shower, and mirrors.",
-            "<strong>Bedrooms:</strong> Dusting furniture and decor, making beds, and light tidying."
+            "<strong>General Areas:</strong> Dusting, mopping, and trash removal.",
+            "<strong>Kitchen:</strong> Surface wiping and appliance cleaning.",
+            "<strong>Bathroom:</strong> Scrubbing toilet, sink, and mirrors."
         ]
     },
     {
         title: "Deep Cleaning",
         img: "deep.jpg",
         desc: [
-            "<strong>Kitchen:</strong> Degreasing exhaust fans, scrubbing tiles, and cleaning under the sink.",
-            "<strong>Bathrooms:</strong> Disinfecting and descaling taps, showers, and wall tiles.",
-            "<strong>Living Areas:</strong> Machine scrubbing of floors and dry vacuuming of sofas.",
-            "<strong>Windows:</strong> Cleaning of glass panes, window tracks, and balcony grills."
+            "<strong>Kitchen:</strong> Degreasing fans and scrubbing tiles.",
+            "<strong>Living Areas:</strong> Machine floor scrubbing.",
+            "<strong>Balcony:</strong> Window track and grill cleaning."
         ]
     },
     {
-        title: "Commercial & Office Cleaning",
+        title: "Commercial Cleaning",
         img: "office.jpg",
         desc: [
-            "<strong>Workspace:</strong> Mopping/sweeping floors, dusting desks, and basic sanitization.",
-            "<strong>Common Areas:</strong> Deep cleaning of breakrooms, vents, and corners.",
-            "<strong>Professional:</strong> Industrial grade disinfection for high-traffic office areas."
+            "<strong>Workspace:</strong> Desk dusting and floor sanitization.",
+            "<strong>Hygiene:</strong> Disinfection of high-touch areas.",
+            "<strong>Vents:</strong> Deep cleaning of office air vents."
         ]
     }
 ];
 
 let index = 0;
-
 function updateService() {
-    const service = services[index];
-    document.getElementById("serviceTitle").innerText = service.title;
-    document.getElementById("serviceImg").src = service.img;
-    
-    // Clear and rebuild the list
+    const s = services[index];
+    document.getElementById("serviceTitle").innerText = s.title;
+    document.getElementById("serviceImg").src = s.img;
     const list = document.getElementById("serviceDesc");
-    list.innerHTML = "";
-    service.desc.forEach(item => {
-        const li = document.createElement("li");
-        li.innerHTML = item;
-        list.appendChild(li);
-    });
+    list.innerHTML = s.desc.map(item => `<li>${item}</li>`).join('');
 }
 
 function nextService() {
@@ -193,12 +169,8 @@ function nextService() {
     updateService();
 }
 
-// Initial Load
 updateService();
-
-// Auto Rotation every 10 seconds
 setInterval(nextService, 10000);
 </script>
-
 </body>
 </html>
