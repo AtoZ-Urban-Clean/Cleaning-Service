@@ -196,6 +196,106 @@
     margin-top: 10px;
     line-height: 1.4;
   }
+  /* ================= REVIEW SECTION ================= */
+
+.review-section {
+    background: #f5f5f5;
+    padding: 80px 20px;
+}
+
+.review-container {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+.review-small {
+    color: #777;
+    font-size: 16px;
+}
+
+.review-container h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.review-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+}
+
+.review-card {
+    min-width: 300px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-align: left;
+    transition: 0.3s;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-card h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.stars {
+    color: #ffc107;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.review-card p {
+    color: #555;
+    line-height: 1.6;
+}
+.contact-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 999;
+}
+
+.float-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.whatsapp {
+    background: #25D366;
+}
+
+.whatsapp:hover {
+    background: #1ebe5d;
+}
+
+.email {
+    background: #ff5722;
+}
+
+.email:hover {
+    background: #e64a19;
+}
+
 </style>
 <body>
 
@@ -279,6 +379,61 @@
     </div>
   </div>
 </section>
+<!-- ================= CUSTOMER REVIEWS SECTION ================= -->
+<section class="review-section">
+    <div class="review-container">
+
+        <div class="review-top">
+            <p class="review-small">Customer reviews</p>
+            <h2>What our customers are saying</h2>
+        </div>
+
+        <div class="review-slider">
+
+            <!-- Review 1 -->
+            <div class="review-card">
+                <h3>A. Akshay</h3>
+                <div class="stars">★★★★★</div>
+                <p>
+                    I had tough stains on my sofa and mattress, but CLOUDS cleaning removed everything.
+                    The staff was friendly and professional. Highly satisfied!
+                </p>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-card">
+                <h3>Ganesan Shanmugam</h3>
+                <div class="stars">★★★★★</div>
+                <p>
+                    Booked sofa and bed deep cleaning for my home in Tenkasi.
+                    The team arrived on time and used good machines. Excellent service!
+                </p>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-card">
+                <h3>Divya Lakshmi</h3>
+                <div class="stars">★★★★★</div>
+                <p>
+                    They cleaned my full house perfectly.
+                    Great job CLOUDS team!
+                </p>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="review-card">
+                <h3>Velayutham Balaji</h3>
+                <div class="stars">★★★★★</div>
+                <p>
+                    Affordable price and excellent cleaning quality.
+                    Highly recommended.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
 
 <!-- FOOTER LOAD -->
@@ -354,6 +509,23 @@ function scrollServices(direction){
   track.style.transform = `translateX(-${index * 100}%)`;
 }
 </script>
+<!-- Floating Contact Buttons -->
+<div class="contact-float">
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/919087191900?text=Hello%20I%20want%20cleaning%20service"
+       target="_blank"
+       class="float-btn whatsapp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:atozurbanclean@gmail.com"
+       class="float-btn email">
+        <i class="fas fa-envelope"></i>
+    </a>
+
+</div>
 
 </body>
 </html>
