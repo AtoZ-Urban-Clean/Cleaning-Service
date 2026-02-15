@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
 <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="atoz.png">
 
@@ -296,6 +297,28 @@
 .email:hover {
     background: #e64a19;
 }
+.call-float {
+    position: fixed;
+    bottom: 100px;   /* adjust position */
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #008CBA;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 999;
+    transition: 0.3s;
+}
+
+.call-float:hover {
+    background: #006f94;
+}
 
 </style>
 <body>
@@ -525,6 +548,11 @@ function scrollServices(direction){
        class="float-btn email">
         <i class="fas fa-envelope"></i>
     </a>
+
+  <!-- Call Button -->
+<a href="tel:+919087191900" class="call-float">
+    <i class="fas fa-phone"></i>
+</a>
 
 </div>
 
