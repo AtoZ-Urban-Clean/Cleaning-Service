@@ -229,6 +229,9 @@ async function fetchStatus(id, manual = false){
 
             resultDiv.innerHTML =
             `<b>Customer:</b> ${data.name}<br>
+            <b>Services :</b> ${data.service}<br>
+            <b>Serive Date:</b> ${data.date}<br>
+            <b>Labour Assigned :</b> ${data.labourname}<br>
              <b>Booking ID:</b> ${id}<br>
              <b>Status:</b> ${data.status}`;
 
