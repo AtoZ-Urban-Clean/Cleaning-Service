@@ -3,8 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Sparkle & Shine Cleaning</title>
-    <link rel="stylesheet" href="styles.css"> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>About Us | Cleaning Services</title>
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; line-height: 1.6; color: #333; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Hero Section */
+        .hero { background: #eef2f3; padding: 60px 0; text-align: center; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; color: #0056b3; }
+        
+        /* Split Content Section (Story & Mission) */
+        .split-section { display: flex; flex-wrap: wrap; gap: 40px; padding: 50px 0; }
+        .split-text { flex: 1; min-width: 300px; }
+        .split-box { 
+            flex: 1; min-width: 300px; 
+            background: #0056b3; color: white; 
+            padding: 30px; border-radius: 12px; 
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        /* Feature Grid (Responsive) */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; padding: 40px 0; 
+        }
+        .card { 
+            background: #fff; border: 1px solid #ddd; 
+            padding: 25px; border-radius: 8px; text-align: center; 
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card-icon { font-size: 2.5rem; margin-bottom: 15px; }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .split-section { gap: 20px; }
+            .split-box { min-width: 100%; }
+            .split-text { min-width: 100%; }
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script> 
         $(function(){
           $("#header").load("header.html"); 
@@ -17,51 +59,47 @@
     <div id="header"></div>
 
     <main>
-        <section class="about-hero" style="background: #f4f7f6; padding: 60px 20px; text-align: center;">
+        <section class="hero">
             <div class="container">
-                <h1 style="color: #2c3e50; font-size: 2.5rem;">Cleaning with Integrity, Every Single Time.</h1>
-                <p style="color: #7f8c8d; max-width: 700px; margin: 20px auto; font-size: 1.1rem;">
-                    We don’t just move dust around; we create healthier, happier spaces for you to live and work in.
-                </p>
+                <h1>Sparkling Homes, Stress-Free Lives</h1>
+                <p>Providing professional cleaning services you can trust since 2015.</p>
             </div>
         </section>
 
-        <section class="content-section" style="padding: 50px 20px;">
-            <div class="container" style="max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px;">
-                <div style="flex: 1; min-width: 300px;">
-                    <h2 style="color: #3498db;">Who We Are</h2>
-                    <p>Founded in 2015, <strong>[Company Name]</strong> started with a simple bucket, a mop, and a vision: to provide premium cleaning services that people can actually trust. We noticed that "good enough" was the industry standard, and we decided to change that.</p>
-                    <p>Today, we are a team of 20+ dedicated professionals serving the greater metropolitan area, specialized in residential, commercial, and deep-cleaning solutions.</p>
+        <div class="container">
+            <section class="split-section">
+                <div class="split-text">
+                    <h2>Our Journey</h2>
+                    <p>What started as a small family-run business has grown into one of the city's most trusted cleaning providers. We believe that a clean space is a productive space, and we treat every home as if it were our own.</p>
+                    <p>Our team is background-checked, professionally trained, and committed to excellence.</p>
                 </div>
-                <div style="flex: 1; min-width: 300px; background: #3498db; color: white; padding: 30px; border-radius: 8px;">
-                    <h3>Our Mission</h3>
-                    <p>"To provide a spotless environment through sustainable practices, meticulous attention to detail, and a commitment to customer peace of mind."</p>
+                <div class="split-box">
+                    <h3>Our Commitment</h3>
+                    <p>To provide reliable, high-quality cleaning that exceeds expectations while using eco-friendly products that keep your family and pets safe.</p>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section style="background: #ffffff; padding: 50px 20px;">
-            <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
-                <h2 style="margin-bottom: 40px;">Why Clients Trust Us</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">🛡️</div>
-                        <h4>Fully Insured</h4>
-                        <p>Rest easy knowing your property is protected. We are bonded and fully covered.</p>
-                    </div>
-                    <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">🌿</div>
-                        <h4>Eco-Friendly</h4>
-                        <p>We use non-toxic, biodegradable products that are safe for kids and pets.</p>
-                    </div>
-                    <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">✨</div>
-                        <h4>100% Satisfaction</h4>
-                        <p>Not happy with the result? We’ll come back and reclean it within 24 hours for free.</p>
-                    </div>
+            <hr style="border: 0; border-top: 1px solid #eee;">
+
+            <h2 style="text-align: center; margin-top: 40px;">The [Company Name] Difference</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">🧤</div>
+                    <h3>Trained Pros</h3>
+                    <p>Our staff undergoes rigorous training to handle specialized cleaning equipment and delicate surfaces.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📅</div>
+                    <h3>Flexible Scheduling</h3>
+                    <p>Weekly, bi-weekly, or one-time deep cleans. We work around your busy schedule.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✅</div>
+                    <h3>Quality Guaranteed</h3>
+                    <p>If you aren’t 100% satisfied with our service, we will return to fix it at no extra cost.</p>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <div id="footer"></div>
