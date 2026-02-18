@@ -7,92 +7,109 @@
 
 <style>
 :root {
-    --uc-blue: #2f80ed;
-    --uc-text: #2d3436;
-    --uc-gray: #636e72;
-    --uc-bg: #f4f7f9;
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --bg: #f1f5f9;
+    --white: #ffffff;
 }
 
 body {
     font-family: 'Segoe UI', Roboto, sans-serif;
     margin: 0;
-    background-color: var(--uc-bg);
-    color: var(--uc-text);
+    background: var(--bg);
+    color: var(--dark);
 }
 
 .container {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: auto;
     padding: 20px;
 }
 
 /* Hero Section */
 .hero-section {
-    background: white;
-    padding: 40px 0;
-    border-bottom: 1px solid #e0e0e0;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    padding: 60px 20px;
     text-align: center;
+    color: white;
 }
 
 .hero-section h1 {
-    font-size: 2rem;
-    margin: 0;
-    color: var(--uc-blue);
+    font-size: 2.2rem;
+    margin-bottom: 10px;
 }
 
-/* Category Header */
+/* Category Title */
 .category-title {
-    margin: 40px 0 15px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-}
-
-.category-title::before {
-    content: "";
-    width: 4px;
-    height: 24px;
-    background: var(--uc-blue);
-    margin-right: 12px;
-    border-radius: 2px;
+    margin: 50px 0 20px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--primary);
 }
 
 /* Card Style */
 .uc-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    transition: all 0.3s ease;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.35s ease;
     cursor: pointer;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Hover Effect */
 .uc-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.25);
+    border: 1px solid var(--primary);
+}
+
+/* Glow Effect on Hover */
+.uc-card::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-light);
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.3s ease;
+    z-index: 0;
+}
+
+.uc-card:hover::before {
+    opacity: 0.2;
 }
 
 .uc-card h3 {
-    margin: 0 0 10px 0;
-    font-size: 1.25rem;
+    margin-top: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .uc-card p {
-    margin: 0 0 15px 0;
-    color: var(--uc-gray);
-    line-height: 1.5;
+    color: var(--gray);
+    position: relative;
+    z-index: 1;
 }
 
-/* Inclusion Box (Hidden Initially) */
+/* Inclusion Box */
 .inclusion-box {
     display: none;
-    background: #f8faff;
-    border: 1px dashed var(--uc-blue);
-    border-radius: 8px;
+    margin-top: 15px;
     padding: 15px;
-    margin-top: 10px;
+    background: #f8fafc;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+    position: relative;
+    z-index: 1;
 }
 
 .uc-card.active .inclusion-box {
@@ -101,31 +118,30 @@ body {
 }
 
 .inclusion-box strong {
-    color: var(--uc-blue);
-    font-size: 0.85rem;
-    text-transform: uppercase;
+    color: var(--primary);
 }
 
 .inclusion-box ul {
-    margin: 10px 0 0 0;
-    padding-left: 18px;
-    font-size: 0.95rem;
+    padding-left: 20px;
 }
 
 /* Button */
 .book-btn {
-    padding: 8px 14px;
-    background: var(--uc-blue);
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: var(--primary);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: 0.3s;
+    transition: 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .book-btn:hover {
-    background: #1f6ed4;
+    background: #1d4ed8;
+    transform: scale(1.05);
 }
 
 /* Animation */
@@ -135,9 +151,11 @@ body {
 }
 
 @media (max-width: 600px) {
-    .container { padding: 15px; }
-    .hero-section h1 { font-size: 1.5rem; }
+    .hero-section h1 {
+        font-size: 1.6rem;
+    }
 }
+
 </style>
 </head>
 
