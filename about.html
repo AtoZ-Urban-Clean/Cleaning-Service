@@ -3,46 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Cleaning Services</title>
+    <title>About Us | Professional Cleaning</title>
     
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; line-height: 1.6; color: #333; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-        
-        /* Hero Section */
-        .hero { background: #eef2f3; padding: 60px 0; text-align: center; }
-        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; color: #0056b3; }
-        
-        /* Split Content Section (Story & Mission) */
-        .split-section { display: flex; flex-wrap: wrap; gap: 40px; padding: 50px 0; }
-        .split-text { flex: 1; min-width: 300px; }
-        .split-box { 
-            flex: 1; min-width: 300px; 
-            background: #0056b3; color: white; 
-            padding: 30px; border-radius: 12px; 
-            display: flex; flex-direction: column; justify-content: center;
+        /* Global Reset & Fonts */
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            margin: 0; line-height: 1.7; color: #444; background-color: #fff;
         }
 
-        /* Feature Grid (Responsive) */
+        /* Container - This keeps content from stretching too wide on Desktop */
+        .container { 
+            max-width: 1140px; 
+            margin: 0 auto; 
+            padding: 0 25px; 
+        }
+
+        /* Hero Section */
+        .hero { 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 100px 20px; 
+            text-align: center; 
+        }
+        .hero h1 { font-size: 3rem; color: #2c3e50; margin-bottom: 15px; }
+        .hero p { font-size: 1.25rem; color: #576574; max-width: 800px; margin: 0 auto; }
+
+        /* Main Story Section (Side-by-Side on Desktop) */
+        .story-flex { 
+            display: flex; 
+            align-items: center; 
+            gap: 60px; 
+            padding: 80px 0; 
+        }
+        .story-content { flex: 1.2; }
+        .story-image-box { 
+            flex: 0.8; 
+            background: #3498db; 
+            color: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2);
+        }
+        .story-image-box h3 { margin-top: 0; color: #fff; font-size: 1.8rem; }
+
+        /* Features Grid */
+        .features-section { background: #f9f9f9; padding: 80px 0; }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2.2rem; color: #2c3e50; }
+        
         .grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; padding: 40px 0; 
+            grid-template-columns: repeat(3, 1fr); /* Force 3 columns on Desktop */
+            gap: 30px; 
         }
         .card { 
-            background: #fff; border: 1px solid #ddd; 
-            padding: 25px; border-radius: 8px; text-align: center; 
-            transition: transform 0.3s ease;
+            background: #fff; padding: 40px 30px; 
+            border-radius: 15px; text-align: center; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: 0.3s;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .card-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .card:hover { transform: translateY(-10px); }
+        .icon { font-size: 3rem; margin-bottom: 20px; display: block; }
 
-        /* Mobile specific adjustments */
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 1.8rem; }
-            .split-section { gap: 20px; }
-            .split-box { min-width: 100%; }
-            .split-text { min-width: 100%; }
+        /* --- RESPONSIVE BREAKPOINTS --- */
+
+        /* Tablet View */
+        @media (max-width: 992px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 2.5rem; }
+        }
+
+        /* Mobile View (The "Wow" factor for phones) */
+        @media (max-width: 768px) {
+            .hero { padding: 60px 20px; }
+            .hero h1 { font-size: 2rem; }
+            
+            .story-flex { 
+                flex-direction: column; /* Stack vertically */
+                gap: 30px; 
+                padding: 40px 0; 
+            }
+            
+            .grid { 
+                grid-template-columns: 1fr; /* Stack cards vertically */
+            }
+            
+            .story-image-box { text-align: center; }
         }
     </style>
 
@@ -50,7 +96,7 @@
     <script> 
         $(function(){
           $("#header").load("header.html"); 
-          $("#footer").load("footer.html"); 
+          #("#footer").load("footer.html"); 
         });
     </script> 
 </head>
@@ -61,45 +107,48 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>Sparkling Homes, Stress-Free Lives</h1>
-                <p>Providing professional cleaning services you can trust since 2015.</p>
+                <h1>More Than Just a Cleaning Service</h1>
+                <p>We believe a clean space is the foundation of a happy life. Let us handle the dirt while you focus on what matters.</p>
             </div>
         </section>
 
         <div class="container">
-            <section class="split-section">
-                <div class="split-text">
-                    <h2>Our Journey</h2>
-                    <p>What started as a small family-run business has grown into one of the city's most trusted cleaning providers. We believe that a clean space is a productive space, and we treat every home as if it were our own.</p>
-                    <p>Our team is background-checked, professionally trained, and committed to excellence.</p>
+            <section class="story-flex">
+                <div class="story-content">
+                    <h2 style="color: #3498db;">Our Story</h2>
+                    <p>It started with a simple realization: <strong>Reliability is rare.</strong> Many services show up late or miss the details. We built our company on the promise of being the most dependable team in the industry.</p>
+                    <p>Every member of our team is hand-picked for their integrity and attention to detail. We don't just clean; we care.</p>
                 </div>
-                <div class="split-box">
-                    <h3>Our Commitment</h3>
-                    <p>To provide reliable, high-quality cleaning that exceeds expectations while using eco-friendly products that keep your family and pets safe.</p>
+                <div class="story-image-box">
+                    <h3>The Guarantee</h3>
+                    <p>"If you find a spot we missed, call us within 24 hours. We’ll come back and fix it immediately, no questions asked."</p>
+                    <small>— Our CEO</small>
                 </div>
             </section>
+        </div>
 
-            <hr style="border: 0; border-top: 1px solid #eee;">
-
-            <h2 style="text-align: center; margin-top: 40px;">The [Company Name] Difference</h2>
-            <div class="grid">
-                <div class="card">
-                    <div class="card-icon">🧤</div>
-                    <h3>Trained Pros</h3>
-                    <p>Our staff undergoes rigorous training to handle specialized cleaning equipment and delicate surfaces.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📅</div>
-                    <h3>Flexible Scheduling</h3>
-                    <p>Weekly, bi-weekly, or one-time deep cleans. We work around your busy schedule.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">✅</div>
-                    <h3>Quality Guaranteed</h3>
-                    <p>If you aren’t 100% satisfied with our service, we will return to fix it at no extra cost.</p>
+        <section class="features-section">
+            <div class="container">
+                <h2 class="section-title">Why We Are Different</h2>
+                <div class="grid">
+                    <div class="card">
+                        <span class="icon">✨</span>
+                        <h3>Precision Clean</h3>
+                        <p>We use a 50-point checklist to ensure every corner of your home sparkles.</p>
+                    </div>
+                    <div class="card">
+                        <span class="icon">🛡️</span>
+                        <h3>Trusted Staff</h3>
+                        <p>Background-checked and fully insured professionals for your security.</p>
+                    </div>
+                    <div class="card">
+                        <span class="icon">🍃</span>
+                        <h3>Safe for All</h3>
+                        <p>Pet-friendly and eco-conscious products used in every single session.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
     <div id="footer"></div>
