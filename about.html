@@ -1,150 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us | Professional Services</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Professional Services</title>
 
-<style>
-:root {
-    --uc-blue: #2f80ed;
-    --uc-text: #2d3436;
-    --uc-gray: #636e72;
-    --uc-bg: #f4f7f9;
-}
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --bg: #f1f5f9;
+            --white: #ffffff;
+        }
 
-body {
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    margin: 0;
-    background-color: var(--uc-bg);
-    color: var(--uc-text);
-}
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--dark);
+        }
 
-.container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-}
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-/* Hero Section */
-.hero-section {
-    background: white;
-    padding: 40px 0;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: center;
-}
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+        }
 
-.hero-section h1 {
-    font-size: 2rem;
-    margin: 0;
-    color: var(--uc-blue);
-}
+        .hero-section h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+        }
 
-/* Category Header */
-.category-title {
-    margin: 40px 0 15px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-}
+        /* Category Title */
+        .category-title {
+            margin: 50px 0 20px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+        }
 
-.category-title::before {
-    content: "";
-    width: 4px;
-    height: 24px;
-    background: var(--uc-blue);
-    margin-right: 12px;
-    border-radius: 2px;
-}
+        .category-title::after {
+            content: "";
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            display: block;
+            margin-top: 6px;
+            border-radius: 2px;
+        }
 
-/* Card Style */
-.uc-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+        /* Card */
+        .uc-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.35s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
 
-.uc-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-}
+        /* Hover Glow Effect */
+        .uc-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.25);
+            border: 1px solid var(--primary);
+        }
 
-.uc-card h3 {
-    margin: 0 0 10px 0;
-    font-size: 1.25rem;
-}
+        .uc-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
 
-.uc-card p {
-    margin: 0 0 15px 0;
-    color: var(--uc-gray);
-    line-height: 1.5;
-}
+        .uc-card p {
+            margin: 0 0 15px 0;
+            color: var(--gray);
+            line-height: 1.6;
+        }
 
-/* Inclusion Box (Hidden Initially) */
-.inclusion-box {
-    display: none;
-    background: #f8faff;
-    border: 1px dashed var(--uc-blue);
-    border-radius: 8px;
-    padding: 15px;
-    margin-top: 10px;
-}
+        /* Inclusion Box (Hidden Initially) */
+        .inclusion-box {
+            display: none;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
 
-.uc-card.active .inclusion-box {
-    display: block;
-    animation: fadeIn 0.3s ease-in-out;
-}
+        .uc-card.active .inclusion-box {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
 
-.inclusion-box strong {
-    color: var(--uc-blue);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-}
+        .inclusion-box strong {
+            color: var(--primary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
 
-.inclusion-box ul {
-    margin: 10px 0 0 0;
-    padding-left: 18px;
-    font-size: 0.95rem;
-}
+        .inclusion-box ul {
+            margin: 10px 0 0 0;
+            padding-left: 18px;
+            font-size: 0.95rem;
+        }
 
-/* Button */
-.book-btn {
-    padding: 8px 14px;
-    background: var(--uc-blue);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
+        .inclusion-box li {
+            margin-bottom: 6px;
+        }
 
-.book-btn:hover {
-    background: #1f6ed4;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* Animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        @media (max-width: 600px) {
+            .hero-section h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 
-@media (max-width: 600px) {
-    .container { padding: 15px; }
-    .hero-section h1 { font-size: 1.5rem; }
-}
-</style>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>$(function(){ $("#header").load("header.html"); $("#footer").load("footer.html"); });</script>
+    <!-- Header & Footer Loader (Kept Same) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        });
+    </script>
 </head>
 
 <body>
+
 <div id="header"></div>
+
 <section class="hero-section">
     <div class="container">
         <h1>Expert Services at Your Doorstep</h1>
@@ -158,8 +160,7 @@ body {
 
     <div class="uc-card">
         <h3>Residential Cleaning</h3>
-        <p>A complete cleaning service for homes that brings freshness and hygiene.</p>
-        <button class="book-btn">Book Now</button>
+        <p>A complete cleaning service for homes that brings freshness, comfort, and hygiene to your living spaces.</p>
         <div class="inclusion-box">
             <strong>Includes:</strong>
             <ul>
@@ -172,14 +173,13 @@ body {
 
     <div class="uc-card">
         <h3>Kitchen Deep Cleaning</h3>
-        <p>Make your kitchen spotless, grease-free, and hygienic.</p>
-        <button class="book-btn">Book Now</button>
+        <p>Make your kitchen spotless, grease-free, and hygienic with our expert deep cleaning.</p>
         <div class="inclusion-box">
             <strong>Includes:</strong>
             <ul>
                 <li>Degreasing of exhaust fans and chimney</li>
-                <li>Cleaning cabinets and tiles</li>
-                <li>Sink, stove, and countertop cleaning</li>
+                <li>Scrubbing tiles and cleaning inside/outside cabinets</li>
+                <li>Cleaning under the sink, stove, and countertops</li>
             </ul>
         </div>
     </div>
@@ -188,36 +188,32 @@ body {
 
     <div class="uc-card">
         <h3>Labour Support</h3>
-        <p>Providing extra workers for operational and project-based tasks.</p>
-        <button class="book-btn">Book Now</button>
+        <p>Providing extra workers to assist with physical, operational, or project-based tasks.</p>
         <div class="inclusion-box">
             <strong>Types of Support:</strong>
             <ul>
-                <li>Construction labour</li>
-                <li>Commercial furniture moving</li>
-                <li>Assisting electricians and plumbers</li>
+                <li>Construction Labour: Site cleanup and material handling</li>
+                <li>Commercial Support: Furniture moving and event setup</li>
+                <li>Assisting skilled trades (electricians, plumbers)</li>
             </ul>
         </div>
     </div>
 
 </div>
 
-<script>
-document.querySelectorAll(".uc-card").forEach(card => {
-    card.addEventListener("click", function() {
-        this.classList.toggle("active");
-    });
-});
+<div id="footer"></div>
 
-document.querySelectorAll(".book-btn").forEach(btn => {
-    btn.addEventListener("click", function(e){
-        e.stopPropagation();
-        alert("Booking feature coming soon!");
+<!-- Click to Expand Script -->
+<script>
+    document.querySelectorAll(".uc-card").forEach(card => {
+        card.addEventListener("click", function() {
+            this.classList.toggle("active");
+        });
     });
-});
 </script>
-    <div id="footer"></div>
+
 </body>
 </html>
+
 
 
