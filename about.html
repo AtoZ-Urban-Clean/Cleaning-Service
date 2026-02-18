@@ -3,25 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Professional Cleaning Services</title>
+    <title>About Us | Professional Services</title>
     <style>
-        /* Shared Styles */
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; line-height: 1.6; color: #333; background: #fff; }
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
-        
-        /* Hero */
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6954?auto=format&fit=crop&w=1350&q=80'); background-size: cover; color: white; padding: 80px 20px; text-align: center; }
-        
-        /* Service Cards Grid */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 50px 0; }
-        .service-card { border: 1px solid #eee; padding: 25px; border-radius: 10px; transition: 0.3s; background: #fdfdfd; }
-        .service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #3498db; }
-        .service-card h3 { color: #3498db; margin-top: 0; }
-        .includes { font-size: 0.9rem; color: #666; font-style: italic; }
+        :root {
+            --uc-blue: #2f80ed;
+            --uc-text: #2d3436;
+            --uc-gray: #636e72;
+            --uc-bg: #f4f7f9;
+        }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 1.8rem; }
-            .services-grid { grid-template-columns: 1fr; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background-color: var(--uc-bg); color: var(--uc-text); }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* Header Section */
+        .hero-section { background: white; padding: 40px 0; border-bottom: 1px solid #e0e0e0; text-align: center; }
+        .hero-section h1 { font-size: 2rem; margin: 0; color: var(--uc-blue); }
+
+        /* Category Header */
+        .category-title { margin: 40px 0 15px; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; }
+        .category-title::before { content: ""; width: 4px; height: 24px; background: var(--uc-blue); margin-right: 12px; border-radius: 2px; }
+
+        /* Urban Company Style Card */
+        .uc-card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; }
+        .uc-card h3 { margin: 0 0 10px 0; font-size: 1.25rem; }
+        .uc-card p { margin: 0 0 15px 0; color: var(--uc-gray); line-height: 1.5; }
+
+        /* Inclusion Box - Exactly from your images */
+        .inclusion-box { background: #f8faff; border: 1px dashed var(--uc-blue); border-radius: 8px; padding: 15px; }
+        .inclusion-box strong { color: var(--uc-blue); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .inclusion-box ul { margin: 10px 0 0 0; padding-left: 18px; color: #444; font-size: 0.95rem; }
+        .inclusion-box li { margin-bottom: 5px; }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            .hero-section h1 { font-size: 1.5rem; }
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -30,42 +45,56 @@
 <body>
     <div id="header"></div>
 
-    <section class="hero">
+    <section class="hero-section">
         <div class="container">
-            <h1>Excellence in Every Corner</h1>
-            <p>From residential sanctuaries to commercial hubs, we bring hygiene and freshness to your space.</p>
+            <h1>Expert Services at Your Doorstep</h1>
+            <p>Quality cleaning and professional support you can trust.</p>
         </div>
     </section>
 
     <div class="container">
-        <section style="padding: 60px 0;">
-            <h2 style="text-align: center;">Our Specialized Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Residential Cleaning</h3>
-                    <p>A complete cleaning service for homes that brings freshness, comfort, and hygiene.</p>
-                    <p class="includes"><strong>Includes:</strong> Bedroom, bathroom, kitchen, mopping, dusting, and sanitisation.</p>
-                </div>
-
-                <div class="service-card">
-                    <h3>Commercial Services</h3>
-                    <p>Professional cleaning for offices, shops, clinics, showrooms, and commercial properties.</p>
-                    <p class="includes"><strong>Includes:</strong> Workstation cleaning, glass cleaning, floor care, and disinfecting.</p>
-                </div>
-
-                <div class="service-card">
-                    <h3>Toilet Deep Cleaning</h3>
-                    <p>Specialised cleaning for a fresh, stain-free, and germ-free washroom.</p>
-                    <p class="includes"><strong>Includes:</strong> Descaling, stain removal, odor control, and bowl cleaning.</p>
-                </div>
-
-                <div class="service-card" style="background: #eef7ff;">
-                    <h3>Labour Support</h3>
-                    <p>Providing extra workers to assist with physical, operational, or project-based tasks.</p>
-                    <p class="includes"><strong>Includes:</strong> Site cleanup, material handling, and furniture moving.</p>
-                </div>
+        <div class="category-title">Deep Cleaning</div>
+        
+        <div class="uc-card">
+            <h3>Residential Cleaning</h3>
+            <p>A complete cleaning service for homes that brings freshness, comfort, and hygiene to your living spaces.</p>
+            <div class="inclusion-box">
+                <strong>Includes:</strong>
+                <ul>
+                    <li>Bedroom, bathroom, and kitchen cleaning</li>
+                    <li>Mopping, dusting, and sanitisation</li>
+                    <li>Machine scrubbing of floors</li>
+                </ul>
             </div>
-        </section>
+        </div>
+
+        <div class="uc-card">
+            <h3>Kitchen Deep Cleaning</h3>
+            <p>Make your kitchen spotless, grease-free, and hygienic with our expert deep cleaning.</p>
+            <div class="inclusion-box">
+                <strong>Includes:</strong>
+                <ul>
+                    <li>Degreasing of exhaust fans and chimney</li>
+                    <li>Scrubbing tiles and cleaning inside/outside cabinets</li>
+                    <li>Cleaning under the sink, stove, and countertops</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="category-title">Support Services</div>
+
+        <div class="uc-card">
+            <h3>Labour Support</h3>
+            <p>Providing extra workers to assist with physical, operational, or project-based tasks.</p>
+            <div class="inclusion-box">
+                <strong>Types of Support:</strong>
+                <ul>
+                    <li>Construction Labour: Site cleanup and material handling</li>
+                    <li>Commercial Support: Furniture moving and event setup</li>
+                    <li>Assisting skilled trades (electricians, plumbers)</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div id="footer"></div>
