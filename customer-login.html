@@ -2,124 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AtoZ Urban Clean - Customer Registration</title>
+    <title>AtoZ Urban Clean - Registration</title>
     <style>
-        :root { --primary: #673ab7; --bg: #f0f2f5; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        
-        /* Containers */
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 380px; border-top: 6px solid var(--primary); }
-        #app-container { display: none; }
-        
-        /* UI Elements */
-        h2 { color: #333; text-align: center; margin-bottom: 25px; }
-        .input-group { margin-bottom: 15px; }
-        label { font-size: 0.85rem; color: #666; font-weight: 600; display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
-        
-        button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600; margin-top: 10px; transition: 0.3s; }
-        button:hover { background: #512da8; opacity: 0.9; }
-        
-        #status { margin-top: 20px; text-align: center; font-weight: 500; font-size: 0.9rem; }
-        .error { color: #d32f2f; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding-top: 50px; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 380px; border-top: 6px solid #673ab7; }
+        h2 { color: #333; text-align: center; }
+        label { font-size: 0.85rem; color: #666; font-weight: 600; display: block; margin-top: 15px; }
+        input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; background: #673ab7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 20px; }
+        #status { margin-top: 15px; text-align: center; font-size: 0.9rem; }
         .success { color: #388e3c; }
+        .error { color: #d32f2f; }
     </style>
 </head>
 <body>
 
-<div id="login-screen" class="card">
-    <h2>Staff Login</h2>
-    <div class="input-group">
-        <label>Access Key</label>
-        <input type="password" id="passkey" placeholder="Enter Key">
-    </div>
-    <button onclick="handleLogin()">Login</button>
-    <div id="login-status" class="error" style="margin-top:10px; text-align:center;"></div>
-</div>
-
-<div id="app-container" class="card">
-    <h2>Customer Register</h2>
+<div class="card">
+    <h2>Customer Entry</h2>
+    <label>Customer Name</label>
+    <input type="text" id="name" placeholder="Enter Full Name">
     
-    <div class="input-group">
-        <label>Full Name</label>
-        <input type="text" id="custName" placeholder="John Doe">
-    </div>
-
-    <div class="input-group">
-        <label>Customer Number (Phone)</label>
-        <input type="text" id="custNum" placeholder="+1 234 567 890">
-    </div>
-
-    <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" id="custEmail" placeholder="example@mail.com">
-    </div>
-
-    <button id="submitBtn" onclick="registerCustomer()">Register Customer</button>
+    <label>Customer Number</label>
+    <input type="text" id="number" placeholder="Enter Phone Number">
+    
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Enter Email Address">
+    
+    <button onclick="submitData()">Add to Table</button>
     <div id="status"></div>
 </div>
 
 <script>
-    const ACCESS_KEY = "atoz2026"; 
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwoj44SU498Qoqgv-9D4cTL8OZCIwRY6cbnJx49X8OGAO6Avgw9tmq1u9oL0KerS9RRtQ/exec";
-
-    function handleLogin() {
-        const key = document.getElementById('passkey').value;
-        if (key === ACCESS_KEY) {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('app-container').style.display = 'block';
-        } else {
-            document.getElementById('login-status').innerText = "❌ Incorrect Access Key";
-        }
-    }
-
-    async function registerCustomer() {
-        const name = document.getElementById('custName').value.trim();
-        const number = document.getElementById('custNum').value.trim();
-        const email = document.getElementById('custEmail').value.trim();
+    async function submitData() {
         const status = document.getElementById('status');
-        const btn = document.getElementById('submitBtn');
+        const payload = {
+            name: document.getElementById('name').value,
+            number: document.getElementById('number').value,
+            email: document.getElementById('email').value
+        };
 
-        if (!name || !number || !email) {
+        // PASTE YOUR NEW DEPLOYMENT URL HERE
+        const SCRIPT_URL = "YOUR_NEW_WEB_APP_URL";
+
+        if (!payload.name || !payload.number || !payload.email) {
             status.className = "error";
-            status.innerText = "⚠️ Please fill all fields.";
+            status.innerText = "⚠️ All fields are required.";
             return;
         }
 
-        status.className = "";
-        status.innerText = "⏳ Saving to Google Sheets...";
-        btn.disabled = true;
-
-        const payload = {
-            name: name,
-            number: number,
-            email: email
-        };
+        status.innerText = "⏳ Inserting into table...";
 
         try {
-            await fetch(WEB_APP_URL, {
+            await fetch(SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
                 body: JSON.stringify(payload)
             });
 
             status.className = "success";
-            status.innerText = "✅ Registration Successful!";
-            
-            // Clear inputs
-            document.getElementById('custName').value = "";
-            document.getElementById('custNum').value = "";
-            document.getElementById('custEmail').value = "";
-
-        } catch (err) {
+            status.innerText = "✅ Successfully added to Sheet!";
+            document.querySelectorAll('input').forEach(i => i.value = "");
+        } catch (e) {
             status.className = "error";
-            status.innerText = "❌ Error: " + err.message;
-        } finally {
-            btn.disabled = false;
+            status.innerText = "❌ Connection Error.";
         }
     }
 </script>
-
 </body>
 </html>
