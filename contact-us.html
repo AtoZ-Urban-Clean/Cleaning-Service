@@ -1,127 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/png" href="brand-logo.webp">
 <meta charset="UTF-8">
+<title>AtoZ Urban Clean – Contact Us</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Us</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins', sans-serif;
-}
 
-body{
-    background:#f5f7fa;
-}
+/* ================= BASE ================= */
+body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; padding-top:70px; }
+* { box-sizing:border-box; }
 
-/* ===== HEADER ===== */
-.header{
-    background:#111;
-    color:#fff;
-    padding:20px;
-    text-align:center;
-}
+/* ================= HEADER ================= */
+.site-header { background:#fff; border-bottom:1px solid #ddd; position:fixed; top:0; left:0; width:100%; z-index:1000; }
+.site-header .header-container { display:flex; align-items:center; justify-content:space-between; padding:10px 20px; max-width:1400px; margin:0 auto; }
 
-.header h1{
-    font-size:28px;
-    font-weight:600;
-}
+.logo img { height:67px; width:100px; }
 
-/* ===== MAIN SECTION ===== */
+.desktop-nav { display:flex; list-style:none; gap:5px; margin:0; padding:0; }
+.nav-link { padding:15px 12px; display:block; font-size:12px; font-weight:700; color:#333; text-transform:uppercase; text-decoration:none; }
+
+.header-right { display:flex; align-items:center; gap:15px; }
+.header-right input { padding:8px 15px; border:1px solid #ddd; border-radius:20px; font-size:14px; width:180px; }
+
+.bag-btn { background:#ff007f; color:#fff; padding:9px 16px; border-radius:4px; font-weight:700; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+.bag-count { background:#fff; color:#ff007f; border-radius:10px; padding:2px 6px; font-size:11px; }
+
+/* ================= CONTACT SECTION ================= */
+
 .contact-wrapper{
-    max-width:1100px;
-    margin:40px auto;
+    max-width:1200px;
+    margin:60px auto;
     padding:20px;
     display:flex;
     gap:40px;
     flex-wrap:wrap;
 }
 
-/* ===== LEFT INFO ===== */
-.contact-info{
-    flex:1;
-    min-width:300px;
+.contact-left{
+    flex:1 1 450px;
 }
 
-.contact-info h2{
-    font-size:26px;
-    margin-bottom:15px;
+.contact-left h1{
+    font-size:32px;
+    margin-bottom:10px;
 }
 
-.contact-info p{
-    margin-bottom:20px;
+.contact-left p{
     color:#555;
+    margin-bottom:30px;
 }
 
-.info-box{
+.contact-box{
     background:#fff;
     padding:20px;
     border-radius:10px;
-    margin-bottom:15px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
 }
 
-.info-box h3{
-    font-size:16px;
-    margin-bottom:5px;
-    color:#111;
+.contact-box i{
+    color:#ff007f;
+    margin-right:8px;
 }
 
-.info-box p{
-    font-size:14px;
-    color:#666;
-}
-
-/* ===== ACTION BUTTONS ===== */
-.action-buttons{
-    margin-top:15px;
-}
-
-.btn{
-    display:inline-block;
-    padding:12px 18px;
-    margin:8px 5px 0 0;
-    border-radius:6px;
-    text-decoration:none;
-    font-size:14px;
-    font-weight:500;
-    transition:0.3s;
-}
-
-.whatsapp{
-    background:#25D366;
-    color:#fff;
-}
-
-.whatsapp:hover{
-    background:#1ebe57;
-}
-
-.call{
-    background:#007bff;
-    color:#fff;
-}
-
-.call:hover{
-    background:#0062cc;
-}
-
-/* ===== FORM ===== */
-.contact-form{
-    flex:1;
-    min-width:300px;
+.contact-right{
+    flex:1 1 450px;
     background:#fff;
     padding:30px;
-    border-radius:12px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
-.contact-form h2{
+.contact-right h2{
     margin-bottom:20px;
 }
 
@@ -130,44 +83,111 @@ body{
 }
 
 .input-group label{
-    display:block;
+    font-weight:600;
     font-size:14px;
-    margin-bottom:6px;
 }
 
 .input-group input,
 .input-group textarea{
     width:100%;
     padding:12px;
+    margin-top:5px;
     border:1px solid #ddd;
     border-radius:6px;
-    font-size:14px;
-    transition:0.3s;
 }
 
-.input-group input:focus,
-.input-group textarea:focus{
-    border-color:#000;
-    outline:none;
-}
-
-button{
+.submit-btn{
     width:100%;
     padding:14px;
-    border:none;
-    border-radius:6px;
     background:#000;
     color:#fff;
-    font-size:15px;
+    border:none;
+    border-radius:6px;
     cursor:pointer;
-    transition:0.3s;
+    font-weight:600;
 }
 
-button:hover{
+.submit-btn:hover{
     background:#333;
 }
 
-/* ===== MOBILE ===== */
+/* ================= FOOTER ================= */
+
+.footer{
+    background:#111;
+    color:#fff;
+    padding:40px 20px;
+    margin-top:60px;
+}
+
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:40px;
+}
+
+.footer-col{
+    flex:1 1 250px;
+}
+
+.footer h4{
+    margin-bottom:15px;
+    font-size:14px;
+    text-transform:uppercase;
+    color:#ff007f;
+}
+
+.footer a{
+    color:#ccc;
+    text-decoration:none;
+    display:block;
+    margin-bottom:8px;
+    font-size:13px;
+}
+
+.footer a:hover{
+    color:#fff;
+}
+
+.footer-bottom{
+    text-align:center;
+    margin-top:30px;
+    font-size:12px;
+    color:#aaa;
+}
+
+/* ================= FLOAT BUTTONS ================= */
+
+.whatsapp-float{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#25D366;
+    color:#fff;
+    padding:14px 18px;
+    border-radius:50px;
+    font-size:14px;
+    text-decoration:none;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+.call-float{
+    position:fixed;
+    bottom:80px;
+    right:20px;
+    background:#000;
+    color:#fff;
+    padding:14px 18px;
+    border-radius:50px;
+    font-size:14px;
+    text-decoration:none;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* ================= RESPONSIVE ================= */
+
 @media(max-width:768px){
 
     body{
@@ -253,84 +273,134 @@ button:hover{
     }
 
 }
+
+
 </style>
 </head>
 
 <body>
 
-<div class="header">
-    <h1>Contact Us</h1>
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+<div class="header-container">
+<div class="logo">
+<a href="index.html">
+<img src="logo.png" alt="AtoZ Urban Clean">
+</a>
 </div>
 
-<div class="contact-wrapper">
+<ul class="desktop-nav">
+<li><a href="index.html" class="nav-link">Home</a></li>
+<li><a href="services.html" class="nav-link">Services</a></li>
+<li><a href="contact-us.html" class="nav-link">Contact</a></li>
+</ul>
 
-    <!-- LEFT SIDE -->
-    <div class="contact-info">
-        <h2>Get In Touch</h2>
-        <p>Have questions? We’re here to help you 24/7. Contact us through WhatsApp, phone, or send us a message.</p>
+<div class="header-right">
+<input type="text" placeholder="Search services...">
+<a href="booking.html" class="bag-btn">Book Now <span class="bag-count">0</span></a>
+</div>
+</div>
+</header>
 
-        <div class="info-box">
-            <h3>📍 Address</h3>
-            <p>Your Company Address Here</p>
-        </div>
+<!-- ================= CONTACT SECTION ================= -->
 
-        <div class="info-box">
-            <h3>📧 Email</h3>
-            <p>support@yourcompany.com</p>
-        </div>
+<section class="contact-wrapper">
 
-        <div class="info-box">
-            <h3>📞 Phone</h3>
-            <p>+91 98765 43210</p>
-        </div>
+<div class="contact-left">
+<h1>Contact AtoZ Urban Clean</h1>
+<p>Need help with booking, service, or support? Our team is ready to assist you.</p>
 
-        <div class="action-buttons">
-            <a href="https://wa.me/919876543210" target="_blank" class="btn whatsapp">
-                💬 Chat on WhatsApp
-            </a>
+<div class="contact-box">
+<p><i class="fas fa-map-marker-alt"></i> Kovilpatti - 628501</p>
+</div>
 
-            <a href="tel:+919876543210" class="btn call">
-                📞 Call Now
-            </a>
-        </div>
-    </div>
+<div class="contact-box">
+<p><i class="fas fa-phone"></i> <a href="tel:+919087191900">+91 90871 91900</a></p>
+</div>
 
-    <!-- RIGHT SIDE FORM -->
-    <div class="contact-form">
-        <h2>Send Message</h2>
+<div class="contact-box">
+<p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/919087191900" target="_blank">Chat on WhatsApp</a></p>
+</div>
 
-        <form onsubmit="submitForm(event)">
-            <div class="input-group">
-                <label>Name</label>
-                <input type="text" required>
-            </div>
+<div class="contact-box">
+<p><i class="fas fa-envelope"></i> <a href="mailto:atozurbanclean@gmail.com">atozurbanclean@gmail.com</a></p>
+</div>
+</div>
 
-            <div class="input-group">
-                <label>Email</label>
-                <input type="email" required>
-            </div>
+<div class="contact-right">
+<h2>Send Message</h2>
+<form id="contactForm">
 
-            <div class="input-group">
-                <label>Phone</label>
-                <input type="tel" required>
-            </div>
+<div class="input-group">
+<label>Name</label>
+<input type="text" required>
+</div>
 
-            <div class="input-group">
-                <label>Message</label>
-                <textarea rows="4" required></textarea>
-            </div>
+<div class="input-group">
+<label>Email</label>
+<input type="email" required>
+</div>
 
-            <button type="submit">Submit Request</button>
-        </form>
-    </div>
+<div class="input-group">
+<label>Phone</label>
+<input type="tel" required>
+</div>
+
+<div class="input-group">
+<label>Message</label>
+<textarea rows="4" required></textarea>
+</div>
+
+<button type="submit" class="submit-btn">Submit</button>
+
+</form>
+</div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+<div class="footer-container">
+
+<div class="footer-col">
+<h4>Company</h4>
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="contact-us.html">Contact Us</a>
+</div>
+
+<div class="footer-col">
+<h4>Services</h4>
+<a href="services.html#basic">Basic Cleaning</a>
+<a href="services.html#deep">Deep Cleaning</a>
+<a href="services.html#commercial">Commercial Cleaning</a>
+</div>
+
+<div class="footer-col">
+<h4>Support</h4>
+<a href="tel:+919087191900">Call Support</a>
+<a href="https://wa.me/919087191900">WhatsApp</a>
+<a href="mailto:atozurbanclean@gmail.com">Email Us</a>
+</div>
 
 </div>
+
+<div class="footer-bottom">
+© 2026 AtoZ Urban Clean. All Rights Reserved.
+</div>
+</footer>
+
+<!-- FLOAT BUTTONS -->
+<a href="tel:+919087191900" class="call-float"><i class="fas fa-phone"></i> Call</a>
+<a href="https://wa.me/919087191900" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 
 <script>
-function submitForm(e){
-    e.preventDefault();
-    alert("Thank you! We will contact you shortly.");
-}
+document.getElementById("contactForm").addEventListener("submit", function(e){
+e.preventDefault();
+alert("Thank you! Our team will contact you soon.");
+this.reset();
+});
 </script>
 
 </body>
