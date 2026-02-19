@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css" />
+   <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f7f7f7;
+    color: #333;
+}
+
+.contact-section {
+    padding: 60px 20px;
+    background: #fff;
+}
+
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.contact-info {
+    flex: 1 1 350px;
+}
+
+.contact-info h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.info-box {
+    margin-bottom: 15px;
+}
+
+.info-box h3 {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.contact-form {
+    flex: 1 1 350px;
+    background: #fafafa;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.input-group input,
+.input-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: #2196F3;
+    outline: none;
+}
+
+.btn-submit {
+    background: #2196F3;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background: #1976D2;
+}
+
+   </style>
+</head>
+  
+<body>
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>We’re here to help! Fill out the form and we’ll get back to you.</p>
+
+                <div class="info-box">
+                    <h3>Address</h3>
+                    <p>123 Your Street, Your City</p>
+                </div>
+
+                <div class="info-box">
+                    <h3>Email</h3>
+                    <p>support@example.com</p>
+                </div>
+
+                <div class="info-box">
+                    <h3>Phone</h3>
+                    <p>+91 98765 43210</p>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="input-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" required />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script >
+     document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    alert(
+        "Thank you, " + name + "!\nWe’ve received your message and will contact you soon."
+    );
+
+    this.reset();
+});
+
+     </script>
+     
+</body>
+</html>
