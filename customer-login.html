@@ -2,37 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AtoZ Urban Clean - Registration</title>
+    <title>AtoZ Urban Clean - Login/Register</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding-top: 50px; }
         .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 380px; border-top: 6px solid #673ab7; }
         h2 { color: #333; text-align: center; }
         label { font-size: 0.85rem; color: #666; font-weight: 600; display: block; margin-top: 15px; }
         input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 14px; background: #673ab7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 20px; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        button { flex: 1; padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; transition: 0.3s; }
+        .login-btn { background: #4caf50; }
+        .reg-btn { background: #673ab7; }
+        button:hover { opacity: 0.8; }
         #status { margin-top: 15px; text-align: center; font-size: 0.9rem; }
-        .success { color: #388e3c; }
+        .success { color: #388e3c; font-weight: bold; }
         .error { color: #d32f2f; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Customer Entry</h2>
-    <label>Customer Name</label>
-    <input type="text" id="name" placeholder="Enter Full Name">
+    <h2>AtoZ Customer Portal</h2>
     
-    <label>Customer Number</label>
-    <input type="text" id="number" placeholder="Enter Phone Number">
+    <label>Customer Number (Phone)</label>
+    <input type="text" id="number" placeholder="Enter Registered Number">
     
-    <label>Email</label>
-    <input type="email" id="email" placeholder="Enter Email Address">
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
     
-    <button onclick="submitData()">Add to Table</button>
+    <label>Full Name (For Registration)</label>
+    <input type="text" id="name" placeholder="John Doe">
+    
+    <label>Email (For Registration)</label>
+    <input type="email" id="email" placeholder="john@example.com">
+    
+    <div class="btn-group">
+        <button class="login-btn" onclick="checkLogin()">Login</button>
+        <button class="reg-btn" onclick="submitData()">Registration</button>
+    </div>
+    
     <div id="status"></div>
 </div>
 
 <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoj44SU498Qoqgv-9D4cTL8OZCIwRY6cbnJx49X8OGAO6Avgw9tmq1u9oL0KerS9RRtQ/exec";
+
+    async function checkLogin() {
+        const status = document.getElementById('status');
+        const num = document.getElementById('number').value;
+
+        if (!num) return status.innerText = "⚠️ Enter number to login.";
+        
+        status.innerText = "⏳ Checking records...";
+        
+        try {
+            const response = await fetch(`${SCRIPT_URL}?number=${num}`);
+            const result = await response.json();
+
+            if (result.status === "found") {
+                status.className = "success";
+                status.innerText = `✅ Welcome Back, ${result.name}!`;
+                // Redirect or open booking here
+            } else {
+                status.className = "error";
+                status.innerText = "❌ Number not found. Please register.";
+            }
+        } catch (e) {
+            status.innerText = "❌ Error connecting to login server.";
+        }
+    }
+
     async function submitData() {
         const status = document.getElementById('status');
         const payload = {
@@ -41,16 +79,13 @@
             email: document.getElementById('email').value
         };
 
-        // PASTE YOUR NEW DEPLOYMENT URL HERE
-        const SCRIPT_URL = "YOUR_NEW_WEB_APP_URL";
-
         if (!payload.name || !payload.number || !payload.email) {
             status.className = "error";
-            status.innerText = "⚠️ All fields are required.";
+            status.innerText = "⚠️ Fill all fields to register.";
             return;
         }
 
-        status.innerText = "⏳ Inserting into table...";
+        status.innerText = "⏳ Registering...";
 
         try {
             await fetch(SCRIPT_URL, {
@@ -60,10 +95,8 @@
             });
 
             status.className = "success";
-            status.innerText = "✅ Successfully added to Sheet!";
-            document.querySelectorAll('input').forEach(i => i.value = "");
+            status.innerText = "✅ Registration Successful!";
         } catch (e) {
-            status.className = "error";
             status.innerText = "❌ Connection Error.";
         }
     }
