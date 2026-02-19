@@ -395,7 +395,16 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
 </div>
 </footer>
  -->
-     
+     <div id="footer"></div>
+
+<script>
+    // Reusing your footer fetch logic
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data)
+      .catch(err => console.error("Footer Error:", err));
+</script>
+
 <!-- FLOAT BUTTONS -->
 <a href="tel:+919087191900" class="call-float"><i class="fas fa-phone"></i> Call</a>
 <a href="https://wa.me/919087191900" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i> WhatsApp</a>
