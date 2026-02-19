@@ -2,40 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AtoZ Urban Clean - GitHub Auto-Fill</title>
+    <title>AtoZ Urban Clean - Customer Login</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding-top: 50px; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 350px; border-top: 6px solid #673ab7; }
-        h2 { color: #333; font-size: 1.4rem; margin-bottom: 20px; text-align: center; }
-        label { font-size: 0.8rem; color: #666; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
+        
+        /* Login Overlay */
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #673ab7; z-index: 100; display: flex; justify-content: center; align-items: center; transition: 0.5s; }
+        .login-card { background: white; padding: 40px; border-radius: 12px; width: 320px; text-align: center; }
+        
+        /* Main Card */
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 350px; border-top: 6px solid #673ab7; display: none; }
+        
+        h2 { color: #333; font-size: 1.4rem; margin-bottom: 20px; }
+        label { font-size: 0.8rem; color: #666; font-weight: bold; display: block; text-align: left; }
         input { width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 14px; background: #673ab7; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: 0.2s; }
+        
+        button { width: 100%; padding: 14px; background: #673ab7; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600; }
         button:hover { background: #512da8; }
-        #status { margin-top: 15px; text-align: center; font-size: 0.9rem; font-weight: 500; }
+        
+        #status { margin-top: 15px; text-align: center; font-size: 0.9rem; }
         .error { color: #d32f2f; }
         .success { color: #388e3c; }
     </style>
 </head>
 <body>
 
-<div class="card">
+<div id="login-overlay">
+    <div class="login-card">
+        <h2>Staff Login</h2>
+        <input type="password" id="passkey" placeholder="Enter Access Key">
+        <button onclick="checkLogin()">Login</button>
+        <p id="login-msg" class="error" style="margin-top:10px;"></p>
+    </div>
+</div>
+
+<div class="card" id="main-app">
     <h2>AtoZ Booking Fill</h2>
-    
     <label>GitHub Username</label>
-    <input type="text" id="username" placeholder="Enter username (e.g. octocat)">
-    
+    <input type="text" id="username" placeholder="e.g. octocat">
     <button onclick="processData()">Add to Google Sheet</button>
-    
     <div id="status"></div>
 </div>
 
 <script>
+    // Set your secret password here
+    const ACCESS_KEY = "atoz2026"; 
+
+    function checkLogin() {
+        const input = document.getElementById('passkey').value;
+        const msg = document.getElementById('login-msg');
+        
+        if (input === ACCESS_KEY) {
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+        } else {
+            msg.innerText = "❌ Invalid Access Key";
+        }
+    }
+
     async function processData() {
         const userField = document.getElementById('username');
         const status = document.getElementById('status');
         const username = userField.value.trim();
         
-        // YOUR DEPLOYED URL
+        // Use your Web App URL
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwoj44SU498Qoqgv-9D4cTL8OZCIwRY6cbnJx49X8OGAO6Avgw9tmq1u9oL0KerS9RRtQ/exec";
 
         if (!username) {
@@ -48,34 +78,25 @@
         status.innerText = "⏳ Fetching GitHub info...";
 
         try {
-            // 1. Get data from GitHub
             const ghResponse = await fetch(`https://api.github.com/users/${username}`);
             if (!ghResponse.ok) throw new Error("User not found on GitHub");
-            
             const ghData = await ghResponse.json();
 
-            // Prepare the payload for your Google Sheet
             const payload = {
-                name: ghData.name || ghData.login, // Column A
-                number: ghData.id,                 // Column B
-                email: ghData.email || "No Public Email" // Column C
+                name: ghData.name || ghData.login,
+                number: ghData.id,
+                email: ghData.email || "No Public Email"
             };
 
-            status.innerText = "🚀 Sending to Sheet...";
-
-            // 2. Send data to your Google Apps Script
             await fetch(WEB_APP_URL, {
                 method: "POST",
-                mode: "no-cors", // Required for Google Scripts
-                cache: "no-cache",
-                headers: { "Content-Type": "application/json" },
+                mode: "no-cors",
                 body: JSON.stringify(payload)
             });
 
-            // Success feedback
             status.className = "success";
             status.innerText = `✅ Success! ${payload.name} added.`;
-            userField.value = ""; // Clear input
+            userField.value = ""; 
 
         } catch (err) {
             status.className = "error";
