@@ -1,202 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="brand-logo.webp">
     <meta charset="UTF-8">
+    <title>About Us – AtoZ Urban Clean</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | AtoZ Urban Clean</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-blue: #0056b3;
-            --secondary-blue: #e7f1ff;
-            --accent-yellow: #fff9c4;
-            --text-dark: #333;
-            --text-light: #666;
-            --white: #ffffff;
-        }
+        /* === REUSING YOUR BASE STYLES === */
+        .logo img { height: 67px; width: 100px; }
+        body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; padding-top: 70px; color: #333; }
+        * { box-sizing: border-box; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        /* === HEADER STYLES (From your code) === */
+        .site-header { background: #fff; border-bottom: 1px solid #ddd; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
+        .site-header .header-container { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; max-width: 1400px; margin: 0 auto; }
+        .logo a { text-decoration: none; font-size: 22px; font-weight: 800; color: #0066ff; }
+        .desktop-nav { display: flex; list-style: none; gap: 5px; margin: 0; padding: 0; }
+        .nav-link { padding: 15px 12px; display: block; cursor: pointer; font-size: 12px; font-weight: 700; color: #333; text-transform: uppercase; text-decoration: none; }
+        .bag-btn { background:#ff007f; color:#fff; padding:9px 16px; border-radius:4px; font-weight:700; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+        .bag-count { background:#fff; color:#ff007f; border-radius:10px; padding:2px 6px; font-size:11px; min-width:16px; text-align:center; }
 
-        body {
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: #f9f9f9;
-        }
+        /* === ABOUT PAGE SPECIFIC CONTENT === */
+        .about-hero { background: white; padding: 60px 20px; text-align: center; border-bottom: 1px solid #eee; }
+        .about-hero h1 { font-size: 36px; color: #0066ff; margin-bottom: 10px; }
+        .about-hero p { font-size: 18px; color: #666; max-width: 800px; margin: 0 auto; font-style: italic; }
 
-        /* Header Section */
-        header {
-            background-color: var(--white);
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 3px solid var(--primary-blue);
-        }
+        .content-section { max-width: 1100px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .content-text h2 { color: #0066ff; margin-bottom: 20px; }
+        .content-text p { line-height: 1.8; margin-bottom: 15px; color: #444; }
 
-        header h1 {
-            color: var(--primary-blue);
-            font-size: 2.5rem;
-            font-style: italic;
-            margin-bottom: 10px;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .stat-card { background: white; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-bottom: 4px solid #ff007f; }
+        .stat-card i { font-size: 30px; color: #0066ff; margin-bottom: 15px; }
+        .stat-card h3 { font-size: 24px; margin-bottom: 5px; }
 
-        header p {
-            color: var(--text-light);
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* About Section */
-        .about-intro {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .about-intro h2 {
-            margin-bottom: 20px;
-            color: var(--primary-blue);
-        }
-
-        /* Services Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .service-card {
-            background: var(--white);
-            padding: 25px;
-            border-left: 5px solid var(--primary-blue);
-            border-radius: 4px;
-            transition: transform 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            background: var(--secondary-blue);
-        }
-
-        .service-card h3 {
-            margin-bottom: 10px;
-            color: var(--primary-blue);
-        }
-
-        /* Highlight Section */
-        .highlight-box {
-            background-color: var(--accent-yellow);
-            padding: 30px;
-            border-radius: 8px;
-            margin: 40px 0;
-            border: 1px dashed #d4d4d4;
-        }
-
-        /* Labor Support Section */
-        .labor-section {
-            background: #2c3e50;
-            color: white;
-            padding: 40px;
-            border-radius: 8px;
-            margin-bottom: 40px;
-        }
-
-        .labor-section h2 {
-            color: #ecf0f1;
-            margin-bottom: 15px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px;
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: #ffcc00;
-            color: #333;
-            padding: 12px 30px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 50px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
+        /* Mobile specific adjustments */
+        @media(max-width:1024px){
+            .desktop-nav, .header-right { display: none; }
+            .content-section { grid-template-columns: 1fr; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>AtoZ Urban Clean</h1>
-        <p>WE CLEAN. YOU RELAX. / LUXURY CLEANING FOR EVERYDAY LIVING.</p>
-    </header>
-
-    <div class="container">
-        <section class="about-intro">
-            <h2>Expert Professional Services at Your Doorstep</h2>
-            <p>Welcome to <strong>AtoZ Urban Clean</strong>. We are a premier service provider dedicated to bringing professional-grade cleaning and labor support directly to your home or office. From a single window to a 3,000 sq. ft. furnished villa, our mission is to provide a spotless environment so you can focus on what truly matters.</p>
-        </section>
-
-        <h2 style="text-align: center; margin-bottom: 30px;">Our Core Expertise</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Basic Cleaning</h3>
-                <p>Routine maintenance including fans, exhaust, bathrooms, and kitchens. Perfect for keeping your home fresh and hygienic on a budget.</p>
-            </div>
-            <div class="service-card">
-                <h3>Deep House Cleaning</h3>
-                <p>An intensive solution for homes of all sizes. Includes machine scrubbing of floors, degreasing, and high-ceiling dusting for both furnished and unfurnished spaces.</p>
-            </div>
-            <div class="service-grid-item service-card">
-                <h3>Commercial & Office</h3>
-                <p>Professional sanitation for businesses and public facilities. We offer standard and premium office cleaning starting from just Rs 20.00/sq. ft.</p>
-            </div>
+<header class="site-header">
+    <div class="header-container">
+        <div class="logo">
+            <a href="index.html">
+                <img src="logo.png" alt="AtoZ Urban Clean">
+            </a>
         </div>
-
-        <div class="highlight-box">
-            <h3>🏠 House Shifting Support</h3>
-            <p>Moving to a new place? We provide expert labor for packing, loading, and unloading. Our rates are structured by square footage (up to 2000+ sqft) to ensure you only pay for the support you need.</p>
+        <ul class="desktop-nav">
+            <li class="nav-item"><a href="services.html#basic" class="nav-link">Basic Cleaning</a></li>
+            <li class="nav-item"><a href="services.html#deep" class="nav-link">Deep Cleaning</a></li>
+            <li class="nav-item"><a href="services.html#commercial" class="nav-link">Commercial</a></li>
+            <li class="nav-item"><a href="services.html#shifting" class="nav-link">Shifting</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link" style="color: #ff007f;">About Us</a></li>
+        </ul>
+        <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+            <a href="booking.html" class="bag-btn">BAG <span class="bag-count">0</span></a>
         </div>
-
-        <section class="labor-section">
-            <h2>Construction & Maintenance Support</h2>
-            <p>Beyond cleaning, we provide "Labor Support" for physical and operational tasks:</p>
-            <ul style="margin-left: 20px; margin-top: 15px;">
-                <li>Construction Site Cleanup & Material Handling</li>
-                <li>Assisting Skilled Trades (Electricians, Plumbers, etc.)</li>
-                <li>Demolition Support & Debris Loading</li>
-                <li>Furniture Moving & Event Setup</li>
-            </ul>
-        </section>
     </div>
+</header>
 
-    <footer>
-        <h2>Experience Luxury Cleaning Today</h2>
-        <p>Trusted by homeowners and businesses for quality and reliability.</p>
-        <a href="#" class="cta-button">Book a Service Now</a>
-        <div style="margin-top: 20px; font-size: 0.8rem;">
-            &copy; 2024 AtoZ Urban Clean. All Rights Reserved.
+<section class="about-hero">
+    <h1>AtoZ Urban Clean</h1>
+    <p>"We Clean. You Relax. / Luxury Cleaning for Everyday Living."</p>
+</section>
+
+<div class="content-section">
+    <div class="content-text">
+        <h2>Who We Are</h2>
+        <p>AtoZ Urban Clean is a professional service provider dedicated to simplifying urban life. We understand that in today’s fast-paced world, maintaining a pristine environment is essential for health and peace of mind.</p>
+        <p>From essential window cleaning starting at just <b>₹89</b> to comprehensive full-house deep cleaning for villas up to 3,000 sq. ft., we offer a transparent, standardized, and high-quality solution for every household and office need.</p>
+    </div>
+    <div class="content-image">
+        <img src="Standard Kitchen Cleaning.jpg" style="width:100%; border-radius:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);" alt="Cleaning Service">
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <i class="fas fa-broom"></i>
+        <h3>50+</h3>
+        <p>Cleaning Services</p>
+    </div>
+    <div class="stat-card">
+        <i class="fas fa-truck-loading"></i>
+        <h3>House Shifting</h3>
+        <p>Professional Labor Support</p>
+    </div>
+    <div class="stat-card">
+        <i class="fas fa-check-circle"></i>
+        <h3>100% Quality</h3>
+        <p>Satisfaction Guaranteed</p>
+    </div>
+</div>
+
+<div class="content-section" style="background: #fff; border-radius: 20px; padding: 40px; margin-bottom: 60px;">
+    <div class="content-text" style="grid-column: 1 / -1;">
+        <h2 style="text-align: center;">Our Commitment</h2>
+        <p style="text-align: center;">We don't just clean; we provide specialized care. Whether it's removing limescale from your bathroom tiles, degreasing industrial-grade kitchen exhausts, or providing skilled labor for your next house move, our team arrives equipped and ready to deliver excellence.</p>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="services.html" class="bag-btn" style="padding: 15px 30px; font-size: 14px;">Explore Our Services</a>
         </div>
-    </footer>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+<script>
+    // Reusing your footer fetch logic
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data)
+      .catch(err => console.error("Footer Error:", err));
+</script>
 
 </body>
 </html>
