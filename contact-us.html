@@ -110,6 +110,12 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
 .submit-btn:hover{
     background:#333;
 }
+    @media (max-width: 768px) {
+    .dynamic-card { flex-direction: column; padding: 20px; }
+    .image-right { order: 1; width: 100%; }
+    .content-left { order: 2; width: 100%; }
+    .dyn-img-wrapper { height: 220px !important; }
+}
    .location-section {
     padding: 60px 20px;
     background: #f9f9f9;
