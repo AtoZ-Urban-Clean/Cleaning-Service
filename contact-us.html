@@ -170,24 +170,88 @@ button:hover{
 /* ===== MOBILE ===== */
 @media(max-width:768px){
 
-    .contact-wrapper{
-        flex-direction:column;
-        margin:20px;
+    body{
+        padding-top:60px;
     }
 
-    .header h1{
+    .site-header .header-container{
+        padding:10px 15px;
+    }
+
+    .logo img{
+        height:50px;
+        width:auto;
+    }
+
+    .desktop-nav,
+    .header-right{
+        display:none;
+    }
+
+    .contact-wrapper{
+        flex-direction:column;
+        margin:20px auto;
+        padding:15px;
+        gap:25px;
+    }
+
+    .contact-left h1{
         font-size:22px;
     }
 
-    .contact-info h2,
-    .contact-form h2{
-        font-size:20px;
+    .contact-left p{
+        font-size:14px;
     }
 
-    .btn{
-        width:100%;
-        text-align:center;
+    .contact-box{
+        padding:15px;
+        font-size:14px;
     }
+
+    .contact-right{
+        padding:20px;
+    }
+
+    .contact-right h2{
+        font-size:18px;
+    }
+
+    .input-group label{
+        font-size:13px;
+    }
+
+    .input-group input,
+    .input-group textarea{
+        padding:10px;
+        font-size:14px;
+    }
+
+    .submit-btn{
+        padding:12px;
+        font-size:14px;
+    }
+
+    /* Make floating buttons smaller */
+    .call-float,
+    .whatsapp-float{
+        padding:10px 14px;
+        font-size:12px;
+        right:15px;
+    }
+
+    .call-float{
+        bottom:70px;
+    }
+
+    .whatsapp-float{
+        bottom:20px;
+    }
+
+    .footer-container{
+        flex-direction:column;
+        gap:25px;
+    }
+
 }
 </style>
 </head>
