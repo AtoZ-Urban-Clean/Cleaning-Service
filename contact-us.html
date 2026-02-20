@@ -36,6 +36,30 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
     .desktop-nav, .header-right { display: none; }
     .mobile-actions { display: flex; }
     body { padding-top: 64px; } /* optional, to push content below header */
+    /* Remove bullets and add spacing */
+.ada-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ada-menu li {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.ada-menu a {
+  text-decoration: none;
+  color: #ff007f; /* Your pink color */
+  font-weight: 700;
+  font-size: 16px;
+  display: block;
+  padding: 12px 20px;
+}
+
+.ada-menu a:hover {
+  background-color: #ffe6f0; /* subtle pink background on hover */
+}
+
 }
 
 /* ================= CONTACT SECTION ================= */
