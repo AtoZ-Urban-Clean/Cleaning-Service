@@ -1,136 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AtoZ Customer Portal</title>
+<title>Book Service | AtoZ Urban Clean</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="atoz.png">
 
 <style>
-body {
-    font-family: Arial;
-    background: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
+:root {
+  --primary:#0066ff;
+  --secondary:#ff007f;
+  --bg:#f6f6f6;
 }
 
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 350px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-h2 { text-align:center; }
-
-input {
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:1px solid #ccc;
-    border-radius:6px;
-}
-
-button {
-    width:100%;
-    padding:14px;
-    margin-top:15px;
-    border:none;
-    border-radius:6px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.login-btn { background:#4caf50; color:white; }
-.reg-btn { background:#673ab7; color:white; }
-
-#status {
-    margin-top:15px;
-    text-align:center;
-}
-.success { color:green; font-weight:bold; }
-.error { color:red; }
+body{margin:0;font-family:'Segoe UI',Arial;background:var(--bg)}
+.container{max-width:600px;margin:20px auto;background:#fff;padding:25px;border-radius:12px}
+.service-header{display:flex;justify-content:space-between;align-items:center}
+.clear-btn{background:#fee;border:none;color:#c00;padding:6px 10px;border-radius:6px;cursor:pointer}
+.service-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}
+.total{font-size:22px;font-weight:800;text-align:right;margin:20px 0}
+label{display:block;margin-top:15px;font-weight:600}
+input{width:100%;padding:12px;margin-top:6px;border:1px solid #ddd;border-radius:8px}
+.main-btn{width:100%;padding:16px;background:var(--secondary);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer}
+.success{display:none;text-align:center}
 </style>
 </head>
 
 <body>
 
-<div class="card">
-<h2>AtoZ Portal</h2>
+<div class="container" id="formBox">
+  <div class="service-header">
+    <h3 style="margin:0">🧺Selected Services</h3>
+    <button class="clear-btn" onclick="clearAll()">Clear Bag</button>
+  </div>
 
-<input type="text" id="mobile" placeholder="Mobile Number">
+  <div id="serviceList"></div>
+  <div class="total">Total: ₹<span id="amount">0</span></div>
 
-<hr>
+  <label>👤Full Name</label>
+  <input type="text" id="name" placeholder="Name">
 
-<input type="text" id="name" placeholder="Full Name">
-<input type="email" id="email" placeholder="Email">
+  <label>📞Mobile Number</label>
+  <input type="tel" id="mobile" placeholder="Mobile number">
 
-<button class="login-btn" onclick="login()">Login</button>
-<button class="reg-btn" onclick="register()">Register</button>
+  <label>📍Address / Location</label>
+  <input type="text" id="location" placeholder="Enter address">
 
-<div id="status"></div>
+  <label>📅Preferred Date</label>
+  <input type="date" id="date">
+
+  <label>⏰Preferred Time</label>
+  <input type="time" id="time">
+
+  <button class="main-btn" onclick="confirmBooking()">Confirm & Book Now</button>
+</div>
+
+<div class="container success" id="successBox">
+  <h2>🎉 Booking Confirmed</h2>
+  <p>Your booking ID</p>
+  <h3 id="bookingIdText"></h3>
+  <a href="index.html">Back to Home</a>
 </div>
 
 <script>
+const GOOGLE_FORM_ID="1FAIpQLScoCFcqPBqNmzO3c4WHuiq--8rxAd-cBlH-BHkb68TNVE7G3w";
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoj44SU498Qoqgv-9D4cTL8OZCIwRY6cbnJx49X8OGAO6Avgw9tmq1u9oL0KerS9RRtQ/exec";
-
-async function register() {
-    const name = document.getElementById("name").value.trim();
-    const mobile = document.getElementById("mobile").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const status = document.getElementById("status");
-
-    if (!name || !mobile || !email) {
-        status.className = "error";
-        status.innerText = "Fill all fields.";
-        return;
-    }
-
-    status.innerText = "Registering...";
-
-    const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, mobile, email })
-    });
-
-    const result = await response.json();
-
-    if (result.status === "success") {
-        status.className = "success";
-        status.innerText = "Registration Successful!";
-    } else {
-        status.className = "error";
-        status.innerText = "Error registering.";
-    }
+function loadCart(){
+ let list=document.getElementById("serviceList");
+ let total=0;
+ list.innerHTML="";
+ cart.forEach(i=>{
+  total+=Number(i.price)*(i.qty||1);
+  list.innerHTML+=`<div class="service-item">
+    <span>${i.name} x${i.qty||1}</span>
+    <b>₹${Number(i.price)*(i.qty||1)}</b>
+  </div>`;
+ });
+ document.getElementById("amount").innerText=total;
 }
 
-async function login() {
-    const mobile = document.getElementById("mobile").value.trim();
-    const status = document.getElementById("status");
-
-    if (!mobile) {
-        status.className = "error";
-        status.innerText = "Enter mobile number.";
-        return;
-    }
-
-    status.innerText = "Checking...";
-
-    const response = await fetch(`${SCRIPT_URL}?mobile=${mobile}`);
-    const result = await response.json();
-
-    if (result.status === "found") {
-        status.className = "success";
-        status.innerText = "Welcome " + result.name + "!";
-    } else {
-        status.className = "error";
-        status.innerText = "Mobile not found. Please register.";
-    }
+function clearAll(){
+ if(confirm("Clear all services?")){
+  cart=[];
+  localStorage.removeItem("cart");
+  loadCart();
+ }
 }
 
+function generateBookingId(){
+ const d=new Date();
+ const date=d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0");
+ return `AZUC-${date}-${Math.floor(1000+Math.random()*9000)}`;
+}
+
+function confirmBooking(){
+ const name=nameEl.value.trim();
+ const mobile=mobileEl.value.trim();
+ const location=locationEl.value.trim();
+ const date=dateEl.value;
+ const time=timeEl.value;
+
+ if(!name||!mobile||!location||!date||!time){
+  alert("Please fill all details");
+  return;
+ }
+ if(cart.length===0){
+  alert("No services selected");
+  return;
+ }
+
+ const bookingId=generateBookingId();
+ const services=cart.map(i=>`${i.name} (x${i.qty||1})`).join(", ");
+ const total=document.getElementById("amount").innerText;
+
+ const fd=new FormData();
+ fd.append("entry.470681689",name);
+ fd.append("entry.574952680",mobile);
+ fd.append("entry.2032518446",location);
+ fd.append("entry.1025255991",date);
+ fd.append("entry.1650273648",time);
+ fd.append("entry.624600000",services);
+ fd.append("entry.1504263480",total);
+ fd.append("entry.106701433",bookingId);
+
+ fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`,{
+  method:"POST",
+  mode:"no-cors",
+  body:fd
+ });
+
+ document.getElementById("bookingIdText").innerText=bookingId;
+ document.getElementById("formBox").style.display="none";
+ document.getElementById("successBox").style.display="block";
+ localStorage.removeItem("cart");
+}
+
+const nameEl=document.getElementById("name");
+const mobileEl=document.getElementById("mobile");
+const locationEl=document.getElementById("location");
+const dateEl=document.getElementById("date");
+const timeEl=document.getElementById("time");
+
+loadCart();
 </script>
 
 </body>
