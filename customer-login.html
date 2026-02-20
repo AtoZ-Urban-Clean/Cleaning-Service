@@ -44,61 +44,43 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoj44SU498Qoqgv-9D4cTL8OZCIwRY6cbnJx49X8OGAO6Avgw9tmq1u9oL0KerS9RRtQ/exec";
+    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdoyHqPUWPhhDc3nuab06y3kjlmB6nbuQIXjIFOUJXK7htyKw/formResponse";
 
-    async function checkLogin() {
+    function submitData() {
         const status = document.getElementById('status');
-        const num = document.getElementById('number').value;
 
-        if (!num) return status.innerText = "⚠️ Enter number to login.";
-        
-        status.innerText = "⏳ Checking records...";
-        
-        try {
-            const response = await fetch(`${SCRIPT_URL}?number=${num}`);
-            const result = await response.json();
+        const name = document.getElementById('name').value;
+        const number = document.getElementById('number').value;
+        const email = document.getElementById('email').value;
 
-            if (result.status === "found") {
-                status.className = "success";
-                status.innerText = `✅ Welcome Back, ${result.name}!`;
-                // Redirect or open booking here
-            } else {
-                status.className = "error";
-                status.innerText = "❌ Number not found. Please register.";
-            }
-        } catch (e) {
-            status.innerText = "❌ Error connecting to login server.";
-        }
-    }
-
-    async function submitData() {
-        const status = document.getElementById('status');
-        const payload = {
-            name: document.getElementById('name').value,
-            number: document.getElementById('number').value,
-            email: document.getElementById('email').value
-        };
-
-        if (!payload.name || !payload.number || !payload.email) {
+        if (!name || !number || !email) {
             status.className = "error";
             status.innerText = "⚠️ Fill all fields to register.";
             return;
         }
 
-        status.innerText = "⏳ Registering...";
+        const formData = new FormData();
+        formData.append("entry.190141750", name);
+        formData.append("entry.1743067136", number);
+        formData.append("entry.364259750", email);
 
-        try {
-            await fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify(payload)
-            });
+        fetch(FORM_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: formData
+        });
 
-            status.className = "success";
-            status.innerText = "✅ Registration Successful!";
-        } catch (e) {
-            status.innerText = "❌ Connection Error.";
-        }
+        status.className = "success";
+        status.innerText = "✅ Registration Successful!";
+        
+        document.getElementById('name').value = "";
+        document.getElementById('number').value = "";
+        document.getElementById('email').value = "";
+    }
+
+    function checkLogin() {
+        document.getElementById('status').innerText =
+            "⚠️ Login check not possible directly with Google Forms. Use Apps Script for login feature.";
     }
 </script>
 </body>
