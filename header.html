@@ -317,23 +317,26 @@
 </div>
 
 <script>
-    function toggleMenu(isOpen) {
+document.addEventListener('DOMContentLoaded', () => {
+    window.toggleMenu = function(isOpen) {
         const modal = document.getElementById('mobile-menu-modal');
         modal.classList.toggle('active', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
         if (!isOpen) closeSub();
     }
 
-    function openSub(menuId) {
+    window.openSub = function(menuId) {
         document.getElementById('lvl-0').classList.add('shifted');
         document.getElementById(menuId).classList.add('active');
     }
 
-    function closeSub() {
+    window.closeSub = function() {
         document.getElementById('lvl-0').classList.remove('shifted');
         document.querySelectorAll('.menu-level-1').forEach(s => s.classList.remove('active'));
     }
+});
 </script>
+
 
 </body>
 </html>
