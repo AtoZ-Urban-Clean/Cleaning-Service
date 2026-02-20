@@ -37,37 +37,59 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
   body { padding-top: 64px; } /* if header fixed */
 }
 
-/* Modal hidden by default */
-.c-modal { visibility: hidden; transition: visibility 0.3s ease; }
-.c-modal.active { visibility: visible; }
-
-/* Scrim overlay */
-.c-modal__scrim {
+/* Modal base */
+.c-modal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.4);
+  visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s ease;
-  pointer-events: none;
+  z-index: 9999;
 }
-.c-modal.active .c-modal__scrim {
+.c-modal.active {
+  visibility: visible;
   opacity: 1;
-  pointer-events: auto;
 }
 
-/* Slide in menu */
 .c-modal__dialog {
-  position: fixed;
-  top: 0; left: 0;
-  width: 85%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 75%;
   max-width: 320px;
   height: 100%;
-  background: white;
+  background: #fff;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
 .c-modal.active .c-modal__dialog {
   transform: translateX(0);
+}
+
+.menu-container {
+  padding: 60px 20px 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.ada-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.ada-menu li a {
+  display: block;
+  padding: 15px 10px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ff007f;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+.ada-menu li a:hover {
+  background-color: #ff007f;
+  color: #fff;
 }
 
 /* Close button styling, menu links etc. */
@@ -400,26 +422,25 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
     </a>
 </div>
 
+<!-- MOBILE MENU MODAL -->
 <div id="mobile-menu-modal" class="c-modal">
-    <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
-    <div class="c-modal__dialog">
-        <div class="c-modal__content">
-            <button class="close-button" onclick="toggleMenu(false)"><i class="fas fa-times"></i></button>
-            <div class="menu-container">
-                <div class="menu-level-0" id="lvl-0">
-                    <ul class="ada-menu">
-                        <li><a href="index.html">HOME</a></li>
-                        <li><a href="services.html">OUR SERVICES</a></li>
-                        <li><a href="about.html">ABOUT US</a></li>
-                        <li><a href="contact-us.html">CONTACT US</a></li>
-                        <li><a href="customer-login.html"><i class="fa-solid fa-user"></i> Login</a></li>
-                        <li><a href="booking.html">Book Now</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+  <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
+  <div class="c-modal__dialog">
+    <div class="c-modal__content">
+      <button class="close-button" onclick="toggleMenu(false)"><i class="fas fa-times"></i></button>
+      <div class="menu-container">
+        <ul class="ada-menu">
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">OUR SERVICES</a></li>
+          <li><a href="about.html">ABOUT US</a></li>
+          <li><a href="contact-us.html">CONTACT US</a></li>
+          <li><a href="customer-login.html"><i class="fa-solid fa-user"></i> Login</a></li>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>
+
 
     
 <div class="header-right">
