@@ -118,21 +118,24 @@
 <body>
 
 <header class="site-header">
-    <div class="header-container">
-        <div class="logo">
-            <a href="index.html">
-                <img src="logo.png" alt="AtoZ Urban Clean">
-            </a>
-        </div>
-        <ul class="desktop-nav">
-            <li class="nav-item"><a href="index.html" class="nav-link" style="color: #ff007f;">HOME</a></li>
-            <li class="nav-item"><a href="services.html" class="nav-link" style="color: #ff007f;">OUR SERVICES</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link" style="color: #ff007f;">ABOUT US</a></li>
-            <li class="nav-item"><a href="contact-us.html" class="nav-link" style="color: #ff007f;">CONTACT US</a></li>
-            <a href="customer-login.html" class="nav-link" style="color: #ff007f;">
-     <span class="fa-solid fa-user" style="color: #ff007f;">&nbsp;</span> Login
-  </a>
-        </ul>
+  <div class="header-container">
+    <div class="logo">
+      <a href="index.html">
+        <img src="logo.png" alt="AtoZ Urban Clean">
+      </a>
+    </div>
+
+    <!-- Desktop Nav -->
+    <ul class="desktop-nav">
+      <li class="nav-item"><a href="index.html" class="nav-link" style="color: #ff007f;">HOME</a></li>
+      <li class="nav-item"><a href="services.html" class="nav-link" style="color: #ff007f;">OUR SERVICES</a></li>
+      <li class="nav-item"><a href="about.html" class="nav-link" style="color: #ff007f;">ABOUT US</a></li>
+      <li class="nav-item"><a href="contact-us.html" class="nav-link" style="color: #ff007f;">CONTACT US</a></li>
+      <li><a href="customer-login.html" class="nav-link" style="color: #ff007f;">
+        <span class="fa-solid fa-user" style="color: #ff007f;"></span> Login
+      </a></li>
+    </ul>
+
     <!-- Mobile Actions -->
     <div class="mobile-actions">
       <button class="menu-btn" onclick="toggleMenu(true)">
@@ -142,7 +145,15 @@
         Book Now <span class="bag-count">0</span>
       </a>
     </div>
-        <!-- MOBILE MENU MODAL -->
+
+    <!-- Header Right (Desktop Only) -->
+    <div class="header-right">
+      <a href="booking.html" class="bag-btn">Book Now <span class="bag-count">0</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu Modal -->
 <div id="mobile-menu-modal" class="c-modal">
   <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
   <div class="c-modal__dialog">
@@ -155,17 +166,40 @@
           <li><a href="about.html">ABOUT US</a></li>
           <li><a href="contact-us.html">CONTACT US</a></li>
           <li><a href="customer-login.html"><i class="fa-solid fa-user"></i> Login</a></li>
+          <li><a href="booking.html">Book Now</a></li>
         </ul>
       </div>
     </div>
   </div>
 </div>
 
-        <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
-            <a href="booking.html" class="bag-btn">BAG <span class="bag-count">0</span></a>
-        </div>
-    </div>
-</header>
+<script>
+function toggleMenu(isOpen) {
+  const modal = document.getElementById('mobile-menu-modal');
+  modal.classList.toggle('active', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+</script>
+
+<style>
+/* Mobile Menu Styling */
+#mobile-menu-modal .ada-menu {
+  padding-left: 20px; /* space from left (near burger) */
+}
+#mobile-menu-modal .ada-menu li a {
+  padding: 16px 20px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ff007f;
+  border-bottom: 1px solid #eee;
+  display: block;
+}
+#mobile-menu-modal .ada-menu li a:hover {
+  background-color: #ff007f;
+  color: #fff;
+}
+</style>
+
 
 <section class="about-hero">
     <h1>AtoZ Urban Clean</h1>
