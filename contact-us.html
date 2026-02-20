@@ -27,6 +27,16 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
 
 .bag-btn { background:#ff007f; color:#fff; padding:9px 16px; border-radius:4px; font-weight:700; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
 .bag-count { background:#fff; color:#ff007f; border-radius:10px; padding:2px 6px; font-size:11px; }
+/* Mobile actions (hamburger) */
+.mobile-actions { display: none; align-items: center; gap: 12px; }
+.menu-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #333; }
+
+/* Show only on mobile */
+@media (max-width: 1024px) {
+    .desktop-nav, .header-right { display: none; }
+    .mobile-actions { display: flex; }
+    body { padding-top: 64px; } /* optional, to push content below header */
+}
 
 /* ================= CONTACT SECTION ================= */
 
@@ -338,7 +348,37 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
      <span class="fa-solid fa-user" style="color: #ff007f;">&nbsp;</span> Login
   </a>
         </ul>
+<div class="mobile-actions">
+    <button class="menu-btn" onclick="toggleMenu(true)">
+        <i class="fas fa-bars"></i>
+    </button>
+    <a href="booking.html" class="bag-btn">
+        Book Now <span class="bag-count">0</span>
+    </a>
+</div>
 
+<div id="mobile-menu-modal" class="c-modal">
+    <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
+    <div class="c-modal__dialog">
+        <div class="c-modal__content">
+            <button class="close-button" onclick="toggleMenu(false)"><i class="fas fa-times"></i></button>
+            <div class="menu-container">
+                <div class="menu-level-0" id="lvl-0">
+                    <ul class="ada-menu">
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="services.html">OUR SERVICES</a></li>
+                        <li><a href="about.html">ABOUT US</a></li>
+                        <li><a href="contact-us.html">CONTACT US</a></li>
+                        <li><a href="customer-login.html"><i class="fa-solid fa-user"></i> Login</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
 <div class="header-right">
 
 <a href="booking.html" class="bag-btn">Book Now <span class="bag-count">0</span></a>
@@ -473,6 +513,13 @@ e.preventDefault();
 alert("Thank you! Our team will contact you soon.");
 this.reset();
 });
+</script>
+<script>
+function toggleMenu(isOpen) {
+    const modal = document.getElementById('mobile-menu-modal');
+    modal.classList.toggle('active', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+}
 </script>
 
 </body>
