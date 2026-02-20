@@ -33,6 +33,18 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
 
 /* Show only on mobile */
 @media (max-width: 1024px) {
+    #mobile-menu-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.4);
+}
+
+#mobile-menu-modal.active {
+  display: block;
+}
+
     .desktop-nav, .header-right { display: none; }
     .mobile-actions { display: flex; }
     body { padding-top: 64px; } /* optional, to push content below header */
