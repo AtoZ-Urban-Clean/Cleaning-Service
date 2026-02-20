@@ -1,87 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>AtoZ Urban Clean - Login/Register</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding-top: 50px; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 380px; border-top: 6px solid #673ab7; }
-        h2 { color: #333; text-align: center; }
-        label { font-size: 0.85rem; color: #666; font-weight: 600; display: block; margin-top: 15px; }
-        input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        button { flex: 1; padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; transition: 0.3s; }
-        .login-btn { background: #4caf50; }
-        .reg-btn { background: #673ab7; }
-        button:hover { opacity: 0.8; }
-        #status { margin-top: 15px; text-align: center; font-size: 0.9rem; }
-        .success { color: #388e3c; font-weight: bold; }
-        .error { color: #d32f2f; }
-    </style>
+<meta charset="UTF-8">
+<title>AtoZ Customer Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+h2 { text-align:center; }
+
+input {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+button {
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-btn { background:#4caf50; color:white; }
+.reg-btn { background:#673ab7; color:white; }
+
+#status {
+    margin-top:15px;
+    text-align:center;
+}
+.success { color:green; font-weight:bold; }
+.error { color:red; }
+</style>
 </head>
+
 <body>
 
 <div class="card">
-    <h2>AtoZ Customer Portal</h2>
-    
-    <label>Customer Number (Phone)</label>
-    <input type="text" id="number" placeholder="Enter Registered Number">
-    
-    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-    
-    <label>Full Name (For Registration)</label>
-    <input type="text" id="name" placeholder="John Doe">
-    
-    <label>Email (For Registration)</label>
-    <input type="email" id="email" placeholder="john@example.com">
-    
-    <div class="btn-group">
-        <button class="login-btn" onclick="checkLogin()">Login</button>
-        <button class="reg-btn" onclick="submitData()">Registration</button>
-    </div>
-    
-    <div id="status"></div>
+<h2>AtoZ Portal</h2>
+
+<input type="text" id="mobile" placeholder="Mobile Number">
+
+<hr>
+
+<input type="text" id="name" placeholder="Full Name">
+<input type="email" id="email" placeholder="Email">
+
+<button class="login-btn" onclick="login()">Login</button>
+<button class="reg-btn" onclick="register()">Register</button>
+
+<div id="status"></div>
 </div>
 
 <script>
-    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdoyHqPUWPhhDc3nuab06y3kjlmB6nbuQIXjIFOUJXK7htyKw/formResponse";
 
-    function submitData() {
-        const status = document.getElementById('status');
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoj44SU498Qoqgv-9D4cTL8OZCIwRY6cbnJx49X8OGAO6Avgw9tmq1u9oL0KerS9RRtQ/exec";
 
-        const name = document.getElementById('name').value;
-        const number = document.getElementById('number').value;
-        const email = document.getElementById('email').value;
+async function register() {
+    const name = document.getElementById("name").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const status = document.getElementById("status");
 
-        if (!name || !number || !email) {
-            status.className = "error";
-            status.innerText = "⚠️ Fill all fields to register.";
-            return;
-        }
+    if (!name || !mobile || !email) {
+        status.className = "error";
+        status.innerText = "Fill all fields.";
+        return;
+    }
 
-        const formData = new FormData();
-        formData.append("entry.190141750", name);
-        formData.append("entry.1743067136", number);
-        formData.append("entry.364259750", email);
+    status.innerText = "Registering...";
 
-        fetch(FORM_URL, {
-            method: "POST",
-            mode: "no-cors",
-            body: formData
-        });
+    const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, mobile, email })
+    });
 
+    const result = await response.json();
+
+    if (result.status === "success") {
         status.className = "success";
-        status.innerText = "✅ Registration Successful!";
-        
-        document.getElementById('name').value = "";
-        document.getElementById('number').value = "";
-        document.getElementById('email').value = "";
+        status.innerText = "Registration Successful!";
+    } else {
+        status.className = "error";
+        status.innerText = "Error registering.";
+    }
+}
+
+async function login() {
+    const mobile = document.getElementById("mobile").value.trim();
+    const status = document.getElementById("status");
+
+    if (!mobile) {
+        status.className = "error";
+        status.innerText = "Enter mobile number.";
+        return;
     }
 
-    function checkLogin() {
-        document.getElementById('status').innerText =
-            "⚠️ Login check not possible directly with Google Forms. Use Apps Script for login feature.";
+    status.innerText = "Checking...";
+
+    const response = await fetch(`${SCRIPT_URL}?mobile=${mobile}`);
+    const result = await response.json();
+
+    if (result.status === "found") {
+        status.className = "success";
+        status.innerText = "Welcome " + result.name + "!";
+    } else {
+        status.className = "error";
+        status.innerText = "Mobile not found. Please register.";
     }
+}
+
 </script>
+
 </body>
 </html>
