@@ -138,6 +138,26 @@
      <span class="fa-solid fa-user" style="color: #ff007f;">&nbsp;</span> Login
   </a>
         </ul>
+
+        <!-- MOBILE MENU MODAL -->
+<div id="mobile-menu-modal" class="c-modal">
+  <div class="c-modal__scrim" onclick="toggleMenu(false)"></div>
+  <div class="c-modal__dialog">
+    <div class="c-modal__content">
+      <button class="close-button" onclick="toggleMenu(false)"><i class="fas fa-times"></i></button>
+      <div class="menu-container">
+        <ul class="ada-menu">
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">OUR SERVICES</a></li>
+          <li><a href="about.html">ABOUT US</a></li>
+          <li><a href="contact-us.html">CONTACT US</a></li>
+          <li><a href="customer-login.html"><i class="fa-solid fa-user"></i> Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
         <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
             <a href="booking.html" class="bag-btn">BAG <span class="bag-count">0</span></a>
         </div>
