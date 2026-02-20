@@ -36,7 +36,10 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
   .mobile-actions { display: flex; align-items: center; gap: 12px; }
   body { padding-top: 64px; } /* if header fixed */
 }
-
+        #mobile-menu-modal { position: fixed; inset: 0; z-index: 9999; visibility: hidden; transition: visibility 0.3s;}
+        #mobile-menu-modal.active {  visibility: visible; }
+        .c-modal__scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease; }
+        #mobile-menu-modal.active .c-modal__scrim { opacity: 1; }
 /* Modal base */
 .c-modal {
   position: fixed;
