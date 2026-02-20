@@ -118,8 +118,8 @@
         }
 
         /* === MOBILE SIDE MODAL === */
-        #mobile-menu-modal { position: fixed; inset: 0; z-index: 9999; visibility: hidden; transition: visibility 0.3s; }
-        #mobile-menu-modal.active { visibility: visible; }
+        #mobile-menu-modal { position: fixed; inset: 0; z-index: 9999; display: none; }
+        #mobile-menu-modal.active { display: block; }
         .c-modal__scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease; }
         #mobile-menu-modal.active .c-modal__scrim { opacity: 1; }
 
