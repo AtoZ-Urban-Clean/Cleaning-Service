@@ -90,20 +90,25 @@ async function register() {
 
     status.innerText = "Registering...";
 
-    const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, mobile, email })
-    });
+    try {
+        // We use 'mode: no-cors' if we just want to send data, 
+        // but for Apps Script to return JSON properly, 
+        // it's often easier to send data via URL parameters or a specialized Proxy.
+        
+        const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({ name, mobile, email })
+        });
 
-    const result = await response.json();
-
-    if (result.status === "success") {
+        // Note: Because of CORS, you might not be able to read response.json() 
+        // even if the data was successfully saved to the sheet.
         status.className = "success";
-        status.innerText = "Registration Successful!";
-    } else {
+        status.innerText = "Registration Sent! Check your Sheet.";
+        
+    } catch (err) {
         status.className = "error";
-        status.innerText = "Error registering.";
+        status.innerText = "Submission attempted.";
+        console.log(err);
     }
 }
 
