@@ -45,12 +45,33 @@ button {
 .login-btn { background:#4caf50; color:white; }
 .reg-btn { background:#673ab7; color:white; }
 
-#status {
-    margin-top:15px;
-    text-align:center;
+/* Popup Style */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
 }
-.success { color:green; font-weight:bold; }
-.error { color:red; }
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  margin: 15% auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.close {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}
 </style>
 </head>
 
@@ -68,76 +89,76 @@ button {
 
 <button class="login-btn" onclick="login()">Login</button>
 <button class="reg-btn" onclick="register()">Register</button>
+</div>
 
-<div id="status"></div>
+<!-- Popup Modal -->
+<div id="popup" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <h3 id="popupTitle"></h3>
+    <p id="popupMessage"></p>
+  </div>
 </div>
 
 <script>
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoj44SU498Qoqgv-9D4cTL8OZCIwRY6cbnJx49X8OGAO6Avgw9tmq1u9oL0KerS9RRtQ/exec";
 
+function showPopup(title, message) {
+  document.getElementById("popupTitle").innerText = title;
+  document.getElementById("popupMessage").innerText = message;
+  document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
 async function register() {
     const name = document.getElementById("name").value.trim();
     const mobile = document.getElementById("mobile").value.trim();
     const email = document.getElementById("email").value.trim();
-    const status = document.getElementById("status");
 
     if (!name || !mobile || !email) {
-        status.className = "error";
-        status.innerText = "Fill all fields.";
+        showPopup("Error", "Fill all fields.");
         return;
     }
 
-    status.innerText = "Registering...";
-
-    // Use URLSearchParams to avoid CORS preflight issues
-    const params = new URLSearchParams({
-        name: name,
-        mobile: mobile,
-        email: email,
-        action: "register"
-    });
-
     try {
-        // We add 'mode: no-cors' to prevent the browser from blocking the redirect
-        await fetch(`${SCRIPT_URL}?${params.toString()}`, {
-            method: "GET", // Changing to GET is more reliable for Apps Script + GitHub
-            mode: "no-cors" 
+        await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({ name, mobile, email })
         });
 
-        status.className = "success";
-        status.innerText = "Registration Sent! Check your Sheet.";
-        
-        // Clear fields after success
-        document.getElementById("name").value = "";
-        document.getElementById("email").value = "";
+        showPopup("Success", "Registration Sent Successfully!");
+
     } catch (err) {
-        status.className = "error";
-        status.innerText = "Error connecting to server.";
+        showPopup("Error", "Submission attempted.");
+        console.log(err);
     }
 }
 
 async function login() {
     const mobile = document.getElementById("mobile").value.trim();
-    const status = document.getElementById("status");
 
     if (!mobile) {
-        status.className = "error";
-        status.innerText = "Enter mobile number.";
+        showPopup("Error", "Enter mobile number.");
         return;
     }
 
-    status.innerText = "Checking...";
+    try {
+        const response = await fetch(`${SCRIPT_URL}?mobile=${mobile}`);
+        const result = await response.json();
 
-    const response = await fetch(`${SCRIPT_URL}?mobile=${mobile}`);
-    const result = await response.json();
+        if (result.status === "found") {
+            showPopup("Welcome", "Welcome " + result.name + "!");
+        } else {
+            showPopup("Error", "Mobile not found. Please register.");
+        }
 
-    if (result.status === "found") {
-        status.className = "success";
-        status.innerText = "Welcome " + result.name + "!";
-    } else {
-        status.className = "error";
-        status.innerText = "Mobile not found. Please register.";
+    } catch (err) {
+        showPopup("Error", "Server error.");
+        console.log(err);
     }
 }
 
