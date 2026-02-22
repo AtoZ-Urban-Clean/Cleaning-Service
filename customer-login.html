@@ -90,25 +90,30 @@ async function register() {
 
     status.innerText = "Registering...";
 
+    // Use URLSearchParams to avoid CORS preflight issues
+    const params = new URLSearchParams({
+        name: name,
+        mobile: mobile,
+        email: email,
+        action: "register"
+    });
+
     try {
-        // We use 'mode: no-cors' if we just want to send data, 
-        // but for Apps Script to return JSON properly, 
-        // it's often easier to send data via URL parameters or a specialized Proxy.
-        
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify({ name, mobile, email })
+        // We add 'mode: no-cors' to prevent the browser from blocking the redirect
+        await fetch(`${SCRIPT_URL}?${params.toString()}`, {
+            method: "GET", // Changing to GET is more reliable for Apps Script + GitHub
+            mode: "no-cors" 
         });
 
-        // Note: Because of CORS, you might not be able to read response.json() 
-        // even if the data was successfully saved to the sheet.
         status.className = "success";
         status.innerText = "Registration Sent! Check your Sheet.";
         
+        // Clear fields after success
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
     } catch (err) {
         status.className = "error";
-        status.innerText = "Submission attempted.";
-        console.log(err);
+        status.innerText = "Error connecting to server.";
     }
 }
 
