@@ -259,9 +259,11 @@
                         <li><button onclick="openSub('sub-deep')">Deep Cleaning <i class="fas fa-chevron-right"></i></button></li>
                         <li><button onclick="openSub('sub-comm')">Commercial <i class="fas fa-chevron-right"></i></button></li>
                         <li><button onclick="openSub('sub-shift')">Shifting <i class="fas fa-chevron-right"></i></button></li>
-						<li><a href="customer-login.html" class="nav-link" style="color: #ff007f;">
-     <span class="fa-solid fa-user" style="color: #ff007f;">&nbsp;</span> Login
-  </a></li>
+						<li>
+  <button onclick="openPopup()" class="login-btn">
+    <span class="fa-solid fa-user"></span> Login
+  </button>
+</li>
                     </ul>
                 </div>
 
@@ -325,7 +327,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+<script>
+function openPopup() {
+  document.getElementById("popup").style.display = "block";
+}
 
-
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+</script>
+<!-- Popup Modal -->
+<div id="popup" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePopup()">✖</span>
+    <iframe src="customer-login.html"></iframe>
+  </div>
+</div>
 </body>
 </html>
