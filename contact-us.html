@@ -481,30 +481,31 @@ body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background:#f6f6f6; 
 <div class="contact-right">
 <h2>Send Message</h2>
 <form id="contactForm">
-
-<div class="input-group">
-<label>Name</label>
-<input type="text" required>
-</div>
-
-<div class="input-group">
-<label>Email</label>
-<input type="email" required>
-</div>
-
-<div class="input-group">
-<label>Phone</label>
-<input type="tel" required>
-</div>
-
-<div class="input-group">
-<label>Message</label>
-<textarea rows="4" required></textarea>
-</div>
-
-<button type="submit" class="submit-btn">Submit</button>
-
+  <input type="text" name="name" placeholder="Your Name" required><br><br>
+  <input type="email" name="email" placeholder="Your Email" required><br><br>
+  <input type="tel" name="phone" placeholder="Your Phone" required><br><br>
+  <textarea name="message" placeholder="Your Message" required></textarea><br><br>
+  <button type="submit">Send</button>
 </form>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  fetch("YOUR_WEB_APP_URL_HERE", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Message Sent Successfully!");
+    document.getElementById("contactForm").reset();
+  })
+  .catch(err => alert("Error sending message"));
+});
+</script>
 </div>
 
 </section>
