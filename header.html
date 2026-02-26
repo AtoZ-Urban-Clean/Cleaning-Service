@@ -263,6 +263,13 @@
   <button onclick="openPopup()" class="login-btn">
     <span class="fa-solid fa-user"></span> Login
   </button>
+<!-- Popup Modal -->
+<div id="popup" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePopup()">✖</span>
+    <iframe src="customer-login.html"></iframe>
+  </div>
+</div>
 </li>
                     </ul>
                 </div>
@@ -336,12 +343,6 @@ function closePopup() {
   document.getElementById("popup").style.display = "none";
 }
 </script>
-<!-- Popup Modal -->
-<div id="popup" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closePopup()">✖</span>
-    <iframe src="customer-login.html"></iframe>
-  </div>
-</div>
+
 </body>
 </html>
